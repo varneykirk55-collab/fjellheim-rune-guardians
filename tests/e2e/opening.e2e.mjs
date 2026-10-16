@@ -398,7 +398,9 @@ try {
 
   // 8. encounter and capture a wild creature (the frightened Bergling event)
   const policy = { catchSpecies: "bergling", runFromWild: true };
-  for (let tries = 0; tries < 6 && !(await session()).flags.bergling_done; tries++) {
+  // capture is random (the Bergling can be knocked out, resist the ball, or win);
+  // allow enough attempts that a fair player always gets there
+  for (let tries = 0; tries < 10 && !(await session()).flags.bergling_done; tries++) {
     s = await settle(policy);
     if (s.map !== "route1") s = await goTo("route1", policy); // e.g. after a blackout
     // step into the trigger area (24..30 x 10..14) along the path row
