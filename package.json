@@ -1,0 +1,26 @@
+{
+  "name": "fjellheim-rune-guardians",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fjellheim: Rune Guardians - an original Viking creature-collecting RPG (Phase 1 foundation). Presented by Bjorn & Son.",
+  "type": "module",
+  "scripts": {
+    "assets": "node tools/gen/index.mjs",
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "node tests/e2e/opening.e2e.mjs"
+  },
+  "dependencies": {
+    "phaser": "3.90.0"
+  },
+  "devDependencies": {
+    "@fontsource/press-start-2p": "5.3.0",
+    "pngjs": "7.0.0",
+    "typescript": "5.9.3",
+    "vite": "8.0.13",
+    "vitest": "5.0.5"
+  }
+}
