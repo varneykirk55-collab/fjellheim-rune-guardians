@@ -215,7 +215,7 @@ export const VILLAGE: MapDef = {
   warps: [{ x: 25, y: 1, to: { map: "route1", x: 35, y: 23, dir: "down" } }],
   npcs: [
     { id: "guard", char: "guard", x: 26, y: 3, dir: "down" },
-    { id: "child", char: "child", x: 11, y: 13, dir: "right", scale: 0.85 },
+    { id: "child", char: "child", x: 11, y: 13, dir: "right" },
     { id: "sigrun", char: "sigrun", x: 31, y: 24, dir: "left" },
     { id: "fisher", char: "fisher", x: 13, y: 31, dir: "down" },
     { id: "sten", char: "sten", x: 27, y: 11, dir: "left", hideIf: "starter" },

@@ -33,7 +33,7 @@ console.log(`tiles.png  (${ts.count} tiles, ${ts.cols}x${ts.rows} grid)`);
 const ch = buildChars();
 ch.pix.save(join(OUT, "chars.png"));
 layout.chars = ch.layout;
-layout.charSheet = { w: 16, h: 24, framesPerChar: ch.cols, names: ch.names };
+layout.charSheet = { w: ch.w, h: ch.h, framesPerChar: ch.cols, names: ch.names };
 console.log(`chars.png  (${ch.names.length} characters)`);
 
 /* ---- creatures ---- */

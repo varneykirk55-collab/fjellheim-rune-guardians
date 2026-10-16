@@ -11,7 +11,7 @@ export class BootScene extends Phaser.Scene {
     const A = "assets/";
     this.load.setCORS?.("");
     this.load.image("tiles", A + "tiles.png");
-    this.load.spritesheet("chars", A + "chars.png", { frameWidth: 16, frameHeight: 24 });
+    this.load.spritesheet("chars", A + "chars.png", { frameWidth: ASSET_LAYOUT.charSheet.w, frameHeight: ASSET_LAYOUT.charSheet.h });
     this.load.spritesheet("creatures", A + "creatures.png", { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet("icons", A + "icons.png", { frameWidth: 16, frameHeight: 16 });
     this.load.spritesheet("elements", A + "elements.png", { frameWidth: 16, frameHeight: 16 });

@@ -30,6 +30,8 @@ const HALF = TS / 2;
 const depthAt = (tileY: number) => tileY * ART;
 /** whole-number sprite scale (fractional scales make uneven pixels) */
 const spriteScale = (s = 1) => Math.max(1, Math.round(SCALE * s));
+/** characters stand on the bottom edge of their tile (frames are feet-anchored) */
+const feetY = (tileY: number) => (tileY + 1) * TS;
 const CHAR_FRAMES = 12;
 
 interface NpcRuntime {
@@ -256,7 +258,8 @@ export class WorldScene extends Phaser.Scene {
       if (n.showIf && !Session.flag(n.showIf)) continue;
       if (n.hideIf && Session.flag(n.hideIf)) continue;
       const sprite = this.add
-        .image(n.x * TS + HALF, n.y * TS + HALF, "chars")
+        .image(n.x * TS + HALF, feetY(n.y), "chars")
+        .setOrigin(0.5, 1)
         .setFrame(charFrameIndex(n.char, n.dir, 0))
         .setScale(spriteScale(n.scale))
         .setDepth(depthAt(n.y + 1));
@@ -280,7 +283,8 @@ export class WorldScene extends Phaser.Scene {
 
   private buildPlayer() {
     this.player = this.add
-      .image(this.pX * TS + HALF, this.pY * TS + HALF, "chars")
+      .image(this.pX * TS + HALF, feetY(this.pY), "chars")
+      .setOrigin(0.5, 1)
       .setFrame(charFrameIndex(Session.get().playerChar, this.pDir, 0))
       .setScale(SCALE)
       .setDepth(depthAt(this.pY + 1));
@@ -338,7 +342,7 @@ export class WorldScene extends Phaser.Scene {
       const tween = this.tweens.add({
         targets: this.player,
         x: nx * TS + HALF,
-        y: ny * TS + HALF,
+        y: feetY(ny),
         duration: 150,
         ease: "Linear",
         onUpdate: (tw) => {
@@ -607,7 +611,7 @@ export class WorldScene extends Phaser.Scene {
       this.pX = step.movePlayer.x;
       this.pY = step.movePlayer.y;
       if (step.movePlayer.dir) this.pDir = step.movePlayer.dir;
-      this.player.setPosition(this.pX * TS + HALF, this.pY * TS + HALF);
+      this.player.setPosition(this.pX * TS + HALF, feetY(this.pY));
       this.player.setDepth(depthAt(this.pY + 1));
       this.setPlayerFrame(0);
       this.syncPos();

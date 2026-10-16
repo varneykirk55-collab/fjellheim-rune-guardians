@@ -4914,8 +4914,8 @@ export const ASSET_LAYOUT = {
     "size": 16
   },
   "charSheet": {
-    "w": 16,
-    "h": 24,
+    "w": 32,
+    "h": 32,
     "framesPerChar": 12,
     "names": [
       "eirik",
