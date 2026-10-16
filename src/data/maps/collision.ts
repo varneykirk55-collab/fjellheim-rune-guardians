@@ -6,7 +6,7 @@ import { MapDef } from "./types";
 
 export const TILE_SIZE = 16;
 
-type TileMeta = { solid: boolean; frames: number; encounter: boolean };
+type TileMeta = { solid: boolean; frames: number; encounter: boolean; deco?: boolean };
 type ObjectMeta = { w: number; h: number; frames?: number };
 
 export function tileMeta(key: string): TileMeta | undefined {

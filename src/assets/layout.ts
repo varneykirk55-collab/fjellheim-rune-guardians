@@ -6,70 +6,278 @@ export const ASSET_LAYOUT = {
     "grass2": 1,
     "grass3": 2,
     "meadow": 3,
-    "tallgrass": 4,
-    "tallgrass_f1": 5,
-    "tallgrass_f2": 6,
-    "flowers_r": 7,
-    "flowers_w": 8,
-    "tuft": 9,
-    "forestfloor": 10,
-    "path": 11,
-    "path2": 12,
-    "sand": 13,
-    "sand2": 14,
-    "cobble": 15,
-    "cobble2": 16,
-    "boards": 17,
-    "boards2": 18,
-    "dock": 19,
-    "bridge": 20,
-    "water": 21,
-    "water_f1": 22,
-    "water_f2": 23,
-    "shore_water": 24,
-    "shore_water_f1": 25,
-    "shore_water_f2": 26,
-    "rug_l": 27,
-    "rug_m": 28,
-    "rug_r": 29,
-    "cliff_face": 30,
-    "cliff_face_grass": 31,
-    "cliff_top": 32,
-    "boulder": 33,
-    "pine_young": 34,
-    "stump": 35,
-    "log": 36,
-    "bush": 37,
-    "reeds": 38,
-    "mushrooms": 39,
-    "fence_h": 40,
-    "fence_v": 41,
-    "fence_post": 42,
-    "sign": 43,
-    "well": 44,
-    "bonfire": 45,
-    "bonfire_f1": 46,
-    "bonfire_f2": 47,
-    "dock_post": 48,
-    "bridge_rail": 49,
-    "wall_int": 50,
-    "wall_int_banner": 51,
-    "counter": 52,
-    "table": 53,
-    "stool": 54,
-    "shelf": 55,
-    "bookshelf": 56,
-    "hearth": 57,
-    "hearth_f1": 58,
-    "hearth_f2": 59,
-    "bed_top": 60,
-    "bed_bot": 61,
-    "barrel": 62,
-    "crate": 63,
-    "pot": 64,
-    "door_int": 65,
-    "stairs": 66,
-    "heal_rune": 67
+    "path": 4,
+    "path#0": 5,
+    "path#1": 6,
+    "path#2": 7,
+    "path#3": 8,
+    "path#4": 9,
+    "path#5": 10,
+    "path#6": 11,
+    "path#7": 12,
+    "path#8": 13,
+    "path#9": 14,
+    "path#10": 15,
+    "path#11": 16,
+    "path#12": 17,
+    "path#13": 18,
+    "path#14": 19,
+    "path#15": 20,
+    "path2": 21,
+    "path2#0": 22,
+    "path2#1": 23,
+    "path2#2": 24,
+    "path2#3": 25,
+    "path2#4": 26,
+    "path2#5": 27,
+    "path2#6": 28,
+    "path2#7": 29,
+    "path2#8": 30,
+    "path2#9": 31,
+    "path2#10": 32,
+    "path2#11": 33,
+    "path2#12": 34,
+    "path2#13": 35,
+    "path2#14": 36,
+    "path2#15": 37,
+    "sand": 38,
+    "sand#0": 39,
+    "sand#1": 40,
+    "sand#2": 41,
+    "sand#3": 42,
+    "sand#4": 43,
+    "sand#5": 44,
+    "sand#6": 45,
+    "sand#7": 46,
+    "sand#8": 47,
+    "sand#9": 48,
+    "sand#10": 49,
+    "sand#11": 50,
+    "sand#12": 51,
+    "sand#13": 52,
+    "sand#14": 53,
+    "sand#15": 54,
+    "sand2": 55,
+    "sand2#0": 56,
+    "sand2#1": 57,
+    "sand2#2": 58,
+    "sand2#3": 59,
+    "sand2#4": 60,
+    "sand2#5": 61,
+    "sand2#6": 62,
+    "sand2#7": 63,
+    "sand2#8": 64,
+    "sand2#9": 65,
+    "sand2#10": 66,
+    "sand2#11": 67,
+    "sand2#12": 68,
+    "sand2#13": 69,
+    "sand2#14": 70,
+    "sand2#15": 71,
+    "cobble": 72,
+    "cobble#0": 73,
+    "cobble#1": 74,
+    "cobble#2": 75,
+    "cobble#3": 76,
+    "cobble#4": 77,
+    "cobble#5": 78,
+    "cobble#6": 79,
+    "cobble#7": 80,
+    "cobble#8": 81,
+    "cobble#9": 82,
+    "cobble#10": 83,
+    "cobble#11": 84,
+    "cobble#12": 85,
+    "cobble#13": 86,
+    "cobble#14": 87,
+    "cobble#15": 88,
+    "cobble2": 89,
+    "cobble2#0": 90,
+    "cobble2#1": 91,
+    "cobble2#2": 92,
+    "cobble2#3": 93,
+    "cobble2#4": 94,
+    "cobble2#5": 95,
+    "cobble2#6": 96,
+    "cobble2#7": 97,
+    "cobble2#8": 98,
+    "cobble2#9": 99,
+    "cobble2#10": 100,
+    "cobble2#11": 101,
+    "cobble2#12": 102,
+    "cobble2#13": 103,
+    "cobble2#14": 104,
+    "cobble2#15": 105,
+    "water": 106,
+    "water_f1": 107,
+    "water_f2": 108,
+    "shore_water": 109,
+    "shore_water_f1": 110,
+    "shore_water_f2": 111,
+    "water#0": 112,
+    "water#0_f1": 113,
+    "water#0_f2": 114,
+    "water#1": 115,
+    "water#1_f1": 116,
+    "water#1_f2": 117,
+    "water#2": 118,
+    "water#2_f1": 119,
+    "water#2_f2": 120,
+    "water#3": 121,
+    "water#3_f1": 122,
+    "water#3_f2": 123,
+    "water#4": 124,
+    "water#4_f1": 125,
+    "water#4_f2": 126,
+    "water#5": 127,
+    "water#5_f1": 128,
+    "water#5_f2": 129,
+    "water#6": 130,
+    "water#6_f1": 131,
+    "water#6_f2": 132,
+    "water#7": 133,
+    "water#7_f1": 134,
+    "water#7_f2": 135,
+    "water#8": 136,
+    "water#8_f1": 137,
+    "water#8_f2": 138,
+    "water#9": 139,
+    "water#9_f1": 140,
+    "water#9_f2": 141,
+    "water#10": 142,
+    "water#10_f1": 143,
+    "water#10_f2": 144,
+    "water#11": 145,
+    "water#11_f1": 146,
+    "water#11_f2": 147,
+    "water#12": 148,
+    "water#12_f1": 149,
+    "water#12_f2": 150,
+    "water#13": 151,
+    "water#13_f1": 152,
+    "water#13_f2": 153,
+    "water#14": 154,
+    "water#14_f1": 155,
+    "water#14_f2": 156,
+    "water#15": 157,
+    "water#15_f1": 158,
+    "water#15_f2": 159,
+    "dock": 160,
+    "cliff_top": 161,
+    "cliff_face": 162,
+    "cliff_face_grass": 163,
+    "cliff_top#0": 164,
+    "cliff_upper#0": 165,
+    "cliff_base#0": 166,
+    "cliff_top#1": 167,
+    "cliff_upper#1": 168,
+    "cliff_base#1": 169,
+    "cliff_top#2": 170,
+    "cliff_upper#2": 171,
+    "cliff_base#2": 172,
+    "cliff_top#3": 173,
+    "cliff_upper#3": 174,
+    "cliff_base#3": 175,
+    "cliff_top#4": 176,
+    "cliff_upper#4": 177,
+    "cliff_base#4": 178,
+    "cliff_top#5": 179,
+    "cliff_upper#5": 180,
+    "cliff_base#5": 181,
+    "cliff_top#6": 182,
+    "cliff_upper#6": 183,
+    "cliff_base#6": 184,
+    "cliff_top#7": 185,
+    "cliff_upper#7": 186,
+    "cliff_base#7": 187,
+    "cliff_top#8": 188,
+    "cliff_upper#8": 189,
+    "cliff_base#8": 190,
+    "cliff_top#9": 191,
+    "cliff_upper#9": 192,
+    "cliff_base#9": 193,
+    "cliff_top#10": 194,
+    "cliff_upper#10": 195,
+    "cliff_base#10": 196,
+    "cliff_top#11": 197,
+    "cliff_upper#11": 198,
+    "cliff_base#11": 199,
+    "cliff_top#12": 200,
+    "cliff_upper#12": 201,
+    "cliff_base#12": 202,
+    "cliff_top#13": 203,
+    "cliff_upper#13": 204,
+    "cliff_base#13": 205,
+    "cliff_top#14": 206,
+    "cliff_upper#14": 207,
+    "cliff_base#14": 208,
+    "cliff_top#15": 209,
+    "cliff_upper#15": 210,
+    "cliff_base#15": 211,
+    "flowers_r": 212,
+    "flowers_w": 213,
+    "tuft": 214,
+    "reeds": 215,
+    "fence_h": 216,
+    "fence_v": 217,
+    "fence_post": 218,
+    "fence_post#0": 219,
+    "fence_post#1": 220,
+    "fence_post#2": 221,
+    "fence_post#3": 222,
+    "fence_post#4": 223,
+    "fence_post#5": 224,
+    "fence_post#6": 225,
+    "fence_post#7": 226,
+    "fence_post#8": 227,
+    "fence_post#9": 228,
+    "fence_post#10": 229,
+    "fence_post#11": 230,
+    "fence_post#12": 231,
+    "fence_post#13": 232,
+    "fence_post#14": 233,
+    "fence_post#15": 234,
+    "sign": 235,
+    "well": 236,
+    "bonfire": 237,
+    "bonfire_f1": 238,
+    "bonfire_f2": 239,
+    "dock_post": 240,
+    "tallgrass": 241,
+    "tallgrass_f1": 242,
+    "tallgrass_f2": 243,
+    "forestfloor": 244,
+    "boards": 245,
+    "boards2": 246,
+    "bridge": 247,
+    "rug_l": 248,
+    "rug_m": 249,
+    "rug_r": 250,
+    "boulder": 251,
+    "pine_young": 252,
+    "stump": 253,
+    "log": 254,
+    "bush": 255,
+    "mushrooms": 256,
+    "bridge_rail": 257,
+    "wall_int": 258,
+    "wall_int_banner": 259,
+    "counter": 260,
+    "table": 261,
+    "stool": 262,
+    "shelf": 263,
+    "bookshelf": 264,
+    "hearth": 265,
+    "hearth_f1": 266,
+    "hearth_f2": 267,
+    "bed_top": 268,
+    "bed_bot": 269,
+    "barrel": 270,
+    "crate": 271,
+    "pot": 272,
+    "door_int": 273,
+    "stairs": 274,
+    "heal_rune": 275
   },
   "tileMeta": {
     "grass": {
@@ -96,49 +304,103 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
-    "tallgrass": {
-      "solid": false,
-      "frames": 3,
-      "encounter": true,
-      "frame": 0
-    },
-    "tallgrass_f1": {
-      "solid": false,
-      "frames": 3,
-      "encounter": true,
-      "frame": 1
-    },
-    "tallgrass_f2": {
-      "solid": false,
-      "frames": 3,
-      "encounter": true,
-      "frame": 2
-    },
-    "flowers_r": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "flowers_w": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "tuft": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "forestfloor": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
     "path": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#4": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#6": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#8": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#10": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#12": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#14": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#15": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -150,7 +412,199 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path2#0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#4": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#6": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#8": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#10": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#12": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#14": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#4": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#6": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#8": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#10": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#12": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#14": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#15": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -162,7 +616,199 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand2#0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#4": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#6": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#8": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#10": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#12": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#14": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#4": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#6": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#8": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#10": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#12": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#14": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#15": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -174,25 +820,97 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
-    "boards": {
+    "cobble2#0": {
       "solid": false,
       "frames": 1,
       "encounter": false,
       "frame": 0
     },
-    "boards2": {
+    "cobble2#1": {
       "solid": false,
       "frames": 1,
       "encounter": false,
       "frame": 0
     },
-    "dock": {
+    "cobble2#2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
       "frame": 0
     },
-    "bridge": {
+    "cobble2#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#4": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#6": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#8": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#10": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#12": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#14": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#15": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -234,20 +952,302 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 2
     },
-    "rug_l": {
+    "water#0": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#0_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#0_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#1_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#1_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#2_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#2_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#3": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#3_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#3_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#4": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#4_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#4_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#5": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#5_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#5_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#6": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#6_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#6_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#7": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#7_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#7_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#8": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#8_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#8_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#9": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#9_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#9_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#10": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#10_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#10_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#11": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#11_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#11_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#12": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#12_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#12_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#13": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#13_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#13_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#14": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#14_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#14_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "water#15": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "water#15_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "water#15_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "dock": {
       "solid": false,
       "frames": 1,
       "encounter": false,
       "frame": 0
     },
-    "rug_m": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "rug_r": {
-      "solid": false,
+    "cliff_top": {
+      "solid": true,
       "frames": 1,
       "encounter": false,
       "frame": 0
@@ -264,8 +1264,553 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
-    "cliff_top": {
+    "cliff_top#0": {
       "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#4": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#4": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#4": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#5": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#5": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#5": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#6": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#6": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#6": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#7": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#7": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#7": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#8": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#8": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#8": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#9": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#9": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#9": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#10": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#10": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#10": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#11": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#11": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#11": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#12": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#12": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#12": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#13": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#13": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#13": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#14": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#14": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#14": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_top#15": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_upper#15": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cliff_base#15": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "flowers_r": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "flowers_w": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "tuft": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "reeds": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_h": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_v": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#4": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#5": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#6": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#7": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#8": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#9": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#10": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#11": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#12": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#13": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#14": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fence_post#15": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "sign": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "well": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bonfire": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bonfire_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1,
+      "deco": true
+    },
+    "bonfire_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2,
+      "deco": true
+    },
+    "dock_post": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "tallgrass": {
+      "solid": false,
+      "frames": 3,
+      "encounter": true,
+      "frame": 0
+    },
+    "tallgrass_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": true,
+      "frame": 1
+    },
+    "tallgrass_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": true,
+      "frame": 2
+    },
+    "forestfloor": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "boards": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "boards2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "bridge": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "rug_l": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "rug_m": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "rug_r": {
+      "solid": false,
       "frames": 1,
       "encounter": false,
       "frame": 0
@@ -300,68 +1845,8 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
-    "reeds": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
     "mushrooms": {
       "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "fence_h": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "fence_v": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "fence_post": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "sign": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "well": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "bonfire": {
-      "solid": true,
-      "frames": 3,
-      "encounter": false,
-      "frame": 0
-    },
-    "bonfire_f1": {
-      "solid": true,
-      "frames": 3,
-      "encounter": false,
-      "frame": 1
-    },
-    "bonfire_f2": {
-      "solid": true,
-      "frames": 3,
-      "encounter": false,
-      "frame": 2
-    },
-    "dock_post": {
-      "solid": true,
       "frames": 1,
       "encounter": false,
       "frame": 0
@@ -596,7 +2081,7 @@ export const ASSET_LAYOUT = {
       "h": 108,
       "door": {
         "x": 72,
-        "y": 88
+        "y": 94
       }
     },
     "house_player": {
@@ -604,14 +2089,14 @@ export const ASSET_LAYOUT = {
       "h": 92,
       "door": {
         "x": 40,
-        "y": 76
+        "y": 80
       }
     },
     "house_npc_0": {
       "w": 96,
       "h": 80,
       "door": {
-        "x": 33,
+        "x": 40,
         "y": 66
       }
     },
@@ -619,7 +2104,7 @@ export const ASSET_LAYOUT = {
       "w": 96,
       "h": 80,
       "door": {
-        "x": 33,
+        "x": 40,
         "y": 66
       }
     },
@@ -627,16 +2112,16 @@ export const ASSET_LAYOUT = {
       "w": 128,
       "h": 96,
       "door": {
-        "x": 64,
-        "y": 82
+        "x": 72,
+        "y": 84
       }
     },
     "shop": {
       "w": 112,
       "h": 88,
       "door": {
-        "x": 29,
-        "y": 72
+        "x": 24,
+        "y": 76
       }
     },
     "longship": {
@@ -728,7 +2213,7 @@ export const ASSET_LAYOUT = {
   },
   "tileAtlas": {
     "cols": 16,
-    "rows": 5,
+    "rows": 18,
     "size": 16
   },
   "charSheet": {

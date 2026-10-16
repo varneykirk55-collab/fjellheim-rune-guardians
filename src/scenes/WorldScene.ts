@@ -8,6 +8,7 @@ import { Session } from "../core/session";
 import { Facing } from "../core/save";
 import { getMap, MapDef } from "../data/maps";
 import { buildSolidGrid, tileMeta } from "../data/maps/collision";
+import { buildVisuals } from "../data/maps/visual";
 import { STORY_EVENTS, StoryEvent, StoryStep } from "../data/story";
 import { NPC_LINES, Cond } from "../data/dialogues";
 import { getSpecies, STARTERS, StarterId } from "../data/species";
@@ -19,7 +20,16 @@ import { DialogueBox } from "../ui/DialogueBox";
 import { TouchControls } from "../ui/TouchControls";
 import { TXT, textStyle } from "../ui/theme";
 
-const TS = 16;
+// Art is authored on a 16px grid and shown at an integer 2x, so the screen
+// frames ~16x9 tiles like a DS (Platinum shows 16x12). TS is the on-screen size
+// of a tile; depths stay in art pixels so the HUD (depth 900+) stays on top.
+const ART = 16;
+const SCALE = 2;
+const TS = ART * SCALE;
+const HALF = TS / 2;
+const depthAt = (tileY: number) => tileY * ART;
+/** whole-number sprite scale (fractional scales make uneven pixels) */
+const spriteScale = (s = 1) => Math.max(1, Math.round(SCALE * s));
 const CHAR_FRAMES = 12;
 
 interface NpcRuntime {
@@ -30,6 +40,8 @@ interface NpcRuntime {
   dir: Facing;
   sprite: Phaser.GameObjects.Image;
 }
+
+const TILE_INDEX = ASSET_LAYOUT.tiles as Record<string, number>;
 
 export function charFrameIndex(charKey: string, dir: Facing, step: number): number {
   const row = (ASSET_LAYOUT.chars as Record<string, number>)[charKey];
@@ -45,7 +57,7 @@ export function creatureFrameIndex(speciesSprite: string): number {
 
 export class WorldScene extends Phaser.Scene {
   private map!: MapDef;
-  private layer!: Phaser.Tilemaps.TilemapLayer;
+  private layers: Record<"ground" | "deco", Phaser.Tilemaps.TilemapLayer> = {} as never;
   private solid!: Uint8Array;
   private npcs: NpcRuntime[] = [];
   private player!: Phaser.GameObjects.Image;
@@ -56,7 +68,8 @@ export class WorldScene extends Phaser.Scene {
   private busy = false;
   private dialogue!: DialogueBox;
   private touch!: TouchControls;
-  private animTiles = new Map<string, { x: number; y: number }[]>();
+  /** animated tiles, keyed "layer|tileKey" */
+  private animTiles = new Map<string, { layer: "ground" | "deco"; key: string; at: { x: number; y: number }[] }>();
   private animFrame = 0;
   private storyCreatures: Phaser.GameObjects.Image[] = [];
   private uiTick: (() => void) | null = null;
@@ -115,12 +128,12 @@ export class WorldScene extends Phaser.Scene {
       loop: true,
       callback: () => {
         this.animFrame += 1;
-        for (const [key, positions] of this.animTiles) {
-          const meta = (ASSET_LAYOUT.tileMeta as Record<string, { frames: number }>)[key];
-          const frames = meta?.frames ?? 1;
+        for (const { layer, key, at } of this.animTiles.values()) {
+          const frames = tileMeta(key)?.frames ?? 1;
           const f = this.animFrame % frames;
-          const idx = (ASSET_LAYOUT.tiles as Record<string, number>)[f === 0 ? key : `${key}_f${f}`];
-          for (const p of positions) this.layer.putTileAt(idx, p.x, p.y);
+          const idx = TILE_INDEX[f === 0 ? key : `${key}_f${f}`];
+          if (idx === undefined) continue;
+          for (const p of at) this.layers[layer].putTileAt(idx, p.x, p.y);
         }
       },
     });
@@ -163,27 +176,33 @@ export class WorldScene extends Phaser.Scene {
   private buildMap() {
     const w = this.map.grid[0].length;
     const h = this.map.grid.length;
-    const data: number[][] = this.map.grid.map((row) =>
-      [...row].map((ch) => {
-        const key = this.map.legend[ch];
-        if (!key) return -1;
-        return (ASSET_LAYOUT.tiles as Record<string, number>)[key] ?? -1;
-      }),
-    );
-    const tm = this.make.tilemap({ data, tileWidth: TS, tileHeight: TS });
-    const set = tm.addTilesetImage("tiles", "tiles", TS, TS, 0, 0)!;
-    this.layer = tm.createLayer(0, set, 0, 0)!;
-
-    this.solid = buildSolidGrid(this.map);
+    const has = (k: string) => TILE_INDEX[k] !== undefined;
+    const visuals = buildVisuals(this.map, has);
+    const tm = this.make.tilemap({ width: w, height: h, tileWidth: ART, tileHeight: ART });
+    const set = tm.addTilesetImage("tiles", "tiles", ART, ART, 0, 0)!;
+    this.layers = {
+      ground: tm.createBlankLayer("ground", set)!.setScale(SCALE),
+      deco: tm.createBlankLayer("deco", set)!.setScale(SCALE),
+    };
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
-        const key = this.tileKeyAt(x, y);
-        if (key && (tileMeta(key)?.frames ?? 1) > 1) {
-          const list = this.animTiles.get(key) ?? [];
-          list.push({ x, y });
-          this.animTiles.set(key, list);
-        }
+        const v = visuals[y][x];
+        this.placeTile("ground", v.ground, x, y);
+        if (v.deco) this.placeTile("deco", v.deco, x, y);
       }
+    }
+    this.solid = buildSolidGrid(this.map);
+  }
+
+  private placeTile(layer: "ground" | "deco", key: string, x: number, y: number) {
+    const idx = TILE_INDEX[key];
+    if (idx === undefined) return;
+    this.layers[layer].putTileAt(idx, x, y);
+    if ((tileMeta(key)?.frames ?? 1) > 1) {
+      const id = `${layer}|${key}`;
+      const entry = this.animTiles.get(id) ?? { layer, key, at: [] };
+      entry.at.push({ x, y });
+      this.animTiles.set(id, entry);
     }
   }
 
@@ -201,14 +220,13 @@ export class WorldScene extends Phaser.Scene {
   private buildObjects() {
     for (const b of this.map.buildings) {
       const meta = ASSET_LAYOUT.objects[b.asset as keyof typeof ASSET_LAYOUT.objects];
-      const img = this.add.image(b.x * TS, b.y * TS, b.asset).setOrigin(0, 0);
-      img.setDepth((b.y + Math.round(meta.h / TS)) * TS);
+      const img = this.add.image(b.x * TS, b.y * TS, b.asset).setOrigin(0, 0).setScale(SCALE);
+      img.setDepth(depthAt(b.y + Math.round(meta.h / ART)));
     }
     for (const p of this.map.props) {
       const meta = ASSET_LAYOUT.objects[p.asset as keyof typeof ASSET_LAYOUT.objects] as { w: number; h: number; frames?: number };
-      const img = this.add.image(p.x * TS, p.y * TS, p.asset).setOrigin(0, 0);
-      img.setDepth((p.y + Math.round(meta.h / TS)) * TS);
-      if (p.scale) img.setScale(p.scale);
+      const img = this.add.image(p.x * TS, p.y * TS, p.asset).setOrigin(0, 0).setScale(spriteScale(p.scale));
+      img.setDepth(depthAt(p.y + Math.round(meta.h / ART)));
       if (p.anim && (meta.frames ?? 1) > 1) {
         this.time.addEvent({
           delay: 260,
@@ -224,10 +242,10 @@ export class WorldScene extends Phaser.Scene {
       if (n.showIf && !Session.flag(n.showIf)) continue;
       if (n.hideIf && Session.flag(n.hideIf)) continue;
       const sprite = this.add
-        .image(n.x * TS + 8, n.y * TS + 8, "chars")
+        .image(n.x * TS + HALF, n.y * TS + HALF, "chars")
         .setFrame(charFrameIndex(n.char, n.dir, 0))
-        .setDepth((n.y + 1) * TS);
-      if (n.scale) sprite.setScale(n.scale);
+        .setScale(spriteScale(n.scale))
+        .setDepth(depthAt(n.y + 1));
       sprite.setInteractive({ useHandCursor: true });
       sprite.on("pointerdown", () => {
         Input.suppress("a");
@@ -248,9 +266,10 @@ export class WorldScene extends Phaser.Scene {
 
   private buildPlayer() {
     this.player = this.add
-      .image(this.pX * TS + 8, this.pY * TS + 8, "chars")
+      .image(this.pX * TS + HALF, this.pY * TS + HALF, "chars")
       .setFrame(charFrameIndex(Session.get().playerChar, this.pDir, 0))
-      .setDepth((this.pY + 1) * TS);
+      .setScale(SCALE)
+      .setDepth(depthAt(this.pY + 1));
   }
 
   private setPlayerFrame(step: number) {
@@ -304,8 +323,8 @@ export class WorldScene extends Phaser.Scene {
       this.moving = true;
       const tween = this.tweens.add({
         targets: this.player,
-        x: nx * TS + 8,
-        y: ny * TS + 8,
+        x: nx * TS + HALF,
+        y: ny * TS + HALF,
         duration: 150,
         ease: "Linear",
         onUpdate: (tw) => {
@@ -315,7 +334,7 @@ export class WorldScene extends Phaser.Scene {
           this.moving = false;
           this.pX = nx;
           this.pY = ny;
-          this.player.setDepth((ny + 1) * TS);
+          this.player.setDepth(depthAt(ny + 1));
           this.setPlayerFrame(0);
           this.onStep();
         },
@@ -549,12 +568,12 @@ export class WorldScene extends Phaser.Scene {
       this.openShop(() => next());
     } else if ("showCreature" in step) {
       const img = this.add
-        .image(step.showCreature.x * TS + 8, step.showCreature.y * TS + 8, "creatures")
+        .image(step.showCreature.x * TS + HALF, step.showCreature.y * TS + HALF, "creatures")
         .setFrame(creatureFrameIndex(step.showCreature.species))
         .setOrigin(0.5, 0.5)
-        .setScale(0.5)
-        .setDepth((step.showCreature.y + 1) * TS);
-      this.tweens.add({ targets: img, y: img.y - 2, duration: 500, yoyo: true, repeat: -1 });
+        .setScale(spriteScale(0.5))
+        .setDepth(depthAt(step.showCreature.y + 1));
+      this.tweens.add({ targets: img, y: img.y - SCALE * 2, duration: 500, yoyo: true, repeat: -1 });
       this.storyCreatures.push(img);
       this.setSolid(step.showCreature.x, step.showCreature.y, 1);
       next();
@@ -574,8 +593,8 @@ export class WorldScene extends Phaser.Scene {
       this.pX = step.movePlayer.x;
       this.pY = step.movePlayer.y;
       if (step.movePlayer.dir) this.pDir = step.movePlayer.dir;
-      this.player.setPosition(this.pX * TS + 8, this.pY * TS + 8);
-      this.player.setDepth((this.pY + 1) * TS);
+      this.player.setPosition(this.pX * TS + HALF, this.pY * TS + HALF);
+      this.player.setDepth(depthAt(this.pY + 1));
       this.setPlayerFrame(0);
       this.syncPos();
       next();

@@ -1,6 +1,7 @@
 // tiles.mjs - generates the 16x16 tileset atlas for the Viking world.
 // All tiles are drawn from code with a fixed seed -> reproducible bytes.
 import { Pix, rng, shade, mix } from "./pix.mjs";
+import { registerVillageTiles } from "./village-tiles.mjs";
 
 export const TILE = 16;
 
@@ -172,10 +173,9 @@ function animTiles(key, meta, frames, draw) {
 }
 
 /* ---------------- ground ---------------- */
-tile("grass", {}, (p) => baseGrass(p, 11));
-tile("grass2", {}, (p) => baseGrass(p, 23));
-tile("grass3", {}, (p) => baseGrass(p, 37));
-tile("meadow", {}, (p) => baseGrass(p, 51, PAL.meadow, PAL.meadowB, PAL.grassC));
+// Exterior village tiles (ground families, water, cliffs, decorations) live in
+// village-tiles.mjs; the remaining tiles here are route and interior art.
+registerVillageTiles(tile, animTiles);
 animTiles("tallgrass", { encounter: true }, 3, (p, f) => {
   baseGrass(p, 61, PAL.grassB, PAL.grassDark, PAL.grassA);
   const sway = f - 1; // -1,0,1
@@ -193,97 +193,17 @@ animTiles("tallgrass", { encounter: true }, 3, (p, f) => {
     if (x % 4 === 1) p.set(Math.round(cx + sway), 15 - hgt - 1, PAL.grassC);
   }
 });
-tile("flowers_r", {}, (p) => {
-  baseGrass(p, 83);
-  const spots = [[3, 4], [9, 7], [5, 12], [12, 3], [13, 11]];
-  for (const [x, y] of spots) {
-    p.set(x, y, PAL.redC);
-    p.set(x + 1, y, "#e8e0c0");
-    p.set(x, y + 1, "#e8e0c0");
-    p.set(x + 1, y + 1, PAL.goldB);
-  }
-});
-tile("flowers_w", {}, (p) => {
-  baseGrass(p, 97);
-  const spots = [[4, 3], [10, 6], [3, 11], [12, 12], [8, 2]];
-  for (const [x, y] of spots) {
-    p.set(x, y, "#efe9d0");
-    p.set(x + 1, y, "#d8d0b0");
-    p.set(x, y + 1, PAL.goldB);
-    p.set(x + 1, y + 1, "#efe9d0");
-  }
-});
-tile("tuft", {}, (p) => {
-  baseGrass(p, 101);
-  for (const [x, y] of [[4, 8], [11, 5], [7, 12]]) {
-    p.set(x, y, PAL.grassDark);
-    p.set(x + 1, y - 1, PAL.grassC);
-    p.set(x + 2, y, PAL.grassDark);
-    p.set(x + 1, y, PAL.grassA);
-  }
-});
 tile("forestfloor", {}, (p) => {
   baseGrass(p, 113, PAL.forest, PAL.forestB, "#54804a");
   const r = rng(129);
   for (let i = 0; i < 6; i++) p.set((r() * 16) | 0, (r() * 16) | 0, "#3a4a2a");
 });
-tile("path", {}, (p) => {
-  const r = rng(131);
-  p.rect(0, 0, 16, 16, PAL.dirt);
-  for (let i = 0; i < 40; i++) p.set((r() * 16) | 0, (r() * 16) | 0, r() < 0.5 ? PAL.dirtB : PAL.dirtC);
-  for (let i = 0; i < 4; i++) {
-    const x = (r() * 13) | 0;
-    const y = (r() * 13) | 0;
-    p.set(x, y, PAL.cobbleB);
-    p.set(x + 1, y, PAL.cobble);
-    p.set(x, y + 1, PAL.cobbleB);
-    p.set(x + 1, y + 1, "#6a6a74");
-  }
-});
-tile("path2", {}, (p) => {
-  const r = rng(149);
-  p.rect(0, 0, 16, 16, PAL.dirtB);
-  for (let i = 0; i < 44; i++) p.set((r() * 16) | 0, (r() * 16) | 0, r() < 0.5 ? PAL.dirt : PAL.dirtC);
-});
-tile("sand", {}, (p) => {
-  const r = rng(151);
-  p.rect(0, 0, 16, 16, PAL.sand);
-  for (let i = 0; i < 34; i++) p.set((r() * 16) | 0, (r() * 16) | 0, r() < 0.5 ? PAL.sandB : "#e4d3a4");
-});
-tile("sand2", {}, (p) => {
-  const r = rng(157);
-  p.rect(0, 0, 16, 16, PAL.sandB);
-  for (let i = 0; i < 30; i++) p.set((r() * 16) | 0, (r() * 16) | 0, PAL.sand);
-});
-tile("cobble", {}, (p) => stoneWall(p, 163));
-tile("cobble2", {}, (p) => stoneWall(p, 167));
 tile("boards", {}, (p) => planks(p, 173, PAL.wood, PAL.woodB, PAL.woodD));
 tile("boards2", {}, (p) => planks(p, 181, PAL.woodB, PAL.woodC, PAL.woodD));
-tile("dock", {}, (p) => {
-  planks(p, 191, PAL.woodB, PAL.woodC, PAL.woodD, false);
-  // vertical dock planks
-  for (const x of [0, 5, 10, 15]) {
-    p.rect(x, 0, 1, 16, PAL.woodD);
-    p.rect(x + 1, 0, 1, 16, shade(PAL.woodB, 0.1));
-  }
-  const r = rng(193);
-  for (let i = 0; i < 14; i++) p.set((r() * 16) | 0, (r() * 16) | 0, PAL.woodC);
-});
 tile("bridge", {}, (p) => {
   planks(p, 197, PAL.wood, PAL.woodB, PAL.woodD, false);
   for (const x of [0, 8, 15]) p.rect(x, 0, 1, 16, PAL.woodD);
   p.rect(0, 0, 16, 1, shade(PAL.wood, 0.2));
-});
-animTiles("water", { solid: true }, 3, (p, f) => waterFrame(p, f));
-animTiles("shore_water", { solid: true }, 3, (p, f) => {
-  waterFrame(p, f);
-  // foam lip along the top edge (shore below land above)
-  p.rect(0, 0, 16, 2, PAL.foam);
-  for (let x = 0; x < 16; x++) {
-    const wob = Math.sin(x * 0.9 + f * 2.1) > 0 ? 3 : 2;
-    p.set(x, wob, PAL.ice);
-    if ((x + f) % 4 === 0) p.set(x, wob + 1, PAL.foam);
-  }
 });
 tile("rug_l", {}, (p) => {
   p.rect(0, 0, 16, 16, PAL.red);
@@ -310,30 +230,6 @@ tile("rug_r", {}, (p) => {
 });
 
 /* ---------------- cliffs & rocks ---------------- */
-tile("cliff_face", { solid: true }, (p) => {
-  stoneWall(p, 211);
-  p.rect(0, 0, 16, 3, PAL.rockD);
-  p.rect(0, 3, 16, 1, shade(PAL.rockD, 0.2));
-  for (let x = 0; x < 16; x++) {
-    if ((x * 7) % 5 === 0) p.set(x, 4 + ((x * 3) % 6), PAL.rockD);
-  }
-});
-tile("cliff_face_grass", { solid: true }, (p) => {
-  stoneWall(p, 213);
-  p.rect(0, 0, 16, 3, PAL.grassDark);
-  const r = rng(221);
-  for (let x = 0; x < 16; x++) {
-    const h = 2 + ((r() * 3) | 0);
-    p.rect(x, 0, 1, h, r() < 0.5 ? PAL.grassA : PAL.grassB);
-    if (r() < 0.3) p.set(x, h, PAL.grassC);
-  }
-});
-tile("cliff_top", { solid: true }, (p) => {
-  const r = rng(223);
-  p.rect(0, 0, 16, 16, PAL.rockC);
-  for (let i = 0; i < 50; i++) p.set((r() * 16) | 0, (r() * 16) | 0, r() < 0.5 ? PAL.rock : PAL.rockB);
-  p.rect(0, 0, 16, 1, shade(PAL.rockC, 0.15));
-});
 tile("boulder", { solid: true }, (p) => {
   baseGrass(p, 227);
   p.ellipse(8, 9, 6, 5, PAL.rockB);
@@ -378,15 +274,6 @@ tile("bush", { solid: true }, (p) => {
   p.set(11, 11, PAL.redC);
   p.set(8, 7, PAL.redC);
 });
-tile("reeds", {}, (p) => {
-  p.rect(0, 0, 16, 16, PAL.sandB);
-  const r = rng(257);
-  for (let x = 1; x < 16; x += 2) {
-    const h = 5 + ((r() * 6) | 0);
-    for (let y = 0; y < h; y++) p.set(x + ((y > h - 3 && r() < 0.5) ? 1 : 0), 15 - y, y > h - 3 ? "#6b7a3a" : "#7d8f45");
-    p.set(x, 15 - h - 1, "#8a6b3a");
-  }
-});
 tile("mushrooms", {}, (p) => {
   baseGrass(p, 263, PAL.forest, PAL.forestB, "#54804a");
   const spots = [[4, 10], [10, 12], [8, 6]];
@@ -398,71 +285,6 @@ tile("mushrooms", {}, (p) => {
 });
 
 /* ---------------- fences & village props ---------------- */
-tile("fence_h", { solid: true }, (p) => {
-  baseGrass(p, 269);
-  p.rect(0, 6, 16, 3, PAL.wood);
-  p.rect(0, 6, 16, 1, PAL.woodLight);
-  p.rect(0, 10, 16, 3, PAL.woodB);
-  p.rect(0, 10, 16, 1, PAL.wood);
-  p.rect(0, 12, 16, 1, PAL.woodD);
-});
-tile("fence_v", { solid: true }, (p) => {
-  baseGrass(p, 271);
-  p.rect(6, 0, 3, 16, PAL.wood);
-  p.rect(6, 0, 1, 16, PAL.woodLight);
-  p.rect(10, 0, 3, 16, PAL.woodB);
-  p.rect(10, 0, 1, 16, PAL.wood);
-  p.rect(12, 0, 1, 16, PAL.woodD);
-});
-tile("fence_post", { solid: true }, (p) => {
-  baseGrass(p, 277);
-  p.rect(6, 2, 5, 13, PAL.wood);
-  p.rect(6, 2, 2, 13, PAL.woodLight);
-  p.rect(10, 2, 1, 13, PAL.woodD);
-  p.rect(5, 1, 7, 2, PAL.woodB);
-  p.rect(6, 0, 5, 1, PAL.woodLight);
-});
-tile("sign", { solid: true }, (p) => {
-  baseGrass(p, 281);
-  p.rect(7, 8, 2, 7, PAL.woodC);
-  p.rect(2, 3, 12, 7, PAL.wood);
-  p.rect(2, 3, 12, 1, PAL.woodLight);
-  p.rect(2, 9, 12, 1, PAL.woodD);
-  p.rect(1, 2, 1, 9, PAL.woodB);
-  p.rect(14, 2, 1, 9, PAL.woodB);
-  for (const x of [4, 6, 8, 10, 12]) p.set(x, 5, PAL.woodD);
-  for (const x of [5, 7, 9, 11]) p.set(x, 7, PAL.woodD);
-});
-tile("well", { solid: true }, (p) => {
-  p.rect(0, 0, 16, 16, PAL.cobbleB);
-  p.ellipse(8, 10, 7, 5, PAL.cobble);
-  p.ellipse(8, 9, 7, 5, PAL.cobbleC);
-  p.ellipse(8, 9, 5, 3, "#1c2836");
-  p.ellipse(8, 10, 5, 3, "#14202e");
-  p.rect(2, 2, 2, 8, PAL.woodC);
-  p.rect(12, 2, 2, 8, PAL.woodC);
-  p.rect(1, 1, 14, 2, PAL.redB);
-  p.poly([[8, -1], [15, 2], [1, 2]], PAL.red);
-});
-animTiles("bonfire", { solid: true }, 3, (p, f) => {
-  p.rect(0, 0, 16, 16, PAL.cobbleB);
-  // stone ring
-  p.ellipse(8, 12, 7, 4, PAL.rockB);
-  p.ellipse(8, 12, 6, 3, PAL.rock);
-  p.ellipse(8, 12, 4, 2, "#2c2119");
-  // logs
-  p.line(4, 13, 12, 11, PAL.woodD);
-  p.line(4, 11, 12, 13, PAL.woodC);
-  firePixels(p, f, 8, 12, 4, 9);
-});
-tile("dock_post", { solid: true }, (p, _f, _r) => {
-  waterFrame(p, 0);
-  p.rect(5, 2, 6, 13, PAL.woodC);
-  p.rect(5, 2, 2, 13, PAL.wood);
-  p.rect(10, 2, 1, 13, PAL.woodD);
-  p.ellipse(8, 2, 3, 1, PAL.woodB);
-  p.rect(4, 13, 8, 2, PAL.foam);
-});
 tile("bridge_rail", { solid: true }, (p) => {
   p.rect(0, 8, 16, 8, PAL.water1);
   planks(p, 283, PAL.wood, PAL.woodB, PAL.woodD, false);
@@ -635,6 +457,7 @@ export function buildTileset() {
       frames: t.meta.frames,
       encounter: !!t.meta.encounter,
       frame: t.meta.frame ?? 0,
+      ...(t.meta.deco ? { deco: true } : {}),
     };
   });
   return { pix: atlas, layout, meta, cols, rows, count: TILES.length };

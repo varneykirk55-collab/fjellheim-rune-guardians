@@ -109,7 +109,16 @@ invariants.
 Every sprite, tile, backdrop and UI piece is generated programmatically by
 `tools/gen/*.mjs` (pngjs) at a consistent pixel density (16px tiles, 16x24 characters,
 64x64 creatures, 512x288 screens) and written to `public/assets/` with machine-readable
-metadata in `src/assets/layout.ts`. Music and SFX are synthesized at runtime with the
+metadata in `src/assets/layout.ts`.
+
+**Bjorvik village pass (Platinum-style):** exterior village tiles are drawn by
+`tools/gen/village-tiles.mjs` and the buildings, pines and longship by
+`tools/gen/village-buildings.mjs`, using the hue-shifted ramps in
+`village-palette.mjs`. The world renders at an integer 2x (about 16x9 tiles on
+screen, close to the DS framing). `src/data/maps/visual.ts` picks ground edge
+variants, cliff roles and a separate decoration layer at render time; collision
+still comes only from the map grid. `node tools/gen/preview.mjs out.png 4 <prefix>`
+renders magnified tile previews for review. Music and SFX are synthesized at runtime with the
 WebAudio API (no audio files, no licensing concerns). Fonts: Press Start 2P (OFL).
 
 ## Save format

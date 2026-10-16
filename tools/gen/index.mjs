@@ -9,6 +9,7 @@ import { buildTileset } from "./tiles.mjs";
 import { buildChars } from "./chars.mjs";
 import { buildCreatures } from "./creatures.mjs";
 import * as OBJ from "./objects.mjs";
+import * as VB from "./village-buildings.mjs";
 import * as UI from "./ui.mjs";
 import * as BG from "./backdrops.mjs";
 
@@ -48,15 +49,16 @@ function saveObj(o) {
   if (o.doorX !== undefined) layout.objects[o.key].door = { x: o.doorX, y: o.doorY };
   console.log(`${o.key}.png`);
 }
-saveObj(OBJ.longhouseSeer());
-saveObj(OBJ.housePlayer());
-saveObj(OBJ.houseNpc(0));
-saveObj(OBJ.houseNpc(1));
-saveObj(OBJ.healHall());
-saveObj(OBJ.shop());
-saveObj(OBJ.longship());
-saveObj(OBJ.pineTree(0));
-saveObj(OBJ.pineTree(1));
+// Bjorvik village pass (Platinum-style, Norse architecture)
+saveObj(VB.longhouseSeer());
+saveObj(VB.housePlayer());
+saveObj(VB.houseNpc(0));
+saveObj(VB.houseNpc(1));
+saveObj(VB.healHall());
+saveObj(VB.shop());
+saveObj(VB.longship());
+saveObj(VB.pineTree(0));
+saveObj(VB.pineTree(1));
 saveObj(OBJ.runeStones());
 saveObj(OBJ.pedestal());
 
