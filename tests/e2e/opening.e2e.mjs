@@ -112,6 +112,7 @@ const battle = () =>
       kind: b.config?.kind,
       bag: b.bagItems ? b.bagItems() : [],
       enemy: e?.active("enemy")?.speciesId,
+      enemyHp: b.enemyHpBar ? b.enemyHpBar.width / 56 : 1, // HP bar fill ratio (bar is 56px wide)
       override: !!b.uiOverride,
     };
   });
@@ -180,7 +181,9 @@ async function fightBattle(policy = {}) {
         shotsTaken.add(`battle-${battleLog.length}`);
         await shot(`battle-${battleLog.length}-${b.kind}-${b.enemy}`);
       }
-      const wantBall = policy.catchSpecies && b.kind === "wild" && b.enemy === policy.catchSpecies && b.bag.includes("rune_ball");
+      // play it like the walkthrough says: weaken the target first, then throw
+      const target = policy.catchSpecies && b.kind === "wild" && b.enemy === policy.catchSpecies;
+      const wantBall = target && b.bag.includes("rune_ball") && b.enemyHp <= 0.5;
       const wantRun = policy.runFromWild && b.kind === "wild" && b.enemy !== policy.catchSpecies;
       if (wantBall) {
         await moveMenuTo(1);

@@ -11,7 +11,8 @@ capture tutorial, wild battles, trainers, a shop, healing, and versioned save/lo
 ## Quick start
 
 ```bash
-cd game
+git clone https://github.com/varneykirk55-collab/fjellheim-rune-guardians.git
+cd fjellheim-rune-guardians
 npm install
 npm run dev        # http://localhost:5180 (binds 0.0.0.0)
 ```

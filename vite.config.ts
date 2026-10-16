@@ -1,12 +1,12 @@
 import { defineConfig } from "vite";
 
-// Standalone game project (separate from the root storefront app).
+// Standalone game project (migrated from the Bjorn & Son website repo's game/ folder).
 // Served statically; no SSR, no backend. base './' keeps builds portable.
 export default defineConfig({
   base: "./",
   css: {
-    // Inline PostCSS config so Vite does NOT pick up the storefront's
-    // tailwind postcss.config.mjs from the repository root.
+    // Inline PostCSS config so Vite never picks up a postcss.config from a
+    // parent directory (the game originally lived inside the storefront repo).
     postcss: { plugins: [] },
   },
   server: {
