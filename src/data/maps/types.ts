@@ -29,6 +29,27 @@ export interface PropDef {
   creature?: string;
 }
 
+/**
+ * A placed scenery object (tree, barrel, garden...), anchored by its
+ * bottom-left tile: the image extends up and right from (x, y). Only the
+ * bottom `foot` rows (default 1) of its width block movement, unless
+ * `solid` is false (e.g. torches mounted on an already-solid cliff).
+ */
+export interface ObjectDef {
+  asset: string;
+  x: number;
+  y: number;
+  foot?: number;
+  solid?: boolean;
+}
+
+/** a small hand-placed, non-blocking decoration tile (flowers, ferns, pebbles) */
+export interface DecorDef {
+  key: string;
+  x: number;
+  y: number;
+}
+
 export interface NpcDef {
   id: string;
   char: string;
@@ -65,6 +86,10 @@ export interface MapDef {
   npcs: NpcDef[];
   signs: SignDef[];
   encounters?: EncounterTable;
+  /** hand-placed scenery objects (render + footprint collision) */
+  objects?: ObjectDef[];
+  /** hand-placed non-blocking decoration tiles (render only) */
+  decor?: DecorDef[];
 }
 
 export interface WarpDef {

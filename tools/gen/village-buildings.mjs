@@ -46,13 +46,36 @@ function roof(p, { x0, x1, r0, r1, top, eave }, skin) {
   });
 }
 
+/** small stable hash for per-bundle / per-plank variation */
+function vh(a, b) {
+  let n = Math.imul(a, 374761393) + Math.imul(b, 668265263);
+  n = Math.imul(n ^ (n >>> 13), 1274126177);
+  return (n ^ (n >>> 16)) >>> 0;
+}
+
+/**
+ * Reed thatch laid in courses: each course is a row of bundles with a sunlit
+ * upper lip and a shadowed hem. Bundles vary in drop and tone, the roof
+ * darkens toward the eave, and moss grows in patches where water runs off.
+ */
 function thatchSkin(top) {
-  return (x, y, t, edge) => {
-    const row = (y - top) % 4;
-    if (row === 0) return (x + y) % 5 === 0 ? V.h2 : V.h1; // course line
-    let c = t < 0.3 ? V.h4 : t < 0.7 ? V.h3 : V.h2;
-    if ((x * 3 + y) % 4 === 0) c = row === 1 ? V.h5 : V.h2; // straw strands
-    if (edge) c = V.h1;
+  const COURSE = 5;
+  return (x, y, t, edge, fromLeft) => {
+    const course = Math.floor((y - top) / COURSE);
+    const bundle = Math.floor((x + (course % 2) * 2) / 4);
+    const h = vh(bundle, course);
+    const drop = h % 3 === 0 ? 1 : 0; // some bundles hang a pixel lower
+    const row = (y - top + COURSE - drop) % COURSE;
+    const ramp = t < 0.35 ? [V.h5, V.h4, V.h3, V.h2] : t < 0.7 ? [V.h4, V.h3, V.h2, V.h1] : [V.h3, V.h2, V.h1, V.h0];
+    let c = ramp[1];
+    if (row === 0) c = ramp[0]; // lit lip of the course
+    else if (row === COURSE - 1) c = ramp[3]; // hem shadow
+    else if ((x + (course % 2) * 2) % 4 === 0) c = ramp[2]; // straw seam between bundles
+    else if ((x * 3 + y) % 5 === 0) c = ramp[0]; // individual reeds catching light
+    // moss patches: clusters, not specks
+    const m = vh(Math.floor(x / 6), Math.floor((y - top) / 4));
+    if (t > 0.45 && m % 11 === 0 && row > 0 && row < COURSE - 1) c = (x + y) % 3 ? V.m2 : V.m3;
+    if (edge) c = fromLeft < 1.5 ? ramp[2] : ramp[3];
     return c;
   };
 }
@@ -103,11 +126,15 @@ function plankWall(p, x0, x1, y0, y1, step = 4) {
   for (let y = y0; y <= y1; y++)
     for (let x = x0; x <= x1; x++) {
       const k = (x - x0) % step;
-      let c = V.t3;
-      if (k === 0) c = V.t1;
-      else if (k === 1) c = V.t4;
+      const plank = Math.floor((x - x0) / step);
+      const tone = vh(plank, 7) % 3; // each plank weathered differently
+      const mid = [V.t3, "#7c4e2c", "#8c5a34"][tone];
+      let c = mid;
+      if (k === 0) c = V.t1; // gap
+      else if (k === 1) c = tone === 1 ? V.t3 : V.t4; // lit edge
       else if (k === step - 1) c = V.t2;
       if ((x * 13 + y * 7) % 29 === 0 && k > 1) c = V.t2; // knots
+      if (y > y1 - 3 && k > 0) c = V.t2; // damp, darker base boards
       p.set(x, y, c);
     }
 }
@@ -447,52 +474,9 @@ export function shop() {
   return { pix: p, key: "shop", w, h, doorX: 24, doorY: 76 };
 }
 
-/* ================================================================ nature & ship */
+/* ================================================================ ship */
 
-/** Platinum-style conifer: stacked rounded tiers, lit from the upper left */
-export function pineTree(variant) {
-  const w = 32;
-  const h = 56;
-  const p = new Pix(w, h);
-  // trunk
-  for (let y = 44; y < 52; y++) {
-    p.set(14, y, V.t4);
-    p.set(15, y, V.t3);
-    p.set(16, y, V.t2);
-    p.set(17, y, V.t1);
-  }
-  const tiers = variant === 0
-    ? [[16, 2, 6], [16, 10, 9], [16, 19, 12], [16, 29, 14]]
-    : [[16, 4, 7], [16, 12, 10], [16, 22, 13], [16, 31, 15]];
-  for (const [cx, ty, half] of tiers) {
-    const th = 13;
-    for (let yy = 0; yy < th; yy++) {
-      const t = yy / (th - 1);
-      const span = Math.round(1 + half * t);
-      for (let xx = -span; xx <= span; xx++) {
-        const x = cx + xx;
-        const y = ty + yy;
-        let c = V.g1;
-        if (xx < -span * 0.3) c = V.g2;
-        if (xx < -span * 0.6 && t < 0.85) c = V.g3;
-        if (yy >= th - 2) c = V.g0; // tier underside
-        if (yy === th - 3 && Math.abs(xx) % 3 === 1) c = V.g0; // drooping tips
-        p.set(x, y, c);
-      }
-    }
-    // needle highlights
-    p.set(cx - 2, ty + 3, V.g4);
-    p.set(cx - 4, ty + 7, V.g4);
-    p.set(cx - 1, ty + 6, V.g3);
-  }
-  p.set(16, 1, V.g2);
-  finish(p);
-  for (let x = 8; x <= 24; x++) {
-    p.set(x, 52, V.shadow);
-    if (x > 10 && x < 22) p.set(x, 53, V.shadow);
-  }
-  return { pix: p, key: `pine_${variant}`, w, h };
-}
+// Trees and other vegetation live in village-props.mjs.
 
 /** clinker-built longship with striped sail, shields and a carved prow */
 export function longship() {

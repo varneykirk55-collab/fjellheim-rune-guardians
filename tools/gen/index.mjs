@@ -10,6 +10,7 @@ import { buildChars } from "./chars.mjs";
 import { buildCreatures } from "./creatures.mjs";
 import * as OBJ from "./objects.mjs";
 import * as VB from "./village-buildings.mjs";
+import * as VP from "./village-props.mjs";
 import * as UI from "./ui.mjs";
 import * as BG from "./backdrops.mjs";
 
@@ -57,8 +58,7 @@ saveObj(VB.houseNpc(1));
 saveObj(VB.healHall());
 saveObj(VB.shop());
 saveObj(VB.longship());
-saveObj(VB.pineTree(0));
-saveObj(VB.pineTree(1));
+for (const make of VP.VILLAGE_PROPS) saveObj(make());
 saveObj(OBJ.runeStones());
 saveObj(OBJ.pedestal());
 

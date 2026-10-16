@@ -1,14 +1,16 @@
-// visual.ts - which graphic to draw for each map cell (pure, render-only).
+// visual.ts - which graphics to draw for each map cell (pure, render-only).
 //
 // The map grid stays the single source of truth for gameplay (collision,
-// encounters, story triggers). This module only decides presentation:
-// - decorations (flowers, fences, signs, ...) go on an overlay layer, and the
-//   ground beneath them is inferred from the surrounding cells;
-// - ground families (path, sand, cobble, water) pick an edge variant from a
-//   4-bit neighbour mask so transitions are soft instead of square;
-// - cliffs pick plateau / upper face / base face by their position in the
-//   cliff mass.
-// Any variant missing from the tileset falls back to the cell's own key.
+// encounters, story triggers). This module only decides presentation, as four
+// stacked tile layers per cell:
+// - ground: grass variants, autotiled path/sand/cobble/water, cliff roles;
+// - edge:   soft transitions (creeping blades, sand/soil
+//           tongues, wet sand at the waterline);
+// - corner: inner-corner grass nubs and foam;
+// - deco:   decorations (grid decorations plus hand-placed MapDef.decor),
+//           with the ground beneath inferred from the surrounding cells.
+// Variety comes from a stable position hash, so the same map always looks the
+// same. Any variant missing from the tileset falls back to a plainer key.
 import { MapDef } from "./types";
 import { tileKeyAt, tileMeta } from "./collision";
 
@@ -16,6 +18,10 @@ export const N = 1;
 export const E = 2;
 export const S = 4;
 export const W = 8;
+const NE = 1;
+const SE = 2;
+const SW = 4;
+const NW = 8;
 
 type Group = "grass" | "path" | "sand" | "cobble" | "water" | "cliff";
 
@@ -40,11 +46,19 @@ const GROUP: Record<string, Group> = {
   cliff_face_grass: "cliff",
 };
 
+/** plain grass keys that get position-chosen variants */
+const PLAIN_GRASS = new Set(["grass", "grass2", "grass3", "meadow"]);
+const GRASS_VARIANTS = 8;
+const GRASS_FEATURES = ["grass_clover", "grass_clump"];
+const EDGE_PROFILES = 3;
+
 /** fence pieces join to each other */
 const FENCE = new Set(["fence_h", "fence_v", "fence_post"]);
 
 export interface CellVisual {
   ground: string;
+  edge: string | null;
+  corner: string | null;
   deco: string | null;
 }
 
@@ -54,19 +68,34 @@ const DIRS: [number, number, number][] = [
   [0, 1, S],
   [-1, 0, W],
 ];
+/** diagonal bit, and the two orthogonal neighbours that frame that corner */
+const DIAGS: [number, number, number][] = [
+  [1, -1, NE],
+  [1, 1, SE],
+  [-1, 1, SW],
+  [-1, -1, NW],
+];
 
 export function isDeco(key: string | null): boolean {
   return !!key && !!tileMeta(key)?.deco;
 }
 
+/** stable per-cell hash (same map -> same picture) */
+export function cellHash(x: number, y: number): number {
+  let n = Math.imul(x, 374761393) + Math.imul(y, 668265263);
+  n = Math.imul(n ^ (n >>> 13), 1274126177);
+  return (n ^ (n >>> 16)) >>> 0;
+}
+
 /**
- * Compute ground + overlay keys for every cell. `has(key)` reports whether the
- * tileset contains a variant, so maps without the new art degrade gracefully.
+ * Compute every layer for every cell. `has(key)` reports whether the tileset
+ * contains a variant, so maps without the new art degrade gracefully.
  */
 export function buildVisuals(map: MapDef, has: (key: string) => boolean): CellVisual[][] {
   const h = map.grid.length;
   const w = map.grid[0].length;
-  const raw = (x: number, y: number) => (x < 0 || y < 0 || x >= w || y >= h ? null : tileKeyAt(map, x, y));
+  const inBounds = (x: number, y: number) => x >= 0 && y >= 0 && x < w && y < h;
+  const raw = (x: number, y: number) => (inBounds(x, y) ? tileKeyAt(map, x, y) : null);
 
   // 1. ground key per cell: decorations take the most common neighbouring ground
   const ground: (string | null)[][] = [];
@@ -84,35 +113,79 @@ export function buildVisuals(map: MapDef, has: (key: string) => boolean): CellVi
     }
 
   const groupAt = (x: number, y: number): Group | null => {
-    const k = x < 0 || y < 0 || x >= w || y >= h ? null : ground[y][x];
+    const k = inBounds(x, y) ? ground[y][x] : null;
     return k ? (GROUP[k] ?? null) : null;
   };
-  const inBounds = (x: number, y: number) => x >= 0 && y >= 0 && x < w && y < h;
   const pick = (variant: string, fallback: string) => (has(variant) ? variant : fallback);
+  const maskOf = (x: number, y: number, test: (g: Group | null, nx: number, ny: number) => boolean) => {
+    let m = 0;
+    for (const [dx, dy, bit] of DIRS) if (test(groupAt(x + dx, y + dy), x + dx, y + dy)) m |= bit;
+    return m;
+  };
 
-  // 2. choose variants
+  const decorAt = new Map<string, string>();
+  for (const d of map.decor ?? []) decorAt.set(`${d.x},${d.y}`, d.key);
+
+  // 2. choose variants and overlays
   const out: CellVisual[][] = [];
   for (let y = 0; y < h; y++) {
     out.push([]);
     for (let x = 0; x < w; x++) {
       const k = ground[y][x];
       if (!k) {
-        out[y].push({ ground: "", deco: null });
+        out[y].push({ ground: "", edge: null, corner: null, deco: null });
         continue;
       }
+      const hash = cellHash(x, y);
       const g = GROUP[k];
       let groundKey = k;
-      if (g === "path" || g === "sand" || g === "cobble") {
+      let edge: string | null = null;
+      let corner: string | null = null;
+      const v = (hash >>> 9) & 1;
+
+      if (g === "grass" && PLAIN_GRASS.has(k)) {
+        groundKey =
+          hash % 100 < 7
+            ? pick(GRASS_FEATURES[(hash >>> 8) % GRASS_FEATURES.length], k)
+            : pick(`grass~${(hash >>> 4) % GRASS_VARIANTS}`, k);
+      } else if (g === "path" || g === "sand" || g === "cobble") {
         // grass overhangs the terrain on every side that touches grass
-        let mask = 0;
-        for (const [dx, dy, bit] of DIRS) if (groupAt(x + dx, y + dy) === "grass") mask |= bit;
-        groundKey = pick(`${k}#${mask}`, k);
+        const toGrass = maskOf(x, y, (n) => n === "grass");
+        const pattern = hash & 2 ? g : `${g}2`;
+        const prof = (hash >>> 5) % EDGE_PROFILES;
+        const key = `${pattern}#${toGrass}${prof ? `~${prof}` : ""}`;
+        groundKey = pick(key, pick(`${k}#${toGrass}`, k));
+
+        if (g === "path") {
+          const toSand = maskOf(x, y, (n) => n === "sand");
+          if (toSand) edge = pick(`blend_sand#${toSand}~${v}`, "") || null;
+          else if (toGrass && hash % 3 === 0) edge = pick(`creep#${toGrass}~${v}`, "") || null;
+        } else if (g === "sand") {
+          const toWater = maskOf(x, y, (n) => n === "water");
+          const toPath = maskOf(x, y, (n) => n === "path" || n === "cobble");
+          if (toWater) edge = pick(`wet#${toWater}`, "") || null;
+          else if (toPath) edge = pick(`blend_dirt#${toPath}~${v}`, "") || null;
+        } else {
+          const toPath = maskOf(x, y, (n) => n === "path");
+          const toSand = maskOf(x, y, (n) => n === "sand");
+          if (toPath) edge = pick(`blend_dirt#${toPath}~${v}`, "") || null;
+          else if (toSand) edge = pick(`blend_sand#${toSand}~${v}`, "") || null;
+        }
+        // inner corners: grass only on the diagonal
+        let c = 0;
+        for (const [dx, dy, bit] of DIAGS)
+          if (groupAt(x + dx, y + dy) === "grass" && groupAt(x + dx, y) !== "grass" && groupAt(x, y + dy) !== "grass") c |= bit;
+        if (c) corner = pick(`inner#${c}`, "") || null;
       } else if (g === "water" && k !== "dock") {
         // foam wherever the water meets anything that is not water
-        let mask = 0;
-        for (const [dx, dy, bit] of DIRS)
-          if (inBounds(x + dx, y + dy) && groupAt(x + dx, y + dy) !== "water") mask |= bit;
-        groundKey = pick(`water#${mask}`, k);
+        const toLand = maskOf(x, y, (n, nx, ny) => inBounds(nx, ny) && n !== "water");
+        groundKey = pick(`water#${toLand}`, k);
+        let c = 0;
+        for (const [dx, dy, bit] of DIAGS) {
+          const dg = groupAt(x + dx, y + dy);
+          if (inBounds(x + dx, y + dy) && dg !== "water" && groupAt(x + dx, y) === "water" && groupAt(x, y + dy) === "water") c |= bit;
+        }
+        if (c) corner = pick(`foam_inner#${c}`, "") || null;
       } else if (g === "cliff") {
         groundKey = cliffVariant(groupAt, inBounds, x, y, pick, k);
       }
@@ -126,8 +199,11 @@ export function buildVisuals(map: MapDef, has: (key: string) => boolean): CellVi
           for (const [dx, dy, bit] of DIRS) if (FENCE.has(raw(x + dx, y + dy) ?? "")) mask |= bit;
           deco = pick(`fence_post#${mask}`, r!);
         }
+      } else {
+        const placed = decorAt.get(`${x},${y}`);
+        if (placed && has(placed)) deco = placed;
       }
-      out[y].push({ ground: groundKey, deco });
+      out[y].push({ ground: groundKey, edge, corner, deco });
     }
   }
   return out;

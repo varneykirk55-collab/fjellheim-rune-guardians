@@ -37,6 +37,67 @@ function drawGrass(p, layout = GRASS_LAYOUTS.grass) {
   }
 }
 
+/**
+ * Grass variants: the renderer picks one per cell from a position hash, so no
+ * two neighbouring screens repeat. Layouts are sparse hand-style motifs from a
+ * fixed seed (minimum spacing, away from tile borders), not per-pixel noise.
+ */
+export const GRASS_VARIANTS = 8;
+function grassLayout(seed) {
+  let a = (seed * 2654435761) >>> 0;
+  const rnd = () => {
+    a ^= a << 13;
+    a >>>= 0;
+    a ^= a >>> 17;
+    a ^= a << 5;
+    a >>>= 0;
+    return (a % 1000) / 1000;
+  };
+  const pts = [];
+  const far = (x, y, d) => pts.every(([px, py]) => Math.abs(px - x) + Math.abs(py - y) >= d);
+  const tufts = [];
+  for (let tries = 0; tries < 80 && tufts.length < 3 + (seed % 3); tries++) {
+    const x = 1 + Math.floor(rnd() * 12);
+    const y = 1 + Math.floor(rnd() * 12);
+    if (far(x, y, 6)) {
+      tufts.push([x, y]);
+      pts.push([x, y]);
+    }
+  }
+  const specks = [];
+  for (let tries = 0; tries < 80 && specks.length < 3 + (seed % 2); tries++) {
+    const x = 1 + Math.floor(rnd() * 14);
+    const y = 1 + Math.floor(rnd() * 13);
+    if (far(x, y, 4)) {
+      specks.push([x, y]);
+      pts.push([x, y]);
+    }
+  }
+  return { tufts, specks };
+}
+
+/** rare feature tiles mixed into open grass */
+const GRASS_FEATURES = {
+  clover: (p) => {
+    drawGrass(p, GRASS_LAYOUTS.grass3);
+    for (const [x, y] of [[4, 5], [6, 4], [5, 7], [10, 9], [12, 8], [11, 11]]) {
+      stamp(p, x, y, [".4.", "434", ".2."], { 4: V.g5, 3: V.g4, 2: V.g2 });
+    }
+    p.set(6, 6, V.cream);
+    p.set(11, 10, V.cream);
+  },
+  clump: (p) => {
+    drawGrass(p, GRASS_LAYOUTS.grass3);
+    stamp(
+      p,
+      3,
+      5,
+      ["...4..4...", "..424.24..", ".42224224.", "4222222224", ".22121122.", "..111111.."],
+      { 4: V.g4, 2: V.g2, 1: V.g1 },
+    );
+  },
+};
+
 /** pixel colour of the plain grass tile at (x,y) - used so fringes join seamlessly */
 const GRASS_REF = (() => {
   const p = new Pix(16, 16);
@@ -46,13 +107,29 @@ const GRASS_REF = (() => {
 
 /* ================================================================ edge fringes */
 
-// hand-picked fringe depth profiles (1..3 px); ends match neighbours (2)
-const PROF = {
-  [N]: [2, 2, 3, 2, 1, 2, 2, 3, 3, 2, 2, 1, 2, 2, 3, 2],
-  [S]: [2, 1, 2, 2, 3, 2, 2, 2, 1, 2, 3, 3, 2, 2, 1, 2],
-  [W]: [2, 3, 2, 2, 1, 2, 3, 2, 2, 2, 1, 2, 3, 2, 2, 2],
-  [E]: [2, 2, 1, 2, 3, 3, 2, 2, 1, 2, 2, 3, 2, 1, 2, 2],
-};
+// hand-picked fringe depth profiles (1..3 px); ends match neighbours (2).
+// Three sets are picked per cell by the renderer so long edges never repeat.
+const PROFS = [
+  {
+    [N]: [2, 2, 3, 2, 1, 2, 2, 3, 3, 2, 2, 1, 2, 2, 3, 2],
+    [S]: [2, 1, 2, 2, 3, 2, 2, 2, 1, 2, 3, 3, 2, 2, 1, 2],
+    [W]: [2, 3, 2, 2, 1, 2, 3, 2, 2, 2, 1, 2, 3, 2, 2, 2],
+    [E]: [2, 2, 1, 2, 3, 3, 2, 2, 1, 2, 2, 3, 2, 1, 2, 2],
+  },
+  {
+    [N]: [2, 1, 1, 2, 3, 3, 2, 2, 1, 2, 3, 2, 1, 1, 2, 2],
+    [S]: [2, 3, 3, 2, 1, 2, 2, 3, 2, 1, 1, 2, 3, 2, 2, 2],
+    [W]: [2, 2, 1, 1, 2, 3, 3, 2, 1, 2, 2, 3, 2, 1, 1, 2],
+    [E]: [2, 3, 2, 1, 1, 2, 2, 3, 3, 2, 1, 2, 2, 3, 2, 2],
+  },
+  {
+    [N]: [2, 3, 2, 2, 2, 1, 2, 3, 2, 1, 1, 2, 3, 3, 2, 2],
+    [S]: [2, 2, 1, 1, 2, 3, 2, 1, 2, 3, 2, 2, 1, 2, 3, 2],
+    [W]: [2, 1, 2, 3, 3, 2, 1, 1, 2, 3, 2, 1, 2, 2, 3, 2],
+    [E]: [2, 1, 2, 2, 3, 2, 1, 2, 3, 3, 2, 2, 1, 1, 2, 2],
+  },
+];
+let PROF = PROFS[0];
 
 /** does the grass fringe cover (x,y) for this edge mask? */
 function fringeAt(mask, x, y) {
@@ -72,8 +149,9 @@ function fringeAt(mask, x, y) {
  * Overlay a grass fringe on edges in `mask`. Boundary pixels get a lit lip on
  * the grass side and a contact shadow on the terrain side (light from above).
  */
-function grassFringe(p, mask, terrainShadow) {
+function grassFringe(p, mask, terrainShadow, prof = 0) {
   if (!mask) return;
+  PROF = PROFS[prof];
   const inG = (x, y) => x >= 0 && y >= 0 && x < 16 && y < 16 && fringeAt(mask, x, y);
   for (let y = 0; y < 16; y++)
     for (let x = 0; x < 16; x++) {
@@ -81,7 +159,7 @@ function grassFringe(p, mask, terrainShadow) {
         const below = y < 15 && !inG(x, y + 1);
         const above = y > 0 && !inG(x, y - 1);
         const side = (x > 0 && !inG(x - 1, y)) || (x < 15 && !inG(x + 1, y));
-        let c = GRASS_REF.get(x, y);
+        let c = V.g3;
         if (below) c = V.g1; // bottom lip of overhanging grass
         else if (above) c = V.g4; // sunlit top lip
         else if (side) c = V.g2;
@@ -176,12 +254,15 @@ const FLAGS_B = [
   "#ggggg#fffffff#h",
 ];
 // per-stone tone: slight warm/cool variation keeps the plaza from looking tiled
+// worn granite flags: varied warm/cool tones, one darker weathered stone
 const STONE_TONES = [
-  ["#bdb6a6", "#d6d0c0", "#9c9486"],
-  ["#b4b0a8", "#cecac0", "#948f88"],
-  ["#c2b8a4", "#dad0bc", "#a09684"],
+  ["#bdb6a6", "#d2ccbc", "#a29a8c"],
+  ["#b2aea6", "#c8c4ba", "#9a958e"],
+  ["#c4baa6", "#d6ccb8", "#a69c8a"],
+  ["#aaa49a", "#bfb9ae", "#928c84"],
+  ["#c0b8b0", "#d4cec6", "#a49e96"],
 ];
-const MORTAR = "#857c70";
+const MORTAR = "#968d80";
 
 function drawFlagstones(p, grid) {
   for (let y = 0; y < 16; y++) {
@@ -588,6 +669,123 @@ function drawDock(p) {
   for (const y of [3, 11]) for (const x of [2, 7, 12]) p.set(x, y, V.k3);
 }
 
+/* ================================================================ overlays */
+// Transparent tiles for the renderer's "edge" and "corner" layers. They soften
+// seams between terrains without adding ground variants for every pairing.
+
+const TONGUES = [
+  [0, 1, 2, 2, 1, 0, 0, 1, 3, 2, 1, 0, 1, 2, 1, 0],
+  [1, 2, 1, 0, 0, 1, 2, 3, 2, 1, 0, 0, 1, 1, 0, 0],
+];
+
+/** irregular tongues of a material reaching in from each masked edge */
+function tongues(p, mask, variant, base, rim, lit) {
+  const prof = TONGUES[variant % TONGUES.length];
+  const put = (x, y, d, k) => p.set(x, y, k === d - 1 ? rim : k === 0 ? lit : base);
+  for (let i = 0; i < 16; i++) {
+    const d = prof[i];
+    for (let k = 0; k < d; k++) {
+      if (mask & N) put(i, k, d, k);
+      if (mask & S) put(15 - i, 15 - k, d, k);
+      if (mask & W) put(k, 15 - i, d, k);
+      if (mask & E) put(15 - k, i, d, k);
+    }
+  }
+}
+
+/** grass blades creeping onto a path along grass-facing edges */
+function drawCreep(p, mask, variant) {
+  const at = variant ? [3, 11] : [6, 12];
+  const blade = (x, y) => stamp(p, x, y, ["4.4", ".2."], { 4: V.g4, 2: V.g2 });
+  for (const a of at) {
+    if (mask & N) blade(a, 3);
+    if (mask & S) blade(a, 11);
+    if (mask & W) blade(3, a);
+    if (mask & E) blade(11, a);
+  }
+}
+
+/** darker wet sand and a tide line where the beach meets the water */
+function drawWet(p, mask) {
+  const prof = [3, 3, 4, 3, 2, 3, 3, 4, 4, 3, 3, 2, 3, 3, 4, 3];
+  for (let i = 0; i < 16; i++)
+    for (let k = 0; k < prof[i]; k++) {
+      const c = k === prof[i] - 1 ? V.s2 : k === 0 ? "#bfa070" : V.s1;
+      if (mask & S) p.set(i, 15 - k, c);
+      if (mask & N) p.set(i, k, c);
+      if (mask & W) p.set(k, i, c);
+      if (mask & E) p.set(15 - k, i, c);
+    }
+  if (mask & S) {
+    p.set(5, 13, V.s4);
+    p.set(11, 14, V.cream);
+  }
+}
+
+/** rounded grass nubs in corners whose diagonal neighbour is grass (NE=1 SE=2 SW=4 NW=8) */
+const CORNERS = [
+  [1, 15, 0, -1, 1],
+  [2, 15, 15, -1, -1],
+  [4, 0, 15, 1, -1],
+  [8, 0, 0, 1, 1],
+];
+const NUB = ["333", "33.", "3.."];
+function drawInnerCorners(p, cmask) {
+  for (const [bit, cx, cy, sx, sy] of CORNERS) {
+    if (!(cmask & bit)) continue;
+    for (let j = 0; j < 3; j++)
+      for (let i = 0; i < 3; i++) {
+        if (NUB[j][i] === ".") continue;
+        const edge = NUB[j][i + 1] === "." || NUB[j + 1]?.[i] === "." || i === 2 || j === 2;
+        p.set(cx + i * sx, cy + j * sy, edge ? V.g2 : V.g3);
+      }
+    p.set(cx + 3 * sx, cy, V.shadow);
+    p.set(cx, cy + 3 * sy, V.shadow);
+  }
+}
+
+function drawFoamCorners(p, cmask, frame) {
+  for (const [bit, cx, cy, sx, sy] of CORNERS) {
+    if (!(cmask & bit)) continue;
+    p.set(cx, cy, V.w5);
+    p.set(cx + sx, cy, V.w5);
+    p.set(cx, cy + sy, V.w5);
+    p.set(cx + sx, cy + sy, frame === 1 ? V.w5 : V.w4);
+  }
+}
+
+/* ---------------- small hand-placed decorations ---------------- */
+
+function drawHeather(p) {
+  for (const [x, y] of [[3, 6], [6, 4], [9, 7], [12, 5], [5, 10], [10, 11]]) {
+    stamp(p, x, y, [".p.", "pPp", ".g."], { p: "#9a6ab8", P: "#c89ad8", g: V.g1 });
+  }
+}
+function drawFern(p) {
+  stamp(
+    p,
+    1,
+    3,
+    ["......4......", "...4..3..4...", "....3.3.3....", ".4..33333..4.", "..3333233333.", "...32222223..", "4333222222334", ".22..2.2..22."],
+    { 4: V.g4, 3: V.g3, 2: V.g2 },
+  );
+  p.rect(4, 11, 8, 1, V.shadow);
+}
+function drawBluebells(p) {
+  for (const [x, y] of [[4, 6], [8, 4], [11, 8], [6, 10]]) {
+    stamp(p, x, y, ["b.", "Bb", ".g", ".g"], { b: "#6a7ad8", B: "#9aaaf0", g: V.g2 });
+  }
+}
+function drawPebbles(p) {
+  stamp(p, 3, 5, [".54.", "5433", ".22."], { 5: V.k5, 4: V.k4, 3: V.k3, 2: V.k2 });
+  stamp(p, 10, 9, ["43", "21"], { 4: V.k4, 3: V.k3, 2: V.k2, 1: V.k1 });
+  stamp(p, 7, 12, ["4", "2"], { 4: V.k4, 2: V.k2 });
+}
+function drawTwigs(p) {
+  stamp(p, 2, 7, ["......4..", "44433.3..", "...3333..", "......33."], { 4: V.t4, 3: V.t2 });
+  for (const [x, y] of [[11, 4], [12, 11], [4, 12]]) p.set(x, y, V.red1);
+}
+
 /* ================================================================ registry */
 
 /**
@@ -597,6 +795,8 @@ function drawDock(p) {
 export function registerVillageTiles(tile, animTiles) {
   // grass family (no edges: everything else fringes onto grass)
   for (const key of ["grass", "grass2", "grass3", "meadow"]) tile(key, {}, (p) => drawGrass(p, GRASS_LAYOUTS[key]));
+  for (let v = 0; v < GRASS_VARIANTS; v++) tile(`grass~${v}`, {}, (p) => drawGrass(p, grassLayout(v + 3)));
+  for (const [name, draw] of Object.entries(GRASS_FEATURES)) tile(`grass_${name}`, {}, (p) => draw(p));
 
   // autotiled ground families: base key (no edges) + key#mask variants
   const families = [
@@ -610,10 +810,11 @@ export function registerVillageTiles(tile, animTiles) {
   for (const [key, base, shadow, meta] of families) {
     tile(key, meta, (p) => base(p));
     for (const m of MASKS)
-      tile(`${key}#${m}`, meta, (p) => {
-        base(p);
-        grassFringe(p, m, shadow);
-      });
+      for (let prof = 0; prof < PROFS.length; prof++)
+        tile(prof ? `${key}#${m}~${prof}` : `${key}#${m}`, meta, (p) => {
+          base(p);
+          grassFringe(p, m, shadow, prof);
+        });
   }
 
   // water (animated): legacy keys keep their collision meta; variants are visual
@@ -653,4 +854,23 @@ export function registerVillageTiles(tile, animTiles) {
   tile("well", { ...D, solid: true }, (p) => drawWell(p));
   animTiles("bonfire", { ...D, solid: true }, 3, (p, f) => drawBonfire(p, f));
   tile("dock_post", { ...D, solid: true }, (p) => drawDockPost(p));
+  tile("heather", D, (p) => drawHeather(p));
+  tile("fern", D, (p) => drawFern(p));
+  tile("bluebells", D, (p) => drawBluebells(p));
+  tile("pebbles", D, (p) => drawPebbles(p));
+  tile("twigs", D, (p) => drawTwigs(p));
+
+  // overlay layers (transparent)
+  const O = { overlay: true };
+  for (const m of MASKS) {
+    if (!m) continue;
+    for (const v of [0, 1]) {
+      tile(`creep#${m}~${v}`, O, (p) => drawCreep(p, m, v));
+      tile(`blend_sand#${m}~${v}`, O, (p) => tongues(p, m, v, V.s2, V.s1, V.s3));
+      tile(`blend_dirt#${m}~${v}`, O, (p) => tongues(p, m, v, V.d3, V.d2, V.d4));
+    }
+    tile(`wet#${m}`, O, (p) => drawWet(p, m));
+    tile(`inner#${m}`, O, (p) => drawInnerCorners(p, m));
+    animTiles(`foam_inner#${m}`, O, 3, (p, f) => drawFoamCorners(p, m, f));
+  }
 }

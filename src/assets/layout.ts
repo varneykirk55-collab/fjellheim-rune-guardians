@@ -6,278 +6,650 @@ export const ASSET_LAYOUT = {
     "grass2": 1,
     "grass3": 2,
     "meadow": 3,
-    "path": 4,
-    "path#0": 5,
-    "path#1": 6,
-    "path#2": 7,
-    "path#3": 8,
-    "path#4": 9,
-    "path#5": 10,
-    "path#6": 11,
-    "path#7": 12,
-    "path#8": 13,
-    "path#9": 14,
-    "path#10": 15,
-    "path#11": 16,
-    "path#12": 17,
-    "path#13": 18,
-    "path#14": 19,
-    "path#15": 20,
-    "path2": 21,
-    "path2#0": 22,
-    "path2#1": 23,
-    "path2#2": 24,
-    "path2#3": 25,
-    "path2#4": 26,
-    "path2#5": 27,
-    "path2#6": 28,
-    "path2#7": 29,
-    "path2#8": 30,
-    "path2#9": 31,
-    "path2#10": 32,
-    "path2#11": 33,
-    "path2#12": 34,
-    "path2#13": 35,
-    "path2#14": 36,
-    "path2#15": 37,
-    "sand": 38,
-    "sand#0": 39,
-    "sand#1": 40,
-    "sand#2": 41,
-    "sand#3": 42,
-    "sand#4": 43,
-    "sand#5": 44,
-    "sand#6": 45,
-    "sand#7": 46,
-    "sand#8": 47,
-    "sand#9": 48,
-    "sand#10": 49,
-    "sand#11": 50,
-    "sand#12": 51,
-    "sand#13": 52,
-    "sand#14": 53,
-    "sand#15": 54,
-    "sand2": 55,
-    "sand2#0": 56,
-    "sand2#1": 57,
-    "sand2#2": 58,
-    "sand2#3": 59,
-    "sand2#4": 60,
-    "sand2#5": 61,
-    "sand2#6": 62,
-    "sand2#7": 63,
-    "sand2#8": 64,
-    "sand2#9": 65,
-    "sand2#10": 66,
-    "sand2#11": 67,
-    "sand2#12": 68,
-    "sand2#13": 69,
-    "sand2#14": 70,
-    "sand2#15": 71,
-    "cobble": 72,
-    "cobble#0": 73,
-    "cobble#1": 74,
-    "cobble#2": 75,
-    "cobble#3": 76,
-    "cobble#4": 77,
-    "cobble#5": 78,
-    "cobble#6": 79,
-    "cobble#7": 80,
-    "cobble#8": 81,
-    "cobble#9": 82,
-    "cobble#10": 83,
-    "cobble#11": 84,
-    "cobble#12": 85,
-    "cobble#13": 86,
-    "cobble#14": 87,
-    "cobble#15": 88,
-    "cobble2": 89,
-    "cobble2#0": 90,
-    "cobble2#1": 91,
-    "cobble2#2": 92,
-    "cobble2#3": 93,
-    "cobble2#4": 94,
-    "cobble2#5": 95,
-    "cobble2#6": 96,
-    "cobble2#7": 97,
-    "cobble2#8": 98,
-    "cobble2#9": 99,
-    "cobble2#10": 100,
-    "cobble2#11": 101,
-    "cobble2#12": 102,
-    "cobble2#13": 103,
-    "cobble2#14": 104,
-    "cobble2#15": 105,
-    "water": 106,
-    "water_f1": 107,
-    "water_f2": 108,
-    "shore_water": 109,
-    "shore_water_f1": 110,
-    "shore_water_f2": 111,
-    "water#0": 112,
-    "water#0_f1": 113,
-    "water#0_f2": 114,
-    "water#1": 115,
-    "water#1_f1": 116,
-    "water#1_f2": 117,
-    "water#2": 118,
-    "water#2_f1": 119,
-    "water#2_f2": 120,
-    "water#3": 121,
-    "water#3_f1": 122,
-    "water#3_f2": 123,
-    "water#4": 124,
-    "water#4_f1": 125,
-    "water#4_f2": 126,
-    "water#5": 127,
-    "water#5_f1": 128,
-    "water#5_f2": 129,
-    "water#6": 130,
-    "water#6_f1": 131,
-    "water#6_f2": 132,
-    "water#7": 133,
-    "water#7_f1": 134,
-    "water#7_f2": 135,
-    "water#8": 136,
-    "water#8_f1": 137,
-    "water#8_f2": 138,
-    "water#9": 139,
-    "water#9_f1": 140,
-    "water#9_f2": 141,
-    "water#10": 142,
-    "water#10_f1": 143,
-    "water#10_f2": 144,
-    "water#11": 145,
-    "water#11_f1": 146,
-    "water#11_f2": 147,
-    "water#12": 148,
-    "water#12_f1": 149,
-    "water#12_f2": 150,
-    "water#13": 151,
-    "water#13_f1": 152,
-    "water#13_f2": 153,
-    "water#14": 154,
-    "water#14_f1": 155,
-    "water#14_f2": 156,
-    "water#15": 157,
-    "water#15_f1": 158,
-    "water#15_f2": 159,
-    "dock": 160,
-    "cliff_top": 161,
-    "cliff_face": 162,
-    "cliff_face_grass": 163,
-    "cliff_top#0": 164,
-    "cliff_upper#0": 165,
-    "cliff_base#0": 166,
-    "cliff_top#1": 167,
-    "cliff_upper#1": 168,
-    "cliff_base#1": 169,
-    "cliff_top#2": 170,
-    "cliff_upper#2": 171,
-    "cliff_base#2": 172,
-    "cliff_top#3": 173,
-    "cliff_upper#3": 174,
-    "cliff_base#3": 175,
-    "cliff_top#4": 176,
-    "cliff_upper#4": 177,
-    "cliff_base#4": 178,
-    "cliff_top#5": 179,
-    "cliff_upper#5": 180,
-    "cliff_base#5": 181,
-    "cliff_top#6": 182,
-    "cliff_upper#6": 183,
-    "cliff_base#6": 184,
-    "cliff_top#7": 185,
-    "cliff_upper#7": 186,
-    "cliff_base#7": 187,
-    "cliff_top#8": 188,
-    "cliff_upper#8": 189,
-    "cliff_base#8": 190,
-    "cliff_top#9": 191,
-    "cliff_upper#9": 192,
-    "cliff_base#9": 193,
-    "cliff_top#10": 194,
-    "cliff_upper#10": 195,
-    "cliff_base#10": 196,
-    "cliff_top#11": 197,
-    "cliff_upper#11": 198,
-    "cliff_base#11": 199,
-    "cliff_top#12": 200,
-    "cliff_upper#12": 201,
-    "cliff_base#12": 202,
-    "cliff_top#13": 203,
-    "cliff_upper#13": 204,
-    "cliff_base#13": 205,
-    "cliff_top#14": 206,
-    "cliff_upper#14": 207,
-    "cliff_base#14": 208,
-    "cliff_top#15": 209,
-    "cliff_upper#15": 210,
-    "cliff_base#15": 211,
-    "flowers_r": 212,
-    "flowers_w": 213,
-    "tuft": 214,
-    "reeds": 215,
-    "fence_h": 216,
-    "fence_v": 217,
-    "fence_post": 218,
-    "fence_post#0": 219,
-    "fence_post#1": 220,
-    "fence_post#2": 221,
-    "fence_post#3": 222,
-    "fence_post#4": 223,
-    "fence_post#5": 224,
-    "fence_post#6": 225,
-    "fence_post#7": 226,
-    "fence_post#8": 227,
-    "fence_post#9": 228,
-    "fence_post#10": 229,
-    "fence_post#11": 230,
-    "fence_post#12": 231,
-    "fence_post#13": 232,
-    "fence_post#14": 233,
-    "fence_post#15": 234,
-    "sign": 235,
-    "well": 236,
-    "bonfire": 237,
-    "bonfire_f1": 238,
-    "bonfire_f2": 239,
-    "dock_post": 240,
-    "tallgrass": 241,
-    "tallgrass_f1": 242,
-    "tallgrass_f2": 243,
-    "forestfloor": 244,
-    "boards": 245,
-    "boards2": 246,
-    "bridge": 247,
-    "rug_l": 248,
-    "rug_m": 249,
-    "rug_r": 250,
-    "boulder": 251,
-    "pine_young": 252,
-    "stump": 253,
-    "log": 254,
-    "bush": 255,
-    "mushrooms": 256,
-    "bridge_rail": 257,
-    "wall_int": 258,
-    "wall_int_banner": 259,
-    "counter": 260,
-    "table": 261,
-    "stool": 262,
-    "shelf": 263,
-    "bookshelf": 264,
-    "hearth": 265,
-    "hearth_f1": 266,
-    "hearth_f2": 267,
-    "bed_top": 268,
-    "bed_bot": 269,
-    "barrel": 270,
-    "crate": 271,
-    "pot": 272,
-    "door_int": 273,
-    "stairs": 274,
-    "heal_rune": 275
+    "grass~0": 4,
+    "grass~1": 5,
+    "grass~2": 6,
+    "grass~3": 7,
+    "grass~4": 8,
+    "grass~5": 9,
+    "grass~6": 10,
+    "grass~7": 11,
+    "grass_clover": 12,
+    "grass_clump": 13,
+    "path": 14,
+    "path#0": 15,
+    "path#0~1": 16,
+    "path#0~2": 17,
+    "path#1": 18,
+    "path#1~1": 19,
+    "path#1~2": 20,
+    "path#2": 21,
+    "path#2~1": 22,
+    "path#2~2": 23,
+    "path#3": 24,
+    "path#3~1": 25,
+    "path#3~2": 26,
+    "path#4": 27,
+    "path#4~1": 28,
+    "path#4~2": 29,
+    "path#5": 30,
+    "path#5~1": 31,
+    "path#5~2": 32,
+    "path#6": 33,
+    "path#6~1": 34,
+    "path#6~2": 35,
+    "path#7": 36,
+    "path#7~1": 37,
+    "path#7~2": 38,
+    "path#8": 39,
+    "path#8~1": 40,
+    "path#8~2": 41,
+    "path#9": 42,
+    "path#9~1": 43,
+    "path#9~2": 44,
+    "path#10": 45,
+    "path#10~1": 46,
+    "path#10~2": 47,
+    "path#11": 48,
+    "path#11~1": 49,
+    "path#11~2": 50,
+    "path#12": 51,
+    "path#12~1": 52,
+    "path#12~2": 53,
+    "path#13": 54,
+    "path#13~1": 55,
+    "path#13~2": 56,
+    "path#14": 57,
+    "path#14~1": 58,
+    "path#14~2": 59,
+    "path#15": 60,
+    "path#15~1": 61,
+    "path#15~2": 62,
+    "path2": 63,
+    "path2#0": 64,
+    "path2#0~1": 65,
+    "path2#0~2": 66,
+    "path2#1": 67,
+    "path2#1~1": 68,
+    "path2#1~2": 69,
+    "path2#2": 70,
+    "path2#2~1": 71,
+    "path2#2~2": 72,
+    "path2#3": 73,
+    "path2#3~1": 74,
+    "path2#3~2": 75,
+    "path2#4": 76,
+    "path2#4~1": 77,
+    "path2#4~2": 78,
+    "path2#5": 79,
+    "path2#5~1": 80,
+    "path2#5~2": 81,
+    "path2#6": 82,
+    "path2#6~1": 83,
+    "path2#6~2": 84,
+    "path2#7": 85,
+    "path2#7~1": 86,
+    "path2#7~2": 87,
+    "path2#8": 88,
+    "path2#8~1": 89,
+    "path2#8~2": 90,
+    "path2#9": 91,
+    "path2#9~1": 92,
+    "path2#9~2": 93,
+    "path2#10": 94,
+    "path2#10~1": 95,
+    "path2#10~2": 96,
+    "path2#11": 97,
+    "path2#11~1": 98,
+    "path2#11~2": 99,
+    "path2#12": 100,
+    "path2#12~1": 101,
+    "path2#12~2": 102,
+    "path2#13": 103,
+    "path2#13~1": 104,
+    "path2#13~2": 105,
+    "path2#14": 106,
+    "path2#14~1": 107,
+    "path2#14~2": 108,
+    "path2#15": 109,
+    "path2#15~1": 110,
+    "path2#15~2": 111,
+    "sand": 112,
+    "sand#0": 113,
+    "sand#0~1": 114,
+    "sand#0~2": 115,
+    "sand#1": 116,
+    "sand#1~1": 117,
+    "sand#1~2": 118,
+    "sand#2": 119,
+    "sand#2~1": 120,
+    "sand#2~2": 121,
+    "sand#3": 122,
+    "sand#3~1": 123,
+    "sand#3~2": 124,
+    "sand#4": 125,
+    "sand#4~1": 126,
+    "sand#4~2": 127,
+    "sand#5": 128,
+    "sand#5~1": 129,
+    "sand#5~2": 130,
+    "sand#6": 131,
+    "sand#6~1": 132,
+    "sand#6~2": 133,
+    "sand#7": 134,
+    "sand#7~1": 135,
+    "sand#7~2": 136,
+    "sand#8": 137,
+    "sand#8~1": 138,
+    "sand#8~2": 139,
+    "sand#9": 140,
+    "sand#9~1": 141,
+    "sand#9~2": 142,
+    "sand#10": 143,
+    "sand#10~1": 144,
+    "sand#10~2": 145,
+    "sand#11": 146,
+    "sand#11~1": 147,
+    "sand#11~2": 148,
+    "sand#12": 149,
+    "sand#12~1": 150,
+    "sand#12~2": 151,
+    "sand#13": 152,
+    "sand#13~1": 153,
+    "sand#13~2": 154,
+    "sand#14": 155,
+    "sand#14~1": 156,
+    "sand#14~2": 157,
+    "sand#15": 158,
+    "sand#15~1": 159,
+    "sand#15~2": 160,
+    "sand2": 161,
+    "sand2#0": 162,
+    "sand2#0~1": 163,
+    "sand2#0~2": 164,
+    "sand2#1": 165,
+    "sand2#1~1": 166,
+    "sand2#1~2": 167,
+    "sand2#2": 168,
+    "sand2#2~1": 169,
+    "sand2#2~2": 170,
+    "sand2#3": 171,
+    "sand2#3~1": 172,
+    "sand2#3~2": 173,
+    "sand2#4": 174,
+    "sand2#4~1": 175,
+    "sand2#4~2": 176,
+    "sand2#5": 177,
+    "sand2#5~1": 178,
+    "sand2#5~2": 179,
+    "sand2#6": 180,
+    "sand2#6~1": 181,
+    "sand2#6~2": 182,
+    "sand2#7": 183,
+    "sand2#7~1": 184,
+    "sand2#7~2": 185,
+    "sand2#8": 186,
+    "sand2#8~1": 187,
+    "sand2#8~2": 188,
+    "sand2#9": 189,
+    "sand2#9~1": 190,
+    "sand2#9~2": 191,
+    "sand2#10": 192,
+    "sand2#10~1": 193,
+    "sand2#10~2": 194,
+    "sand2#11": 195,
+    "sand2#11~1": 196,
+    "sand2#11~2": 197,
+    "sand2#12": 198,
+    "sand2#12~1": 199,
+    "sand2#12~2": 200,
+    "sand2#13": 201,
+    "sand2#13~1": 202,
+    "sand2#13~2": 203,
+    "sand2#14": 204,
+    "sand2#14~1": 205,
+    "sand2#14~2": 206,
+    "sand2#15": 207,
+    "sand2#15~1": 208,
+    "sand2#15~2": 209,
+    "cobble": 210,
+    "cobble#0": 211,
+    "cobble#0~1": 212,
+    "cobble#0~2": 213,
+    "cobble#1": 214,
+    "cobble#1~1": 215,
+    "cobble#1~2": 216,
+    "cobble#2": 217,
+    "cobble#2~1": 218,
+    "cobble#2~2": 219,
+    "cobble#3": 220,
+    "cobble#3~1": 221,
+    "cobble#3~2": 222,
+    "cobble#4": 223,
+    "cobble#4~1": 224,
+    "cobble#4~2": 225,
+    "cobble#5": 226,
+    "cobble#5~1": 227,
+    "cobble#5~2": 228,
+    "cobble#6": 229,
+    "cobble#6~1": 230,
+    "cobble#6~2": 231,
+    "cobble#7": 232,
+    "cobble#7~1": 233,
+    "cobble#7~2": 234,
+    "cobble#8": 235,
+    "cobble#8~1": 236,
+    "cobble#8~2": 237,
+    "cobble#9": 238,
+    "cobble#9~1": 239,
+    "cobble#9~2": 240,
+    "cobble#10": 241,
+    "cobble#10~1": 242,
+    "cobble#10~2": 243,
+    "cobble#11": 244,
+    "cobble#11~1": 245,
+    "cobble#11~2": 246,
+    "cobble#12": 247,
+    "cobble#12~1": 248,
+    "cobble#12~2": 249,
+    "cobble#13": 250,
+    "cobble#13~1": 251,
+    "cobble#13~2": 252,
+    "cobble#14": 253,
+    "cobble#14~1": 254,
+    "cobble#14~2": 255,
+    "cobble#15": 256,
+    "cobble#15~1": 257,
+    "cobble#15~2": 258,
+    "cobble2": 259,
+    "cobble2#0": 260,
+    "cobble2#0~1": 261,
+    "cobble2#0~2": 262,
+    "cobble2#1": 263,
+    "cobble2#1~1": 264,
+    "cobble2#1~2": 265,
+    "cobble2#2": 266,
+    "cobble2#2~1": 267,
+    "cobble2#2~2": 268,
+    "cobble2#3": 269,
+    "cobble2#3~1": 270,
+    "cobble2#3~2": 271,
+    "cobble2#4": 272,
+    "cobble2#4~1": 273,
+    "cobble2#4~2": 274,
+    "cobble2#5": 275,
+    "cobble2#5~1": 276,
+    "cobble2#5~2": 277,
+    "cobble2#6": 278,
+    "cobble2#6~1": 279,
+    "cobble2#6~2": 280,
+    "cobble2#7": 281,
+    "cobble2#7~1": 282,
+    "cobble2#7~2": 283,
+    "cobble2#8": 284,
+    "cobble2#8~1": 285,
+    "cobble2#8~2": 286,
+    "cobble2#9": 287,
+    "cobble2#9~1": 288,
+    "cobble2#9~2": 289,
+    "cobble2#10": 290,
+    "cobble2#10~1": 291,
+    "cobble2#10~2": 292,
+    "cobble2#11": 293,
+    "cobble2#11~1": 294,
+    "cobble2#11~2": 295,
+    "cobble2#12": 296,
+    "cobble2#12~1": 297,
+    "cobble2#12~2": 298,
+    "cobble2#13": 299,
+    "cobble2#13~1": 300,
+    "cobble2#13~2": 301,
+    "cobble2#14": 302,
+    "cobble2#14~1": 303,
+    "cobble2#14~2": 304,
+    "cobble2#15": 305,
+    "cobble2#15~1": 306,
+    "cobble2#15~2": 307,
+    "water": 308,
+    "water_f1": 309,
+    "water_f2": 310,
+    "shore_water": 311,
+    "shore_water_f1": 312,
+    "shore_water_f2": 313,
+    "water#0": 314,
+    "water#0_f1": 315,
+    "water#0_f2": 316,
+    "water#1": 317,
+    "water#1_f1": 318,
+    "water#1_f2": 319,
+    "water#2": 320,
+    "water#2_f1": 321,
+    "water#2_f2": 322,
+    "water#3": 323,
+    "water#3_f1": 324,
+    "water#3_f2": 325,
+    "water#4": 326,
+    "water#4_f1": 327,
+    "water#4_f2": 328,
+    "water#5": 329,
+    "water#5_f1": 330,
+    "water#5_f2": 331,
+    "water#6": 332,
+    "water#6_f1": 333,
+    "water#6_f2": 334,
+    "water#7": 335,
+    "water#7_f1": 336,
+    "water#7_f2": 337,
+    "water#8": 338,
+    "water#8_f1": 339,
+    "water#8_f2": 340,
+    "water#9": 341,
+    "water#9_f1": 342,
+    "water#9_f2": 343,
+    "water#10": 344,
+    "water#10_f1": 345,
+    "water#10_f2": 346,
+    "water#11": 347,
+    "water#11_f1": 348,
+    "water#11_f2": 349,
+    "water#12": 350,
+    "water#12_f1": 351,
+    "water#12_f2": 352,
+    "water#13": 353,
+    "water#13_f1": 354,
+    "water#13_f2": 355,
+    "water#14": 356,
+    "water#14_f1": 357,
+    "water#14_f2": 358,
+    "water#15": 359,
+    "water#15_f1": 360,
+    "water#15_f2": 361,
+    "dock": 362,
+    "cliff_top": 363,
+    "cliff_face": 364,
+    "cliff_face_grass": 365,
+    "cliff_top#0": 366,
+    "cliff_upper#0": 367,
+    "cliff_base#0": 368,
+    "cliff_top#1": 369,
+    "cliff_upper#1": 370,
+    "cliff_base#1": 371,
+    "cliff_top#2": 372,
+    "cliff_upper#2": 373,
+    "cliff_base#2": 374,
+    "cliff_top#3": 375,
+    "cliff_upper#3": 376,
+    "cliff_base#3": 377,
+    "cliff_top#4": 378,
+    "cliff_upper#4": 379,
+    "cliff_base#4": 380,
+    "cliff_top#5": 381,
+    "cliff_upper#5": 382,
+    "cliff_base#5": 383,
+    "cliff_top#6": 384,
+    "cliff_upper#6": 385,
+    "cliff_base#6": 386,
+    "cliff_top#7": 387,
+    "cliff_upper#7": 388,
+    "cliff_base#7": 389,
+    "cliff_top#8": 390,
+    "cliff_upper#8": 391,
+    "cliff_base#8": 392,
+    "cliff_top#9": 393,
+    "cliff_upper#9": 394,
+    "cliff_base#9": 395,
+    "cliff_top#10": 396,
+    "cliff_upper#10": 397,
+    "cliff_base#10": 398,
+    "cliff_top#11": 399,
+    "cliff_upper#11": 400,
+    "cliff_base#11": 401,
+    "cliff_top#12": 402,
+    "cliff_upper#12": 403,
+    "cliff_base#12": 404,
+    "cliff_top#13": 405,
+    "cliff_upper#13": 406,
+    "cliff_base#13": 407,
+    "cliff_top#14": 408,
+    "cliff_upper#14": 409,
+    "cliff_base#14": 410,
+    "cliff_top#15": 411,
+    "cliff_upper#15": 412,
+    "cliff_base#15": 413,
+    "flowers_r": 414,
+    "flowers_w": 415,
+    "tuft": 416,
+    "reeds": 417,
+    "fence_h": 418,
+    "fence_v": 419,
+    "fence_post": 420,
+    "fence_post#0": 421,
+    "fence_post#1": 422,
+    "fence_post#2": 423,
+    "fence_post#3": 424,
+    "fence_post#4": 425,
+    "fence_post#5": 426,
+    "fence_post#6": 427,
+    "fence_post#7": 428,
+    "fence_post#8": 429,
+    "fence_post#9": 430,
+    "fence_post#10": 431,
+    "fence_post#11": 432,
+    "fence_post#12": 433,
+    "fence_post#13": 434,
+    "fence_post#14": 435,
+    "fence_post#15": 436,
+    "sign": 437,
+    "well": 438,
+    "bonfire": 439,
+    "bonfire_f1": 440,
+    "bonfire_f2": 441,
+    "dock_post": 442,
+    "heather": 443,
+    "fern": 444,
+    "bluebells": 445,
+    "pebbles": 446,
+    "twigs": 447,
+    "creep#1~0": 448,
+    "blend_sand#1~0": 449,
+    "blend_dirt#1~0": 450,
+    "creep#1~1": 451,
+    "blend_sand#1~1": 452,
+    "blend_dirt#1~1": 453,
+    "wet#1": 454,
+    "inner#1": 455,
+    "foam_inner#1": 456,
+    "foam_inner#1_f1": 457,
+    "foam_inner#1_f2": 458,
+    "creep#2~0": 459,
+    "blend_sand#2~0": 460,
+    "blend_dirt#2~0": 461,
+    "creep#2~1": 462,
+    "blend_sand#2~1": 463,
+    "blend_dirt#2~1": 464,
+    "wet#2": 465,
+    "inner#2": 466,
+    "foam_inner#2": 467,
+    "foam_inner#2_f1": 468,
+    "foam_inner#2_f2": 469,
+    "creep#3~0": 470,
+    "blend_sand#3~0": 471,
+    "blend_dirt#3~0": 472,
+    "creep#3~1": 473,
+    "blend_sand#3~1": 474,
+    "blend_dirt#3~1": 475,
+    "wet#3": 476,
+    "inner#3": 477,
+    "foam_inner#3": 478,
+    "foam_inner#3_f1": 479,
+    "foam_inner#3_f2": 480,
+    "creep#4~0": 481,
+    "blend_sand#4~0": 482,
+    "blend_dirt#4~0": 483,
+    "creep#4~1": 484,
+    "blend_sand#4~1": 485,
+    "blend_dirt#4~1": 486,
+    "wet#4": 487,
+    "inner#4": 488,
+    "foam_inner#4": 489,
+    "foam_inner#4_f1": 490,
+    "foam_inner#4_f2": 491,
+    "creep#5~0": 492,
+    "blend_sand#5~0": 493,
+    "blend_dirt#5~0": 494,
+    "creep#5~1": 495,
+    "blend_sand#5~1": 496,
+    "blend_dirt#5~1": 497,
+    "wet#5": 498,
+    "inner#5": 499,
+    "foam_inner#5": 500,
+    "foam_inner#5_f1": 501,
+    "foam_inner#5_f2": 502,
+    "creep#6~0": 503,
+    "blend_sand#6~0": 504,
+    "blend_dirt#6~0": 505,
+    "creep#6~1": 506,
+    "blend_sand#6~1": 507,
+    "blend_dirt#6~1": 508,
+    "wet#6": 509,
+    "inner#6": 510,
+    "foam_inner#6": 511,
+    "foam_inner#6_f1": 512,
+    "foam_inner#6_f2": 513,
+    "creep#7~0": 514,
+    "blend_sand#7~0": 515,
+    "blend_dirt#7~0": 516,
+    "creep#7~1": 517,
+    "blend_sand#7~1": 518,
+    "blend_dirt#7~1": 519,
+    "wet#7": 520,
+    "inner#7": 521,
+    "foam_inner#7": 522,
+    "foam_inner#7_f1": 523,
+    "foam_inner#7_f2": 524,
+    "creep#8~0": 525,
+    "blend_sand#8~0": 526,
+    "blend_dirt#8~0": 527,
+    "creep#8~1": 528,
+    "blend_sand#8~1": 529,
+    "blend_dirt#8~1": 530,
+    "wet#8": 531,
+    "inner#8": 532,
+    "foam_inner#8": 533,
+    "foam_inner#8_f1": 534,
+    "foam_inner#8_f2": 535,
+    "creep#9~0": 536,
+    "blend_sand#9~0": 537,
+    "blend_dirt#9~0": 538,
+    "creep#9~1": 539,
+    "blend_sand#9~1": 540,
+    "blend_dirt#9~1": 541,
+    "wet#9": 542,
+    "inner#9": 543,
+    "foam_inner#9": 544,
+    "foam_inner#9_f1": 545,
+    "foam_inner#9_f2": 546,
+    "creep#10~0": 547,
+    "blend_sand#10~0": 548,
+    "blend_dirt#10~0": 549,
+    "creep#10~1": 550,
+    "blend_sand#10~1": 551,
+    "blend_dirt#10~1": 552,
+    "wet#10": 553,
+    "inner#10": 554,
+    "foam_inner#10": 555,
+    "foam_inner#10_f1": 556,
+    "foam_inner#10_f2": 557,
+    "creep#11~0": 558,
+    "blend_sand#11~0": 559,
+    "blend_dirt#11~0": 560,
+    "creep#11~1": 561,
+    "blend_sand#11~1": 562,
+    "blend_dirt#11~1": 563,
+    "wet#11": 564,
+    "inner#11": 565,
+    "foam_inner#11": 566,
+    "foam_inner#11_f1": 567,
+    "foam_inner#11_f2": 568,
+    "creep#12~0": 569,
+    "blend_sand#12~0": 570,
+    "blend_dirt#12~0": 571,
+    "creep#12~1": 572,
+    "blend_sand#12~1": 573,
+    "blend_dirt#12~1": 574,
+    "wet#12": 575,
+    "inner#12": 576,
+    "foam_inner#12": 577,
+    "foam_inner#12_f1": 578,
+    "foam_inner#12_f2": 579,
+    "creep#13~0": 580,
+    "blend_sand#13~0": 581,
+    "blend_dirt#13~0": 582,
+    "creep#13~1": 583,
+    "blend_sand#13~1": 584,
+    "blend_dirt#13~1": 585,
+    "wet#13": 586,
+    "inner#13": 587,
+    "foam_inner#13": 588,
+    "foam_inner#13_f1": 589,
+    "foam_inner#13_f2": 590,
+    "creep#14~0": 591,
+    "blend_sand#14~0": 592,
+    "blend_dirt#14~0": 593,
+    "creep#14~1": 594,
+    "blend_sand#14~1": 595,
+    "blend_dirt#14~1": 596,
+    "wet#14": 597,
+    "inner#14": 598,
+    "foam_inner#14": 599,
+    "foam_inner#14_f1": 600,
+    "foam_inner#14_f2": 601,
+    "creep#15~0": 602,
+    "blend_sand#15~0": 603,
+    "blend_dirt#15~0": 604,
+    "creep#15~1": 605,
+    "blend_sand#15~1": 606,
+    "blend_dirt#15~1": 607,
+    "wet#15": 608,
+    "inner#15": 609,
+    "foam_inner#15": 610,
+    "foam_inner#15_f1": 611,
+    "foam_inner#15_f2": 612,
+    "tallgrass": 613,
+    "tallgrass_f1": 614,
+    "tallgrass_f2": 615,
+    "forestfloor": 616,
+    "boards": 617,
+    "boards2": 618,
+    "bridge": 619,
+    "rug_l": 620,
+    "rug_m": 621,
+    "rug_r": 622,
+    "boulder": 623,
+    "pine_young": 624,
+    "stump": 625,
+    "log": 626,
+    "bush": 627,
+    "mushrooms": 628,
+    "bridge_rail": 629,
+    "wall_int": 630,
+    "wall_int_banner": 631,
+    "counter": 632,
+    "table": 633,
+    "stool": 634,
+    "shelf": 635,
+    "bookshelf": 636,
+    "hearth": 637,
+    "hearth_f1": 638,
+    "hearth_f2": 639,
+    "bed_top": 640,
+    "bed_bot": 641,
+    "barrel": 642,
+    "crate": 643,
+    "pot": 644,
+    "door_int": 645,
+    "stairs": 646,
+    "heal_rune": 647
   },
   "tileMeta": {
     "grass": {
@@ -304,6 +676,66 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "grass~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "grass~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "grass~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "grass~3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "grass~4": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "grass~5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "grass~6": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "grass~7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "grass_clover": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "grass_clump": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path": {
       "solid": false,
       "frames": 1,
@@ -316,7 +748,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path#0~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#0~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#1~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#1~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -328,7 +784,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path#2~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#2~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#3~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#3~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -340,7 +820,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path#4~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#4~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#5~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#5~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -352,7 +856,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path#6~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#6~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#7~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#7~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -364,7 +892,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path#8~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#8~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#9~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#9~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -376,7 +928,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path#10~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#10~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#11~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#11~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -388,7 +964,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path#12~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#12~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#13~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#13~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -400,7 +1000,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path#14~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#14~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#15~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path#15~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -418,7 +1042,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path2#0~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#0~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path2#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#1~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#1~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -430,7 +1078,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path2#2~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#2~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path2#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#3~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#3~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -442,7 +1114,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path2#4~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#4~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path2#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#5~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#5~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -454,7 +1150,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path2#6~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#6~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path2#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#7~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#7~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -466,7 +1186,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path2#8~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#8~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path2#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#9~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#9~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -478,7 +1222,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path2#10~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#10~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path2#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#11~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#11~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -490,7 +1258,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path2#12~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#12~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path2#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#13~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#13~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -502,7 +1294,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "path2#14~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#14~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "path2#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#15~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "path2#15~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -520,7 +1336,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand#0~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#0~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#1~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#1~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -532,7 +1372,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand#2~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#2~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#3~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#3~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -544,7 +1408,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand#4~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#4~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#5~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#5~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -556,7 +1444,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand#6~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#6~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#7~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#7~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -568,7 +1480,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand#8~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#8~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#9~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#9~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -580,7 +1516,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand#10~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#10~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#11~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#11~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -592,7 +1552,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand#12~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#12~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#13~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#13~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -604,7 +1588,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand#14~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#14~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#15~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand#15~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -622,7 +1630,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand2#0~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#0~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand2#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#1~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#1~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -634,7 +1666,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand2#2~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#2~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand2#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#3~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#3~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -646,7 +1702,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand2#4~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#4~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand2#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#5~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#5~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -658,7 +1738,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand2#6~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#6~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand2#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#7~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#7~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -670,7 +1774,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand2#8~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#8~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand2#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#9~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#9~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -682,7 +1810,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand2#10~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#10~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand2#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#11~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#11~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -694,7 +1846,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand2#12~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#12~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand2#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#13~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#13~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -706,7 +1882,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "sand2#14~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#14~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "sand2#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#15~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "sand2#15~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -724,7 +1924,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble#0~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#0~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#1~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#1~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -736,7 +1960,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble#2~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#2~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#3~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#3~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -748,7 +1996,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble#4~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#4~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#5~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#5~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -760,7 +2032,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble#6~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#6~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#7~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#7~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -772,7 +2068,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble#8~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#8~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#9~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#9~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -784,7 +2104,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble#10~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#10~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#11~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#11~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -796,7 +2140,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble#12~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#12~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#13~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#13~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -808,7 +2176,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble#14~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#14~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#15~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble#15~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -826,7 +2218,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble2#0~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#0~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble2#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#1~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#1~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -838,7 +2254,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble2#2~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#2~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble2#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#3~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#3~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -850,7 +2290,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble2#4~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#4~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble2#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#5~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#5~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -862,7 +2326,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble2#6~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#6~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble2#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#7~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#7~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -874,7 +2362,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble2#8~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#8~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble2#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#9~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#9~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -886,7 +2398,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble2#10~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#10~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble2#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#11~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#11~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -898,7 +2434,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble2#12~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#12~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble2#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#13~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#13~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -910,7 +2470,31 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "cobble2#14~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#14~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "cobble2#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#15~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "cobble2#15~2": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -1755,6 +3339,1031 @@ export const ASSET_LAYOUT = {
       "frame": 0,
       "deco": true
     },
+    "heather": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "fern": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bluebells": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "pebbles": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "twigs": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "creep#1~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#1~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#1~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#1~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#1~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#1~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#1_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#1_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#2~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#2~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#2~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#2~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#2~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#2~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#2_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#2_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#3~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#3~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#3~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#3~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#3~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#3~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#3": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#3_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#3_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#4~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#4~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#4~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#4~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#4~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#4~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#4": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#4": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#4": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#4_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#4_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#5~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#5~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#5~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#5~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#5~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#5~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#5": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#5_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#5_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#6~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#6~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#6~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#6~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#6~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#6~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#6": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#6": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#6": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#6_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#6_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#7~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#7~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#7~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#7~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#7~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#7~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#7": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#7_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#7_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#8~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#8~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#8~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#8~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#8~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#8~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#8": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#8": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#8": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#8_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#8_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#9~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#9~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#9~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#9~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#9~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#9~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#9": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#9_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#9_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#10~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#10~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#10~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#10~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#10~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#10~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#10": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#10": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#10": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#10_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#10_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#11~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#11~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#11~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#11~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#11~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#11~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#11": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#11_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#11_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#12~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#12~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#12~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#12~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#12~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#12~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#12": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#12": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#12": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#12_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#12_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#13~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#13~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#13~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#13~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#13~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#13~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#13": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#13_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#13_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#14~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#14~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#14~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#14~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#14~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#14~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#14": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#14": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#14": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#14_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#14_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "creep#15~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#15~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#15~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "creep#15~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_sand#15~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "blend_dirt#15~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wet#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "inner#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#15": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "foam_inner#15_f1": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "foam_inner#15_f2": {
+      "solid": false,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
     "tallgrass": {
       "solid": false,
       "frames": 3,
@@ -2136,6 +4745,94 @@ export const ASSET_LAYOUT = {
       "w": 32,
       "h": 56
     },
+    "spruce_young": {
+      "w": 16,
+      "h": 32
+    },
+    "birch": {
+      "w": 32,
+      "h": 48
+    },
+    "shrub_0": {
+      "w": 16,
+      "h": 16
+    },
+    "shrub_1": {
+      "w": 16,
+      "h": 16
+    },
+    "rock_small": {
+      "w": 16,
+      "h": 16
+    },
+    "rock_large": {
+      "w": 32,
+      "h": 24
+    },
+    "log_fallen": {
+      "w": 32,
+      "h": 16
+    },
+    "woodpile": {
+      "w": 32,
+      "h": 24
+    },
+    "chopping_block": {
+      "w": 16,
+      "h": 16
+    },
+    "barrel": {
+      "w": 16,
+      "h": 24
+    },
+    "barrels": {
+      "w": 32,
+      "h": 24
+    },
+    "crates": {
+      "w": 16,
+      "h": 24
+    },
+    "basket": {
+      "w": 16,
+      "h": 16
+    },
+    "garden": {
+      "w": 48,
+      "h": 32
+    },
+    "herb_planter": {
+      "w": 16,
+      "h": 16
+    },
+    "lantern_post": {
+      "w": 16,
+      "h": 32
+    },
+    "wall_torch": {
+      "w": 16,
+      "h": 24
+    },
+    "net_rack": {
+      "w": 32,
+      "h": 32
+    },
+    "fish_rack": {
+      "w": 32,
+      "h": 32
+    },
+    "rowboat": {
+      "w": 48,
+      "h": 24
+    },
+    "log_bench": {
+      "w": 32,
+      "h": 16
+    },
+    "runestone": {
+      "w": 16,
+      "h": 32
+    },
     "runestones": {
       "w": 96,
       "h": 72
@@ -2213,7 +4910,7 @@ export const ASSET_LAYOUT = {
   },
   "tileAtlas": {
     "cols": 16,
-    "rows": 18,
+    "rows": 41,
     "size": 16
   },
   "charSheet": {

@@ -118,7 +118,12 @@ metadata in `src/assets/layout.ts`.
 screen, close to the DS framing). `src/data/maps/visual.ts` picks ground edge
 variants, cliff roles and a separate decoration layer at render time; collision
 still comes only from the map grid. `node tools/gen/preview.mjs out.png 4 <prefix>`
-renders magnified tile previews for review. Music and SFX are synthesized at runtime with the
+renders magnified tile previews for review.
+Village scenery is composed by hand in map data: `MapDef.objects` (trees, firewood,
+barrels, gardens...; anchored at the bottom-left tile, only the bottom `foot` rows
+block movement) and `MapDef.decor` (non-blocking flowers, ferns, pebbles). Props are
+drawn by `tools/gen/village-props.mjs`; `tests/village-composition.test.ts` keeps
+them off paths, doors, warps, NPCs and story triggers. Music and SFX are synthesized at runtime with the
 WebAudio API (no audio files, no licensing concerns). Fonts: Press Start 2P (OFL).
 
 ## Save format

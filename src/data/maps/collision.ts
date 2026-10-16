@@ -6,7 +6,7 @@ import { MapDef } from "./types";
 
 export const TILE_SIZE = 16;
 
-type TileMeta = { solid: boolean; frames: number; encounter: boolean; deco?: boolean };
+type TileMeta = { solid: boolean; frames: number; encounter: boolean; deco?: boolean; overlay?: boolean };
 type ObjectMeta = { w: number; h: number; frames?: number };
 
 export function tileMeta(key: string): TileMeta | undefined {
@@ -51,5 +51,20 @@ export function buildSolidGrid(map: MapDef): Uint8Array {
     for (let y = Math.floor(p.y); y < Math.floor(p.y) + ph; y++)
       for (let x = Math.floor(p.x); x < Math.floor(p.x) + pw; x++) set(x, y);
   }
+  for (const o of map.objects ?? []) {
+    if (o.solid === false) continue;
+    const wTiles = Math.max(1, Math.round(objectMeta(o.asset).w / TILE_SIZE));
+    const foot = o.foot ?? 1;
+    for (let y = o.y - foot + 1; y <= o.y; y++) for (let x = o.x; x < o.x + wTiles; x++) set(x, y);
+  }
   return solid;
+}
+
+/** tiles an object blocks (empty for non-solid objects) */
+export function objectFootprint(o: { asset: string; x: number; y: number; foot?: number; solid?: boolean }): { x: number; y: number }[] {
+  if (o.solid === false) return [];
+  const wTiles = Math.max(1, Math.round(objectMeta(o.asset).w / TILE_SIZE));
+  const out: { x: number; y: number }[] = [];
+  for (let y = o.y - (o.foot ?? 1) + 1; y <= o.y; y++) for (let x = o.x; x < o.x + wTiles; x++) out.push({ x, y });
+  return out;
 }

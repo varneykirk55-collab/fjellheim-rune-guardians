@@ -42,6 +42,7 @@ interface NpcRuntime {
 }
 
 const TILE_INDEX = ASSET_LAYOUT.tiles as Record<string, number>;
+type Layer = "ground" | "edge" | "corner" | "deco";
 
 export function charFrameIndex(charKey: string, dir: Facing, step: number): number {
   const row = (ASSET_LAYOUT.chars as Record<string, number>)[charKey];
@@ -57,7 +58,7 @@ export function creatureFrameIndex(speciesSprite: string): number {
 
 export class WorldScene extends Phaser.Scene {
   private map!: MapDef;
-  private layers: Record<"ground" | "deco", Phaser.Tilemaps.TilemapLayer> = {} as never;
+  private layers: Record<Layer, Phaser.Tilemaps.TilemapLayer> = {} as never;
   private solid!: Uint8Array;
   private npcs: NpcRuntime[] = [];
   private player!: Phaser.GameObjects.Image;
@@ -69,7 +70,7 @@ export class WorldScene extends Phaser.Scene {
   private dialogue!: DialogueBox;
   private touch!: TouchControls;
   /** animated tiles, keyed "layer|tileKey" */
-  private animTiles = new Map<string, { layer: "ground" | "deco"; key: string; at: { x: number; y: number }[] }>();
+  private animTiles = new Map<string, { layer: Layer; key: string; at: { x: number; y: number }[] }>();
   private animFrame = 0;
   private storyCreatures: Phaser.GameObjects.Image[] = [];
   private uiTick: (() => void) | null = null;
@@ -180,21 +181,26 @@ export class WorldScene extends Phaser.Scene {
     const visuals = buildVisuals(this.map, has);
     const tm = this.make.tilemap({ width: w, height: h, tileWidth: ART, tileHeight: ART });
     const set = tm.addTilesetImage("tiles", "tiles", ART, ART, 0, 0)!;
+    // ground -> soft edge overlays -> inner corners -> decorations
     this.layers = {
       ground: tm.createBlankLayer("ground", set)!.setScale(SCALE),
+      edge: tm.createBlankLayer("edge", set)!.setScale(SCALE),
+      corner: tm.createBlankLayer("corner", set)!.setScale(SCALE),
       deco: tm.createBlankLayer("deco", set)!.setScale(SCALE),
     };
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
         const v = visuals[y][x];
         this.placeTile("ground", v.ground, x, y);
+        if (v.edge) this.placeTile("edge", v.edge, x, y);
+        if (v.corner) this.placeTile("corner", v.corner, x, y);
         if (v.deco) this.placeTile("deco", v.deco, x, y);
       }
     }
     this.solid = buildSolidGrid(this.map);
   }
 
-  private placeTile(layer: "ground" | "deco", key: string, x: number, y: number) {
+  private placeTile(layer: Layer, key: string, x: number, y: number) {
     const idx = TILE_INDEX[key];
     if (idx === undefined) return;
     this.layers[layer].putTileAt(idx, x, y);
@@ -237,6 +243,14 @@ export class WorldScene extends Phaser.Scene {
           },
         });
       }
+    }
+    // hand-placed scenery, anchored at its bottom-left tile
+    for (const o of this.map.objects ?? []) {
+      this.add
+        .image(o.x * TS, (o.y + 1) * TS, o.asset)
+        .setOrigin(0, 1)
+        .setScale(SCALE)
+        .setDepth(depthAt(o.y + 1));
     }
     for (const n of this.map.npcs) {
       if (n.showIf && !Session.flag(n.showIf)) continue;

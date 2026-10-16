@@ -37,7 +37,8 @@ describe("map visuals", () => {
   it("paths fringe onto grass with the right edge mask", () => {
     const v = buildVisuals(MAPS.village, has);
     // the vertical path below the player's house door (col 9): grass on both sides
-    expect(v[15][9].ground).toBe(`path#${E | W}`);
+    // pattern (path/path2) and edge profile (~1, ~2) vary by position; the mask must not
+    expect(v[15][9].ground).toMatch(new RegExp(`^path2?#${E | W}(~[12])?$`));
   });
 
   it("cliffs: two face rows at the south edge of the mass, plateau above", () => {
