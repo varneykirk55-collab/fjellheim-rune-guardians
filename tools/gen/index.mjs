@@ -11,6 +11,8 @@ import { buildCreatures } from "./creatures.mjs";
 import * as OBJ from "./objects.mjs";
 import * as VB from "./village-buildings.mjs";
 import * as VP from "./village-props.mjs";
+import { INTERIOR_PROPS } from "./interior-props.mjs";
+import { loadOverride, checkOverrideKeys } from "./overrides.mjs";
 import * as UI from "./ui.mjs";
 import * as BG from "./backdrops.mjs";
 
@@ -28,6 +30,7 @@ layout.tiles = ts.layout;
 layout.tileMeta = ts.meta;
 layout.tileAtlas = { cols: ts.cols, rows: ts.rows, size: 16 };
 console.log(`tiles.png  (${ts.count} tiles, ${ts.cols}x${ts.rows} grid)`);
+if (ts.overridden.length) console.log(`  hand-painted tile overrides: ${ts.overridden.join(", ")}`);
 
 /* ---- characters ---- */
 const ch = buildChars();
@@ -44,7 +47,13 @@ layout.creatureSheet = { size: 64, cols: cr.cols };
 console.log(`creatures.png  (${Object.keys(cr.layout).length} creatures)`);
 
 /* ---- world objects ---- */
+const objectOverrides = [];
 function saveObj(o) {
+  const painted = loadOverride("objects", o.key, o.pix.w, o.pix.h);
+  if (painted) {
+    o.pix = painted;
+    objectOverrides.push(o.key);
+  }
   o.pix.save(join(OUT, `${o.key}.png`));
   layout.objects[o.key] = { w: o.pix.w, h: o.pix.h };
   if (o.doorX !== undefined) layout.objects[o.key].door = { x: o.doorX, y: o.doorY };
@@ -59,20 +68,29 @@ saveObj(VB.healHall());
 saveObj(VB.shop());
 saveObj(VB.longship());
 for (const make of VP.VILLAGE_PROPS) saveObj(make());
+for (const make of INTERIOR_PROPS) saveObj(make());
 saveObj(OBJ.runeStones());
 saveObj(OBJ.pedestal());
 
 /* ---- animated objects (multi-frame single files) ---- */
 function saveAnim(framesData) {
   const { frames, key, w, h } = framesData;
-  const sheet = new Pix(w, h * frames.length);
+  let sheet = new Pix(w, h * frames.length);
   frames.forEach((f, i) => sheet.blit(f, 0, i * h));
+  const painted = loadOverride("objects", key, w, h * frames.length);
+  if (painted) {
+    sheet = painted;
+    objectOverrides.push(key);
+  }
   sheet.save(join(OUT, `${key}.png`));
   layout.objects[key] = { w, h, frames: frames.length };
   console.log(`${key}.png (${frames.length} frames)`);
 }
 saveAnim(OBJ.waterfallFrames());
 saveAnim(OBJ.runeRingFrames());
+
+checkOverrideKeys("objects", Object.keys(layout.objects));
+if (objectOverrides.length) console.log(`  hand-painted object overrides: ${objectOverrides.join(", ")}`);
 
 /* ---- title rune circle ---- */
 const trc = OBJ.titleRuneCircle();

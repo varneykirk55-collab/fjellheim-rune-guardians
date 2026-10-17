@@ -92,6 +92,7 @@ export function cellHash(x: number, y: number): number {
  * contains a variant, so maps without the new art degrade gracefully.
  */
 export function buildVisuals(map: MapDef, has: (key: string) => boolean): CellVisual[][] {
+  if (map.indoors) return buildInteriorVisuals(map, has);
   const h = map.grid.length;
   const w = map.grid[0].length;
   const inBounds = (x: number, y: number) => x >= 0 && y >= 0 && x < w && y < h;
@@ -247,4 +248,124 @@ function cliffVariant(
   if (!cliff(x, y + 2)) return pick(`cliff_upper#${side}`, fallback);
   const top = side | (cliff(x, y - 1) ? 0 : N);
   return pick(`cliff_top#${top}`, fallback);
+}
+
+/* ------------------------------------------------------------------ rooms */
+
+const FLOOR_KEYS = new Set(["boards", "boards2"]);
+const WALL_KEYS = new Set(["wall_int", "wall_int_banner"]);
+/** furniture tall enough to rise in front of the wall face above it */
+const TALL = new Set(["shelf", "bookshelf"]);
+const FLOOR_VARIANTS = 4;
+const WALL_VARIANTS = 4;
+
+/**
+ * Rooms, in the Platinum layout: the north wall band is a two-tile wall face
+ * (upper/lower), every other wall cell is a dark beam top seen from above with
+ * a rim toward the room, and walls cast a soft shadow onto the floor.
+ * Furniture is drawn on the decoration layer over the room's floor. The room id
+ * picks the material set (`floor@home~2`, `wall_lo@seer~1`, `banner@heal`).
+ */
+function buildInteriorVisuals(map: MapDef, has: (key: string) => boolean): CellVisual[][] {
+  const h = map.grid.length;
+  const w = map.grid[0].length;
+  const room = map.id;
+  const inBounds = (x: number, y: number) => x >= 0 && y >= 0 && x < w && y < h;
+  const raw = (x: number, y: number) => (inBounds(x, y) ? tileKeyAt(map, x, y) : null);
+  const isWall = (x: number, y: number): boolean => {
+    if (!inBounds(x, y)) return true;
+    const r = raw(x, y) ?? "";
+    return WALL_KEYS.has(r) || (r === "hearth" && WALL_KEYS.has(raw(x, y - 1) ?? ""));
+  };
+  const isFaceLo = (x: number, y: number) => isWall(x, y) && inBounds(x, y + 1) && !isWall(x, y + 1) && inBounds(x, y - 1) && isWall(x, y - 1) && x > 0 && x < w - 1;
+  const isFaceHi = (x: number, y: number) => isWall(x, y) && isFaceLo(x, y + 1);
+  const isTop = (x: number, y: number) => isWall(x, y) && !isFaceLo(x, y) && !isFaceHi(x, y);
+  /** room-specific art first, then the shared key */
+  const themed = (base: string, v?: number) => {
+    const opts = v === undefined ? [`${base}@${room}`, base] : [`${base}@${room}~${v}`, `${base}~${v}`, `${base}@${room}`, base];
+    return opts.find(has) ?? base;
+  };
+  const decorAt = new Map<string, string>();
+  for (const d of map.decor ?? []) decorAt.set(`${d.x},${d.y}`, d.key);
+
+  const out: CellVisual[][] = [];
+  for (let y = 0; y < h; y++) {
+    out.push([]);
+    for (let x = 0; x < w; x++) {
+      const r = raw(x, y);
+      const cell: CellVisual = { ground: r ?? "", edge: null, corner: null, deco: null };
+      out[y].push(cell);
+      if (!r) continue;
+      const hash = cellHash(x, y);
+      // wall faces vary per column, so the upper and lower halves always match
+      const wv = cellHash(x, 0) % WALL_VARIANTS;
+      if (isWall(x, y)) {
+        if (isFaceLo(x, y)) {
+          cell.ground = r === "hearth" && has("hearth_wall") ? "hearth_wall" : themed("wall_lo", wv);
+          const below = raw(x, y + 1) ?? "";
+          if (r === "wall_int_banner") cell.deco = themed("banner");
+          else if (TALL.has(below)) cell.deco = furnitureKey(below, x, y + 1, true);
+        } else if (isFaceHi(x, y)) {
+          cell.ground = themed("wall_hi", wv);
+          const below = raw(x, y + 1) ?? "";
+          if (below === "wall_int_banner") cell.deco = themed("banner_top");
+          else if (below === "hearth" && has("hearth_top")) cell.deco = "hearth_top";
+        } else {
+          let m = 0;
+          for (const [dx, dy, bit] of DIRS) if (inBounds(x + dx, y + dy) && !isTop(x + dx, y + dy)) m |= bit;
+          cell.ground = has(`wall_top#${m}`) ? `wall_top#${m}` : r;
+          let c = 0;
+          for (const [dx, dy, bit] of DIAGS)
+            if (inBounds(x + dx, y + dy) && !isTop(x + dx, y + dy) && isTop(x + dx, y) && isTop(x, y + dy)) c |= bit;
+          if (c && has(`wall_in#${c}`)) cell.corner = `wall_in#${c}`;
+        }
+        continue;
+      }
+      if (r === "door_int") {
+        cell.ground = themed("door_int");
+        continue;
+      }
+      const floor = themed("floor", (hash >>> 4) % FLOOR_VARIANTS);
+      cell.ground = has(floor) ? floor : FLOOR_KEYS.has(r) ? r : nearestFloor(map, x, y);
+      let shade = 0;
+      if (isWall(x, y - 1)) shade |= N;
+      if (isWall(x + 1, y)) shade |= E;
+      if (isWall(x - 1, y)) shade |= W;
+      if (shade && has(`fshade#${shade}`)) cell.edge = `fshade#${shade}`;
+      if (!FLOOR_KEYS.has(r)) cell.deco = furnitureKey(r, x, y, false);
+      else {
+        const placed = decorAt.get(`${x},${y}`);
+        if (placed && has(placed)) cell.deco = placed;
+      }
+    }
+  }
+  return out;
+
+  function furnitureKey(r: string, x: number, y: number, top: boolean): string | null {
+    const base = top ? `${r}_top` : r;
+    if (r === "counter") {
+      let m = 0;
+      if (raw(x + 1, y) === "counter") m |= E;
+      if (raw(x - 1, y) === "counter") m |= W;
+      const k = [`counter@${room}#${m}`, `counter#${m}`].find(has);
+      return k ?? (has(r) ? r : null);
+    }
+    if (r === "bookshelf") {
+      // alternate the scroll racks so a run of them does not repeat
+      const k = `${base}~${x % 2}`;
+      if (has(k)) return k;
+    }
+    const k = themed(base);
+    return has(k) ? k : null;
+  }
+}
+
+function nearestFloor(map: MapDef, x: number, y: number): string {
+  for (let d = 1; d < 4; d++)
+    for (let dy = -d; dy <= d; dy++)
+      for (let dx = -d; dx <= d; dx++) {
+        const k = tileKeyAt(map, x + dx, y + dy);
+        if (k && FLOOR_KEYS.has(k)) return k;
+      }
+  return "boards";
 }

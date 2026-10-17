@@ -619,37 +619,200 @@ export const ASSET_LAYOUT = {
     "tallgrass_f1": 614,
     "tallgrass_f2": 615,
     "forestfloor": 616,
-    "boards": 617,
-    "boards2": 618,
-    "bridge": 619,
-    "rug_l": 620,
-    "rug_m": 621,
-    "rug_r": 622,
-    "boulder": 623,
-    "pine_young": 624,
-    "stump": 625,
-    "log": 626,
-    "bush": 627,
-    "mushrooms": 628,
-    "bridge_rail": 629,
-    "wall_int": 630,
-    "wall_int_banner": 631,
-    "counter": 632,
-    "table": 633,
-    "stool": 634,
-    "shelf": 635,
-    "bookshelf": 636,
-    "hearth": 637,
-    "hearth_f1": 638,
-    "hearth_f2": 639,
-    "bed_top": 640,
-    "bed_bot": 641,
-    "barrel": 642,
-    "crate": 643,
-    "pot": 644,
-    "door_int": 645,
-    "stairs": 646,
-    "heal_rune": 647
+    "bridge": 617,
+    "boulder": 618,
+    "pine_young": 619,
+    "stump": 620,
+    "log": 621,
+    "bush": 622,
+    "mushrooms": 623,
+    "bridge_rail": 624,
+    "boards": 625,
+    "boards2": 626,
+    "wall_int": 627,
+    "wall_int_banner": 628,
+    "door_int": 629,
+    "stairs": 630,
+    "floor@home~0": 631,
+    "floor@home~1": 632,
+    "floor@home~2": 633,
+    "floor@home~3": 634,
+    "wall_hi@home~0": 635,
+    "wall_lo@home~0": 636,
+    "wall_hi@home~1": 637,
+    "wall_lo@home~1": 638,
+    "wall_hi@home~2": 639,
+    "wall_lo@home~2": 640,
+    "wall_hi@home~3": 641,
+    "wall_lo@home~3": 642,
+    "banner_top@home": 643,
+    "banner@home": 644,
+    "floor@seer~0": 645,
+    "floor@seer~1": 646,
+    "floor@seer~2": 647,
+    "floor@seer~3": 648,
+    "wall_hi@seer~0": 649,
+    "wall_lo@seer~0": 650,
+    "wall_hi@seer~1": 651,
+    "wall_lo@seer~1": 652,
+    "wall_hi@seer~2": 653,
+    "wall_lo@seer~2": 654,
+    "wall_hi@seer~3": 655,
+    "wall_lo@seer~3": 656,
+    "banner_top@seer": 657,
+    "banner@seer": 658,
+    "floor@heal~0": 659,
+    "floor@heal~1": 660,
+    "floor@heal~2": 661,
+    "floor@heal~3": 662,
+    "wall_hi@heal~0": 663,
+    "wall_lo@heal~0": 664,
+    "wall_hi@heal~1": 665,
+    "wall_lo@heal~1": 666,
+    "wall_hi@heal~2": 667,
+    "wall_lo@heal~2": 668,
+    "wall_hi@heal~3": 669,
+    "wall_lo@heal~3": 670,
+    "banner_top@heal": 671,
+    "banner@heal": 672,
+    "floor@shop~0": 673,
+    "floor@shop~1": 674,
+    "floor@shop~2": 675,
+    "floor@shop~3": 676,
+    "wall_hi@shop~0": 677,
+    "wall_lo@shop~0": 678,
+    "wall_hi@shop~1": 679,
+    "wall_lo@shop~1": 680,
+    "wall_hi@shop~2": 681,
+    "wall_lo@shop~2": 682,
+    "wall_hi@shop~3": 683,
+    "wall_lo@shop~3": 684,
+    "banner_top@shop": 685,
+    "banner@shop": 686,
+    "floor@houseA~0": 687,
+    "floor@houseA~1": 688,
+    "floor@houseA~2": 689,
+    "floor@houseA~3": 690,
+    "wall_hi@houseA~0": 691,
+    "wall_lo@houseA~0": 692,
+    "wall_hi@houseA~1": 693,
+    "wall_lo@houseA~1": 694,
+    "wall_hi@houseA~2": 695,
+    "wall_lo@houseA~2": 696,
+    "wall_hi@houseA~3": 697,
+    "wall_lo@houseA~3": 698,
+    "banner_top@houseA": 699,
+    "banner@houseA": 700,
+    "floor@houseB~0": 701,
+    "floor@houseB~1": 702,
+    "floor@houseB~2": 703,
+    "floor@houseB~3": 704,
+    "wall_hi@houseB~0": 705,
+    "wall_lo@houseB~0": 706,
+    "wall_hi@houseB~1": 707,
+    "wall_lo@houseB~1": 708,
+    "wall_hi@houseB~2": 709,
+    "wall_lo@houseB~2": 710,
+    "wall_hi@houseB~3": 711,
+    "wall_lo@houseB~3": 712,
+    "banner_top@houseB": 713,
+    "banner@houseB": 714,
+    "wall_top#0": 715,
+    "wall_top#1": 716,
+    "wall_top#2": 717,
+    "wall_top#3": 718,
+    "wall_top#4": 719,
+    "wall_top#5": 720,
+    "wall_top#6": 721,
+    "wall_top#7": 722,
+    "wall_top#8": 723,
+    "wall_top#9": 724,
+    "wall_top#10": 725,
+    "wall_top#11": 726,
+    "wall_top#12": 727,
+    "wall_top#13": 728,
+    "wall_top#14": 729,
+    "wall_top#15": 730,
+    "wall_in#1": 731,
+    "wall_in#2": 732,
+    "wall_in#3": 733,
+    "wall_in#4": 734,
+    "wall_in#5": 735,
+    "wall_in#6": 736,
+    "wall_in#7": 737,
+    "wall_in#8": 738,
+    "wall_in#9": 739,
+    "wall_in#10": 740,
+    "wall_in#11": 741,
+    "wall_in#12": 742,
+    "wall_in#13": 743,
+    "wall_in#14": 744,
+    "wall_in#15": 745,
+    "fshade#1": 746,
+    "fshade#2": 747,
+    "fshade#3": 748,
+    "fshade#4": 749,
+    "fshade#5": 750,
+    "fshade#6": 751,
+    "fshade#7": 752,
+    "fshade#8": 753,
+    "fshade#9": 754,
+    "fshade#10": 755,
+    "fshade#11": 756,
+    "fshade#12": 757,
+    "fshade#13": 758,
+    "fshade#14": 759,
+    "fshade#15": 760,
+    "table": 761,
+    "table@houseA": 762,
+    "table@houseB": 763,
+    "stool": 764,
+    "barrel": 765,
+    "crate": 766,
+    "pot": 767,
+    "bed_top": 768,
+    "bed_bot": 769,
+    "bed_top@houseA": 770,
+    "bed_bot@houseA": 771,
+    "bed_top@houseB": 772,
+    "bed_bot@houseB": 773,
+    "shelf_top": 774,
+    "shelf": 775,
+    "shelf_top@heal": 776,
+    "shelf@heal": 777,
+    "shelf_top@shop": 778,
+    "shelf@shop": 779,
+    "shelf_top@houseA": 780,
+    "shelf@houseA": 781,
+    "shelf_top@houseB": 782,
+    "shelf@houseB": 783,
+    "bookshelf_top": 784,
+    "bookshelf": 785,
+    "bookshelf_top~1": 786,
+    "bookshelf~1": 787,
+    "counter": 788,
+    "counter#2": 789,
+    "counter#8": 790,
+    "counter#10": 791,
+    "counter@heal#0": 792,
+    "counter@heal#2": 793,
+    "counter@heal#8": 794,
+    "counter@heal#10": 795,
+    "counter@shop#0": 796,
+    "counter@shop#2": 797,
+    "counter@shop#8": 798,
+    "counter@shop#10": 799,
+    "rug_l": 800,
+    "rug_m": 801,
+    "rug_r": 802,
+    "heal_rune": 803,
+    "hearth": 804,
+    "hearth_f1": 805,
+    "hearth_f2": 806,
+    "hearth_wall": 807,
+    "hearth_wall_f1": 808,
+    "hearth_wall_f2": 809,
+    "hearth_top": 810
   },
   "tileMeta": {
     "grass": {
@@ -4388,37 +4551,7 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
-    "boards": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "boards2": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
     "bridge": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "rug_l": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "rug_m": {
-      "solid": false,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "rug_r": {
       "solid": false,
       "frames": 1,
       "encounter": false,
@@ -4466,6 +4599,18 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
+    "boards": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "boards2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
     "wall_int": {
       "solid": true,
       "frames": 1,
@@ -4473,84 +4618,6 @@ export const ASSET_LAYOUT = {
       "frame": 0
     },
     "wall_int_banner": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "counter": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "table": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "stool": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "shelf": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "bookshelf": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "hearth": {
-      "solid": true,
-      "frames": 3,
-      "encounter": false,
-      "frame": 0
-    },
-    "hearth_f1": {
-      "solid": true,
-      "frames": 3,
-      "encounter": false,
-      "frame": 1
-    },
-    "hearth_f2": {
-      "solid": true,
-      "frames": 3,
-      "encounter": false,
-      "frame": 2
-    },
-    "bed_top": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "bed_bot": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "barrel": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "crate": {
-      "solid": true,
-      "frames": 1,
-      "encounter": false,
-      "frame": 0
-    },
-    "pot": {
       "solid": true,
       "frames": 1,
       "encounter": false,
@@ -4568,11 +4635,1144 @@ export const ASSET_LAYOUT = {
       "encounter": false,
       "frame": 0
     },
-    "heal_rune": {
+    "floor@home~0": {
       "solid": false,
       "frames": 1,
       "encounter": false,
       "frame": 0
+    },
+    "floor@home~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@home~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@home~3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@home~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@home~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@home~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@home~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@home~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@home~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@home~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@home~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "banner_top@home": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "banner@home": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "floor@seer~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@seer~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@seer~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@seer~3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@seer~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@seer~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@seer~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@seer~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@seer~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@seer~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@seer~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@seer~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "banner_top@seer": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "banner@seer": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "floor@heal~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@heal~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@heal~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@heal~3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@heal~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@heal~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@heal~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@heal~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@heal~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@heal~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@heal~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@heal~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "banner_top@heal": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "banner@heal": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "floor@shop~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@shop~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@shop~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@shop~3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@shop~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@shop~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@shop~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@shop~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@shop~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@shop~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@shop~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@shop~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "banner_top@shop": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "banner@shop": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "floor@houseA~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@houseA~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@houseA~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@houseA~3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@houseA~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@houseA~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@houseA~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@houseA~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@houseA~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@houseA~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@houseA~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@houseA~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "banner_top@houseA": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "banner@houseA": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "floor@houseB~0": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@houseB~1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@houseB~2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "floor@houseB~3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@houseB~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@houseB~0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@houseB~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@houseB~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@houseB~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@houseB~2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_hi@houseB~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_lo@houseB~3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "banner_top@houseB": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "banner@houseB": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "wall_top#0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#4": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#5": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#6": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#7": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#8": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#9": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#10": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#11": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#12": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#13": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#14": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_top#15": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#3": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#4": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#5": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#6": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#7": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#8": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#9": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#10": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#11": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#12": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#13": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#14": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "wall_in#15": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#1": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#2": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#3": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#4": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#5": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#6": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#7": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#8": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#9": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#10": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#11": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#12": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#13": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#14": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "fshade#15": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0
+    },
+    "table": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "table@houseA": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "table@houseB": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "stool": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "barrel": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "crate": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "pot": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bed_top": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bed_bot": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bed_top@houseA": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bed_bot@houseA": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bed_top@houseB": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bed_bot@houseB": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "shelf_top": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "shelf": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "shelf_top@heal": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "shelf@heal": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "shelf_top@shop": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "shelf@shop": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "shelf_top@houseA": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "shelf@houseA": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "shelf_top@houseB": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "shelf@houseB": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bookshelf_top": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bookshelf": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bookshelf_top~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "bookshelf~1": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter#2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter#8": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter#10": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter@heal#0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter@heal#2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter@heal#8": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter@heal#10": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter@shop#0": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter@shop#2": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter@shop#8": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "counter@shop#10": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "rug_l": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "rug_m": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "rug_r": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "heal_rune": {
+      "solid": false,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "hearth": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
+    },
+    "hearth_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1,
+      "deco": true
+    },
+    "hearth_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2,
+      "deco": true
+    },
+    "hearth_wall": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 0
+    },
+    "hearth_wall_f1": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 1
+    },
+    "hearth_wall_f2": {
+      "solid": true,
+      "frames": 3,
+      "encounter": false,
+      "frame": 2
+    },
+    "hearth_top": {
+      "solid": true,
+      "frames": 1,
+      "encounter": false,
+      "frame": 0,
+      "deco": true
     }
   },
   "chars": {
@@ -4833,6 +6033,106 @@ export const ASSET_LAYOUT = {
       "w": 16,
       "h": 32
     },
+    "shield": {
+      "w": 16,
+      "h": 32
+    },
+    "shields": {
+      "w": 32,
+      "h": 32
+    },
+    "antlers": {
+      "w": 16,
+      "h": 32
+    },
+    "window": {
+      "w": 16,
+      "h": 32
+    },
+    "herbs": {
+      "w": 16,
+      "h": 32
+    },
+    "yggdrasil": {
+      "w": 48,
+      "h": 32
+    },
+    "fish_net": {
+      "w": 32,
+      "h": 32
+    },
+    "fish_hanging": {
+      "w": 16,
+      "h": 32
+    },
+    "tapestry": {
+      "w": 16,
+      "h": 32
+    },
+    "chest": {
+      "w": 16,
+      "h": 16
+    },
+    "brazier": {
+      "w": 16,
+      "h": 32
+    },
+    "raven_perch": {
+      "w": 16,
+      "h": 32
+    },
+    "seer_stone": {
+      "w": 16,
+      "h": 24
+    },
+    "healer_cot": {
+      "w": 16,
+      "h": 32
+    },
+    "herb_table": {
+      "w": 32,
+      "h": 24
+    },
+    "cauldron": {
+      "w": 16,
+      "h": 24
+    },
+    "goods_rack": {
+      "w": 32,
+      "h": 32
+    },
+    "sacks": {
+      "w": 16,
+      "h": 16
+    },
+    "apple_barrel": {
+      "w": 16,
+      "h": 16
+    },
+    "fish_basket": {
+      "w": 16,
+      "h": 16
+    },
+    "sea_chest": {
+      "w": 16,
+      "h": 16
+    },
+    "loom": {
+      "w": 32,
+      "h": 32
+    },
+    "yarn_basket": {
+      "w": 16,
+      "h": 16
+    },
+    "light_warm": {
+      "w": 48,
+      "h": 48
+    },
+    "light_teal": {
+      "w": 64,
+      "h": 48
+    },
     "runestones": {
       "w": 96,
       "h": 72
@@ -4910,7 +6210,7 @@ export const ASSET_LAYOUT = {
   },
   "tileAtlas": {
     "cols": 16,
-    "rows": 41,
+    "rows": 51,
     "size": 16
   },
   "charSheet": {

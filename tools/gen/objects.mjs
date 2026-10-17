@@ -124,33 +124,72 @@ export function runeStones() {
 }
 
 export function pedestal() {
-  // 32x26 creature pedestal for the seer's longhouse
+  // 32x26 carved slate plinth for the seer's longhouse (dark stone, teal runes)
   const p = new Pix(32, 26);
-  stoneBase(p, 4, 12, 24, 12, 107);
-  p.rect(2, 10, 28, 3, STONE_L);
-  p.rect(2, 10, 28, 1, "#b8b8c2");
-  p.ellipseOutline(16, 10, 9, 2, RUNE);
-  p.set(16, 10, RUNE_L);
-  p.set(10, 9, RUNE);
-  p.set(22, 11, RUNE);
+  const ink = "#26182a";
+  // body
+  p.rect(5, 10, 22, 13, "#423e52");
+  p.rect(5, 10, 3, 13, "#5a566e");
+  p.rect(24, 10, 3, 13, "#34304a");
+  for (const x of [11, 16, 21]) p.rect(x, 12, 1, 9, "#34304a");
+  // carved runes on the front, faintly lit
+  for (const [x, y] of [[9, 14], [14, 16], [19, 14]]) {
+    p.set(x, y, RUNE);
+    p.set(x, y + 1, "#3f8f8a");
+    p.set(x + 1, y + 2, "#3f8f8a");
+  }
+  // plinth foot and capstone
+  p.rect(3, 21, 26, 3, "#4c4860");
+  p.rect(3, 21, 26, 1, "#6e6a86");
+  p.rect(3, 6, 26, 5, "#5a566e");
+  p.rect(3, 6, 26, 1, "#8a86a2");
+  p.rect(3, 10, 26, 1, "#34304a");
+  // rune circle inlaid in the top, where a guardian rests
+  p.ellipseOutline(16, 8, 8, 1, RUNE);
+  p.set(16, 8, RUNE_L);
+  p.set(9, 8, RUNE_L);
+  p.set(23, 8, RUNE_L);
+  // ink outline
+  const out = [];
+  for (let y = 0; y < p.h; y++)
+    for (let x = 0; x < p.w; x++) {
+      if (p.opaque(x, y)) continue;
+      if (p.opaque(x - 1, y) || p.opaque(x + 1, y) || p.opaque(x, y - 1) || p.opaque(x, y + 1)) out.push([x, y]);
+    }
+  for (const [x, y] of out) p.set(x, y, ink);
+  // contact shadow
+  for (let x = 4; x < 28; x++) if (!p.opaque(x, 25)) p.set(x, 25, [24, 16, 40, 70]);
   return { pix: p, key: "pedestal", w: 32, h: 26 };
 }
 
 export function runeRingFrames() {
-  // 64x28 glowing floor ring in front of pedestals, 2 frames
+  // 64x28 rune circle inlaid in the floor, 2 frames of a slow pulse
   const frames = [];
   for (let f = 0; f < 2; f++) {
     const p = new Pix(64, 28);
-    const c = f ? RUNE_L : RUNE;
-    const c2 = f ? RUNE : RUNE_L;
-    p.ellipseOutline(32, 14, 29, 12, c);
-    p.ellipseOutline(32, 14, 25, 10, c2);
-    for (let a = 0; a < 8; a++) {
-      const ang = (a / 8) * Math.PI * 2 + f * 0.2;
-      const x = Math.round(32 + Math.cos(ang) * 27);
-      const y = Math.round(14 + Math.sin(ang) * 11);
-      p.set(x, y, "#e8fffa");
+    const outer = f ? RUNE_L : RUNE;
+    const inner = f ? RUNE : "#3f8f8a";
+    // dark inlay band between two lit rings
+    for (let y = 0; y < 28; y++)
+      for (let x = 0; x < 64; x++) {
+        const d = Math.hypot((x - 31.5) / 29.5, (y - 13.5) / 12.5);
+        if (d <= 1 && d >= 0.8) p.set(x, y, [30, 26, 44, 150]);
+        if (d < 0.8) p.set(x, y, [63, 143, 138, f ? 40 : 26]);
+      }
+    p.ellipseOutline(32, 14, 29, 12, outer);
+    p.ellipseOutline(32, 14, 23, 9, inner);
+    // twelve runes around the band
+    for (let a = 0; a < 12; a++) {
+      const ang = (a / 12) * Math.PI * 2;
+      const x = Math.round(32 + Math.cos(ang) * 26);
+      const y = Math.round(14 + Math.sin(ang) * 10.5);
+      p.set(x, y, (a + f) % 3 === 0 ? "#e8fffa" : RUNE);
+      p.set(x, y - 1, inner);
     }
+    // the guardian knot at the centre
+    p.line(28, 14, 36, 14, inner);
+    p.line(32, 11, 32, 17, inner);
+    p.set(32, 14, f ? "#e8fffa" : RUNE_L);
     frames.push(p);
   }
   return { frames, key: "runering", w: 64, h: 28 };

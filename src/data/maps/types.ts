@@ -25,6 +25,8 @@ export interface PropDef {
   scale?: number;
   /** animated multi-frame object (waterfall, runering) */
   anim?: boolean;
+  /** flat on the floor (rune ring): always drawn under characters */
+  floor?: boolean;
   /** creature sprite standing on this prop (starter pedestals etc.) */
   creature?: string;
 }
@@ -41,6 +43,10 @@ export interface ObjectDef {
   y: number;
   foot?: number;
   solid?: boolean;
+  /** "floor": drawn flat on the floor, under every character (light pools) */
+  layer?: "floor";
+  /** "add": additive blending, for light */
+  blend?: "add";
 }
 
 /** a small hand-placed, non-blocking decoration tile (flowers, ferns, pebbles) */

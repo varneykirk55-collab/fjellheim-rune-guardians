@@ -28,6 +28,8 @@ const SCALE = 2;
 const TS = ART * SCALE;
 const HALF = TS / 2;
 const depthAt = (tileY: number) => tileY * ART;
+/** flat floor decals and light: above the tile layers, below every sprite */
+const FLOOR_DEPTH = 1;
 /** whole-number sprite scale (fractional scales make uneven pixels) */
 const spriteScale = (s = 1) => Math.max(1, Math.round(SCALE * s));
 /** characters stand on the bottom edge of their tile (frames are feet-anchored) */
@@ -234,7 +236,8 @@ export class WorldScene extends Phaser.Scene {
     for (const p of this.map.props) {
       const meta = ASSET_LAYOUT.objects[p.asset as keyof typeof ASSET_LAYOUT.objects] as { w: number; h: number; frames?: number };
       const img = this.add.image(p.x * TS, p.y * TS, p.asset).setOrigin(0, 0).setScale(spriteScale(p.scale));
-      img.setDepth(depthAt(p.y + Math.round(meta.h / ART)));
+      img.setDepth(p.floor ? FLOOR_DEPTH : depthAt(p.y + Math.round(meta.h / ART)));
+      if ((meta.frames ?? 1) > 1) img.setCrop(0, 0, meta.w, meta.h); // one frame, never the whole strip
       if (p.anim && (meta.frames ?? 1) > 1) {
         this.time.addEvent({
           delay: 260,
@@ -248,11 +251,12 @@ export class WorldScene extends Phaser.Scene {
     }
     // hand-placed scenery, anchored at its bottom-left tile
     for (const o of this.map.objects ?? []) {
-      this.add
+      const img = this.add
         .image(o.x * TS, (o.y + 1) * TS, o.asset)
         .setOrigin(0, 1)
         .setScale(SCALE)
-        .setDepth(depthAt(o.y + 1));
+        .setDepth(o.layer === "floor" ? FLOOR_DEPTH : depthAt(o.y + 1));
+      if (o.blend === "add") img.setBlendMode(Phaser.BlendModes.ADD);
     }
     for (const n of this.map.npcs) {
       if (n.showIf && !Session.flag(n.showIf)) continue;

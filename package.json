@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "assets": "node tools/gen/index.mjs",
+    "maps:tiled": "node tools/tiled/export-maps.mjs",
     "dev": "vite --host 0.0.0.0",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0",
