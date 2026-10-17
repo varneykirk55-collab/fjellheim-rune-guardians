@@ -1,0 +1,46 @@
+{
+ "male-size1": {
+  "frameWidth": 30,
+  "frameHeight": 50,
+  "frames": [
+   "front",
+   "back",
+   "left",
+   "right"
+  ],
+  "colours": 31
+ },
+ "male-size2": {
+  "frameWidth": 40,
+  "frameHeight": 66,
+  "frames": [
+   "front",
+   "back",
+   "left",
+   "right"
+  ],
+  "colours": 30
+ },
+ "male-size3": {
+  "frameWidth": 46,
+  "frameHeight": 69,
+  "frames": [
+   "front",
+   "back",
+   "left",
+   "right"
+  ],
+  "colours": 31
+ },
+ "female": {
+  "frameWidth": 84,
+  "frameHeight": 152,
+  "frames": [
+   "front",
+   "back",
+   "left",
+   "right"
+  ],
+  "colours": 31
+ }
+}
