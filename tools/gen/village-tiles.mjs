@@ -8,8 +8,25 @@
 // - decorations are drawn on transparency and rendered on an overlay layer, so
 //   they never carry a square of baked-in grass;
 // - objects get a 1px ink outline, ground tiles never do.
-import { Pix } from "./pix.mjs";
+import { Pix, parseColor } from "./pix.mjs";
 import { V, stamp, outlineWith } from "./village-palette.mjs";
+
+/*
+ * Painted fills (tools/gen/overrides/fills, loaded by overrides.mjs). Set by
+ * tiles.mjs for the duration of one atlas build; empty means every tile is
+ * drawn exactly as generated.
+ */
+let FILLS = {};
+export function useFills(fills = {}) {
+  FILLS = fills;
+}
+const blitFill = (p, fill) => p.d.set(fill.d);
+
+/** the painted grass the fringe takes its colours from: the lowest supplied grass~v */
+function fringeGrass() {
+  for (let v = 0; v < GRASS_VARIANTS; v++) if (FILLS[`grass~${v}`]) return FILLS[`grass~${v}`];
+  return null;
+}
 
 const N = 1;
 const E = 2;
@@ -152,6 +169,7 @@ function fringeAt(mask, x, y) {
 function grassFringe(p, mask, terrainShadow, prof = 0) {
   if (!mask) return;
   PROF = PROFS[prof];
+  const grass = fringeGrass();
   const inG = (x, y) => x >= 0 && y >= 0 && x < 16 && y < 16 && fringeAt(mask, x, y);
   for (let y = 0; y < 16; y++)
     for (let x = 0; x < 16; x++) {
@@ -163,11 +181,22 @@ function grassFringe(p, mask, terrainShadow, prof = 0) {
         if (below) c = V.g1; // bottom lip of overhanging grass
         else if (above) c = V.g4; // sunlit top lip
         else if (side) c = V.g2;
-        p.set(x, y, c);
+        p.set(x, y, grass ? relight(grass.get(x, y), c) : c);
       } else if (y > 0 && inG(x, y - 1)) {
         p.set(x, y, terrainShadow); // shadow cast by the grass edge above
       }
     }
+}
+
+/**
+ * With a painted grass fill, the fringe keeps its shape and its light (lit
+ * top lip, dark bottom lip, side shade) but takes the painted colour: each
+ * channel is scaled by how the generated lip colour relates to plain grass.
+ */
+const G3 = parseColor(V.g3);
+function relight(painted, generated) {
+  const g = parseColor(generated);
+  return [0, 1, 2].map((i) => Math.min(255, Math.round((painted[i] * g[i]) / G3[i]))).concat(255);
 }
 
 /* ================================================================ path */
@@ -795,7 +824,8 @@ function drawTwigs(p) {
 export function registerVillageTiles(tile, animTiles) {
   // grass family (no edges: everything else fringes onto grass)
   for (const key of ["grass", "grass2", "grass3", "meadow"]) tile(key, {}, (p) => drawGrass(p, GRASS_LAYOUTS[key]));
-  for (let v = 0; v < GRASS_VARIANTS; v++) tile(`grass~${v}`, {}, (p) => drawGrass(p, grassLayout(v + 3)));
+  for (let v = 0; v < GRASS_VARIANTS; v++)
+    tile(`grass~${v}`, {}, (p) => (FILLS[`grass~${v}`] ? blitFill(p, FILLS[`grass~${v}`]) : drawGrass(p, grassLayout(v + 3))));
   for (const [name, draw] of Object.entries(GRASS_FEATURES)) tile(`grass_${name}`, {}, (p) => draw(p));
 
   // autotiled ground families: base key (no edges) + key#mask variants
@@ -807,7 +837,9 @@ export function registerVillageTiles(tile, animTiles) {
     ["cobble", (p) => drawFlagstones(p, FLAGS_A), MORTAR, {}],
     ["cobble2", (p) => drawFlagstones(p, FLAGS_B), MORTAR, {}],
   ];
-  for (const [key, base, shadow, meta] of families) {
+  for (const [key, drawn, shadow, meta] of families) {
+    // a painted fill replaces the generated texture under every edge shape
+    const base = (p) => (FILLS[key] ? blitFill(p, FILLS[key]) : drawn(p));
     tile(key, meta, (p) => base(p));
     for (const m of MASKS)
       for (let prof = 0; prof < PROFS.length; prof++)

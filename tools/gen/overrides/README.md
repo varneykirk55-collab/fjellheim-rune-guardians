@@ -29,3 +29,32 @@ script are in `art/protagonists/` (`python3 art/protagonists/build.py`).
 Multi-frame objects (`runering`, `waterfall`) keep their frames stacked
 vertically in one PNG. Animated tiles have one key per frame (`hearth`,
 `hearth_f1`, `hearth_f2`).
+
+## Ground fills
+
+A tile override replaces one finished key. A **fill** replaces the texture of a
+whole ground family, and the generator rebuilds every edge tile from it:
+
+| Put the file at | Size | Rebuilds |
+| --- | --- | --- |
+| `fills/grass~0.png` … `fills/grass~7.png` | 16×16 | that grass variant; the lowest supplied one also colours the grass fringe on every path, sand and cobble edge |
+| `fills/path.png`, `path2`, `sand`, `sand2`, `cobble`, `cobble2` | 16×16 | the base key plus all 48 edge keys (`path#<mask>`, `path#<mask>~1`, `path#<mask>~2`) |
+
+- The edges keep the generator's 16 neighbour masks, three fringe profiles,
+  grass lips and contact shadow; only the texture under them changes. With a
+  painted grass fill the fringe keeps its lit and shaded lips, scaled from the
+  painted colour.
+- A fill must be exactly 16×16, fully opaque, and named exactly as above, or
+  `npm run assets` stops.
+- Paint fills to tile seamlessly. The build prints a **seam score** per fill:
+  the left/right and top/bottom wraparound difference divided by the
+  texture's own pixel-to-pixel difference (about 1 or less is seamless). Above
+  2 it warns but still builds. Generated textures score 0–1.5.
+- The map alternates `path`/`path2`, `sand`/`sand2` and `cobble`/`cobble2`
+  cells; supplying only one of a pair warns, because the other stays generated.
+- Tile overrides in `tiles/` are applied after fills, so a single painted edge
+  key still wins.
+- Not driven by fills: the plain `grass`, `grass2`, `grass3`, `meadow`,
+  `grass_clover` and `grass_clump` tiles, and the overlay tiles (`creep`,
+  `blend_sand`, `blend_dirt`, `wet`, `inner`), which keep their generated
+  colours.

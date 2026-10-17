@@ -32,6 +32,10 @@ layout.tileMeta = ts.meta;
 layout.tileAtlas = { cols: ts.cols, rows: ts.rows, size: 16 };
 console.log(`tiles.png  (${ts.count} tiles, ${ts.cols}x${ts.rows} grid)`);
 if (ts.overridden.length) console.log(`  hand-painted tile overrides: ${ts.overridden.join(", ")}`);
+for (const f of ts.fills) {
+  console.log(`  painted fill ${f.key}: seam score ${f.seam.score} (left/right ${f.seam.lr}, top/bottom ${f.seam.tb}, texture ${f.seam.interior})`);
+  for (const w of f.warnings) console.warn(`  WARNING fill ${f.key}: ${w}`);
+}
 
 /* ---- characters ---- */
 const ch = buildChars();

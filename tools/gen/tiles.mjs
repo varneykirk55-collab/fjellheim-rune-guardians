@@ -1,9 +1,9 @@
 // tiles.mjs - generates the 16x16 tileset atlas for the Viking world.
 // All tiles are drawn from code with a fixed seed -> reproducible bytes.
 import { Pix, rng, shade, mix } from "./pix.mjs";
-import { registerVillageTiles } from "./village-tiles.mjs";
+import { registerVillageTiles, useFills } from "./village-tiles.mjs";
 import { registerInteriorTiles } from "./interior-tiles.mjs";
-import { loadOverride, checkOverrideKeys } from "./overrides.mjs";
+import { loadOverride, checkOverrideKeys, loadFills, OVERRIDE_DIR } from "./overrides.mjs";
 
 export const TILE = 16;
 
@@ -230,9 +230,22 @@ tile("bridge_rail", { solid: true }, (p) => {
 /* ---------------- interiors ---------------- */
 registerInteriorTiles(tile, animTiles);
 
-/** Build the atlas. Returns {pix, layout} where layout maps key->index. */
-export function buildTileset() {
-  const overridden = checkOverrideKeys("tiles", TILES.map((t) => t.key));
+/**
+ * Build the atlas. Returns {pix, layout} where layout maps key->index.
+ * Painted fills are composited first, per-key tile overrides on top.
+ */
+export function buildTileset(dir = OVERRIDE_DIR) {
+  const overridden = checkOverrideKeys("tiles", TILES.map((t) => t.key), dir);
+  const { fills, reports: fillReports } = loadFills(dir);
+  useFills(fills);
+  try {
+    return drawAtlas(dir, overridden, fillReports);
+  } finally {
+    useFills({});
+  }
+}
+
+function drawAtlas(dir, overridden, fillReports) {
   const cols = 16;
   const rows = Math.ceil(TILES.length / cols);
   const atlas = new Pix(cols * TILE, rows * TILE);
@@ -243,7 +256,7 @@ export function buildTileset() {
     const y = ((i / cols) | 0) * TILE;
     const p = new Pix(TILE, TILE);
     t.draw(p, t.meta.frame ?? 0, rng(1000 + i));
-    atlas.blit(loadOverride("tiles", t.key, TILE, TILE) ?? p, x, y);
+    atlas.blit(loadOverride("tiles", t.key, TILE, TILE, dir) ?? p, x, y);
     layout[t.key] = i;
     meta[t.key] = {
       solid: t.meta.solid,
@@ -253,5 +266,5 @@ export function buildTileset() {
       ...(t.meta.deco ? { deco: true } : {}),
     };
   });
-  return { pix: atlas, layout, meta, cols, rows, count: TILES.length, overridden };
+  return { pix: atlas, layout, meta, cols, rows, count: TILES.length, overridden, fills: fillReports };
 }
