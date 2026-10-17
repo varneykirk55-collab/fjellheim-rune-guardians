@@ -32,6 +32,8 @@ vertically in one PNG. Animated tiles have one key per frame (`hearth`,
 
 ## Ground fills
 
+The shipped fills (`fills/grass~0..7.png`, `path.png`, `path2.png`) come from the Astra native 64×64 grass and path swatches: eight grass windows and two path windows, each cut as a straight 16×16 crop with no edits. They replace the old generated grass and path.
+
 A tile override replaces one finished key. A **fill** replaces the texture of a
 whole ground family, and the generator rebuilds every edge tile from it:
 
