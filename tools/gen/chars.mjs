@@ -3,6 +3,7 @@
 // Frame order per character: down(3) up(3) right(3) left(3); left is mirrored right.
 import { Pix } from "./pix.mjs";
 import { CW, CH, drawCharFrame } from "./village-chars.mjs";
+import { loadOverride, checkOverrideKeys } from "./overrides.mjs";
 
 /** Full cast. dir frames: down0..2, up0..2, right0..2, left0..2 */
 export const CAST = {
@@ -28,7 +29,15 @@ export function buildChars() {
   const cols = 12; // frames per character
   const atlas = new Pix(cols * CW, keys.length * CH);
   const layout = {};
+  checkOverrideKeys("chars", keys);
   keys.forEach((name, row) => {
+    // hand-pixelled sheets (the protagonists) replace the generated frames
+    const painted = loadOverride("chars", name, cols * CW, CH);
+    if (painted) {
+      atlas.blit(painted, 0, row * CH);
+      layout[name] = row;
+      return;
+    }
     const o = CAST[name];
     ["down", "up", "right", "left"].forEach((dir, di) => {
       for (let f = 0; f < 3; f++) {

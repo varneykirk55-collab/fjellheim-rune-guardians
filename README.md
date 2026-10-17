@@ -23,7 +23,7 @@ npm run dev        # http://localhost:5180 (binds 0.0.0.0)
 | `npm run build` | Typecheck + production build to `dist/` |
 | `npm run typecheck` | `tsc --noEmit` (strict) |
 | `npm test` | Vitest suite for the pure engine/data layers (incl. map reachability, input, dialogue paging, rival balance) |
-| `npm run test:e2e` | Browser playthrough of the opening (new game -> rival -> capture -> heal -> save/reload) with real key presses; needs Playwright + Chromium (local or global install), screenshots in `test-results/e2e/` |
+| `npm run test:e2e` | All browser tests (production build, real input): the opening playthrough (new game -> rival -> capture -> heal -> save/reload), the starter choice by keyboard/mouse/touch (`test:e2e:starters`), and both heroes' selection, walk cycle, door sounds and save/continue (`test:e2e:heroes`). Needs Playwright + Chromium; screenshots in `test-results/e2e/` |
 | `npm run assets` | Regenerate all pixel-art PNGs + `src/assets/layout.ts` (uses any hand-painted files in `tools/gen/overrides/`) |
 | `npm run maps:tiled` | Export every map to Tiled (`tools/tiled/out/*.tmj`) for review; one-way, see `docs/ART-TOOLING.md` |
 

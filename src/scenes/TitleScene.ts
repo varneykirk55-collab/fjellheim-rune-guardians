@@ -5,6 +5,13 @@ import { Input } from "../core/input";
 import { SaveManager } from "../core/save";
 import { Session } from "../core/session";
 import { TXT, textStyle } from "../ui/theme";
+import { charFrameIndex } from "./WorldScene";
+
+/** the two playable heroes: same story and abilities, different sprite */
+export const PROTAGONISTS = [
+  { char: "eirik", name: "Eirik", title: "SON OF BJORN" },
+  { char: "astri", name: "Astri", title: "DAUGHTER OF BJORN" },
+] as const;
 
 export class TitleScene extends Phaser.Scene {
   private menuIndex = 0;
@@ -14,6 +21,9 @@ export class TitleScene extends Phaser.Scene {
   private mode: "main" | "name" | "settings" = "main";
   private nameIndex = 0;
   private ring!: Phaser.GameObjects.Image;
+  /** extra objects of the current menu (headings, character previews) */
+  private extras: Phaser.GameObjects.GameObject[] = [];
+  private previews: Phaser.GameObjects.Sprite[] = [];
 
   constructor() {
     super("title");
@@ -43,6 +53,9 @@ export class TitleScene extends Phaser.Scene {
   private clearMenu() {
     this.labels.forEach((l) => l.destroy());
     this.labels = [];
+    this.extras.forEach((o) => o.destroy());
+    this.extras = [];
+    this.previews = [];
   }
 
   private buildMain() {
@@ -91,9 +104,8 @@ export class TitleScene extends Phaser.Scene {
       return;
     }
     if (this.mode === "name") {
-      const name = this.menuIndex === 0 ? "Eirik" : "Astri";
-      const char = this.menuIndex === 0 ? "eirik" : "astri";
-      Session.startNew(name, char);
+      const hero = PROTAGONISTS[this.menuIndex];
+      Session.startNew(hero.name, hero.char);
       Audio.unlock();
       this.scene.start("world", { map: "home", fresh: true });
       return;
@@ -109,14 +121,33 @@ export class TitleScene extends Phaser.Scene {
   private buildName() {
     this.clearMenu();
     this.mode = "name";
-    this.add.text(256, 170, "WHO ANSWERS THE CALL?", textStyle(TXT, { fontSize: "9px", color: "#f0c860" })).setOrigin(0.5).setDepth(3);
-    ["EIRIK, SON OF BJORN", "ASTRI, DAUGHTER OF BJORN"].forEach((n, i) => {
-      const t = this.add.text(256, 200 + i * 22, n, textStyle(TXT, { fontSize: "9px" })).setOrigin(0.5).setDepth(3);
+    this.extras.push(this.add.text(256, 140, "WHO ANSWERS THE CALL?", textStyle(TXT, { fontSize: "9px", color: "#f0c860" })).setOrigin(0.5).setDepth(3));
+    PROTAGONISTS.forEach((p, i) => {
+      const x = 176 + i * 160;
+      // the selected hero walks toward the camera; the other stands still
+      const sprite = this.add.sprite(x, 226, "chars", charFrameIndex(p.char, "down", 0)).setOrigin(0.5, 1).setScale(2).setDepth(3);
+      sprite.setInteractive({ useHandCursor: true });
+      sprite.on("pointerover", () => this.selectHero(i));
+      sprite.on("pointerdown", () => {
+        this.selectHero(i);
+        Input.suppress("a");
+        Input.suppress("b");
+        this.activate();
+      });
+      this.previews.push(sprite);
+      const t = this.add.text(x, 238, p.name.toUpperCase(), textStyle(TXT, { fontSize: "9px" })).setOrigin(0.5, 0).setDepth(3);
       this.clickable(t, i);
       this.labels.push(t);
+      this.extras.push(this.add.text(x, 252, p.title, textStyle(TXT, { fontSize: "7px", color: "#a8b0c4" })).setOrigin(0.5, 0).setDepth(3));
     });
     this.nameIndex = 0;
     this.menuIndex = 0;
+    this.placeCursor();
+  }
+
+  private selectHero(i: number) {
+    if (this.menuIndex !== i) Audio.sfx("cursor");
+    this.menuIndex = i;
     this.placeCursor();
   }
 
@@ -143,8 +174,13 @@ export class TitleScene extends Phaser.Scene {
   }
 
   private placeCursor() {
+    if (this.mode === "name") {
+      this.cursor.setPosition(176 + this.menuIndex * 160 - 44, 242);
+      this.previews.forEach((p, i) => p.setAlpha(i === this.menuIndex ? 1 : 0.55));
+      return;
+    }
     const row = this.mode === "settings" ? 18 : 22;
-    const base = this.mode === "main" ? 190 : this.mode === "name" ? 200 : 168;
+    const base = this.mode === "main" ? 190 : 168;
     const x = this.mode === "settings" ? 164 : 256 - 90;
     this.cursor.setPosition(x, base + this.menuIndex * row);
   }
@@ -170,6 +206,11 @@ export class TitleScene extends Phaser.Scene {
   update() {
     Input.beginFrame();
     Input.pollVirtual();
+    if (this.mode === "name") {
+      // the highlighted hero walks in place: stand, step, stand, other step
+      const step = [0, 1, 0, 2][Math.floor(this.time.now / 170) % 4];
+      this.previews.forEach((p, i) => p.setFrame(charFrameIndex(PROTAGONISTS[i].char, "down", i === this.menuIndex ? step : 0)));
+    }
     if (this.mode === "main" || this.mode === "name") {
       const n = this.mode === "main" ? this.items.length : 2;
       if (Input.justPressed("down")) {
@@ -181,6 +222,9 @@ export class TitleScene extends Phaser.Scene {
         this.menuIndex = (this.menuIndex + n - 1) % n;
         Audio.sfx("cursor");
         this.placeCursor();
+      }
+      if (this.mode === "name" && (Input.justPressed("left") || Input.justPressed("right"))) {
+        this.selectHero(1 - this.menuIndex);
       }
       if (Input.justPressed("a")) this.activate();
       if (this.mode === "name") {

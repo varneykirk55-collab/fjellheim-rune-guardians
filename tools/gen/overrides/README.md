@@ -8,6 +8,11 @@ here. The generator then uses your file instead of its own drawing.
 | --- | --- | --- |
 | `tiles/<tile key>.png` | 16×16 | `tiles/floor@home~0.png` |
 | `objects/<object key>.png` | same as the generated PNG in `public/assets/` | `objects/chest.png` (16×16) |
+| `chars/<character key>.png` | 384×32: 12 frames of 32×32 (down, up, right, left × stand, step, step) | `chars/eirik.png` |
+
+The two protagonists (`chars/eirik.png`, `chars/astri.png`) ship as overrides:
+they are hand-pixelled from the approved designs. Their source grids and build
+script are in `art/protagonists/` (`python3 art/protagonists/build.py`).
 
 1. Start from the generated file: copy `public/assets/<key>.png` (objects), or
    cut the 16×16 tile out of `public/assets/tiles.png` (the key → index map is

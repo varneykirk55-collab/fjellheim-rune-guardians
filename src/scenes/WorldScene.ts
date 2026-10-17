@@ -2,10 +2,11 @@
 // NPCs, dialogue, story events, encounters, services.
 import Phaser from "phaser";
 import { ASSET_LAYOUT } from "../assets/layout";
-import { Audio } from "../core/audio";
+import { Audio, doorSound } from "../core/audio";
 import { Input } from "../core/input";
 import { Session } from "../core/session";
 import { Facing } from "../core/save";
+import { grantStarter, starterSlotAt, starterSlotX } from "../core/starter";
 import { getMap, MapDef } from "../data/maps";
 import { buildSolidGrid, tileMeta } from "../data/maps/collision";
 import { buildVisuals } from "../data/maps/visual";
@@ -70,6 +71,8 @@ export class WorldScene extends Phaser.Scene {
   private pX = 0;
   private pY = 0;
   private moving = false;
+  /** alternates which foot leads, so consecutive tiles show left then right steps */
+  private stride = 0;
   private busy = false;
   private dialogue!: DialogueBox;
   private touch!: TouchControls;
@@ -350,10 +353,12 @@ export class WorldScene extends Phaser.Scene {
         duration: 150,
         ease: "Linear",
         onUpdate: (tw) => {
-          this.setPlayerFrame(tw.progress < 0.5 ? 1 : 2);
+          // stand -> step (one foot leads) -> stand; the leading foot alternates per tile
+          this.setPlayerFrame(tw.progress < 0.7 ? 1 + (this.stride % 2) : 0);
         },
         onComplete: () => {
           this.moving = false;
+          this.stride += 1;
           this.pX = nx;
           this.pY = ny;
           this.player.setDepth(depthAt(ny + 1));
@@ -388,7 +393,7 @@ export class WorldScene extends Phaser.Scene {
     Session.get().stats.steps += 1;
     const warp = this.findWarp(this.pX, this.pY);
     if (warp) {
-      Audio.sfx("door");
+      Audio.sfx(doorSound(this.map.indoors, getMap(warp.to.map).indoors));
       this.busy = true;
       this.cameras.main.fadeOut(220, 10, 8, 16);
       this.cameras.main.once("camerafadeoutcomplete", () => {
@@ -735,6 +740,7 @@ export class WorldScene extends Phaser.Scene {
     Audio.sfx("confirm");
     const c = this.add.container(0, 0).setDepth(960);
     let idx = 0;
+    let chosen = false;
     // flavour text wraps inside the screen; the prompt lists only keys this menu handles
     const info = this.add
       .text(256, 190, "", textStyle(TXT, { fontSize: "8px", lineSpacing: 5, align: "center", wordWrap: { width: 480 } }))
@@ -743,42 +749,69 @@ export class WorldScene extends Phaser.Scene {
     const cursor = this.add.image(0, 0, "cursor");
     const sprites = STARTERS.map((id, i) => {
       const img = this.add
-        .image(140 + i * 116, 110, "creatures")
+        .image(starterSlotX(i), 110, "creatures")
         .setFrame(creatureFrameIndex(id))
         .setScale(1.2)
         .setOrigin(0.5, 0.8);
       this.tweens.add({ targets: img, y: 106, duration: 600, yoyo: true, repeat: -1, delay: i * 150 });
-      img.setInteractive({ useHandCursor: true });
-      img.on("pointerover", () => {
-        if (idx !== i) {
-          idx = i;
-          refresh();
-        }
-      });
-      img.on("pointerdown", () => {
-        Input.suppress("a");
-        Input.suppress("b");
-        idx = i;
-        pick();
-      });
       return img;
     });
     c.add([info, prompt, cursor, ...sprites]);
-    c.setScrollFactor(0, 0, true); // screen-space overlay (also keeps click hit-tests aligned)
+    c.setScrollFactor(0, 0, true); // screen-space overlay
 
     const refresh = () => {
       const sp = getSpecies(STARTERS[idx]);
       info.setText(`${sp.name}\n${sp.types.join(" / ").toUpperCase()} ELEMENT\n\n${sp.flavor}`);
-      cursor.setPosition(140 + idx * 116 - 44, 110);
+      cursor.setPosition(starterSlotX(idx) - 44, 110);
       Audio.sfx("cursor");
     };
     refresh();
 
+    // Pointer input is hit-tested here in screen space. Per-sprite hit areas inside
+    // a screen-pinned container drift when the camera scrolls (small rooms are
+    // centred), so clicks on the 2nd/3rd creature used to miss and fall through to
+    // the global click-as-confirm, which chose the highlighted (first) starter.
+    let hover = -1; // creature under the mouse pointer
+    let armed = -1; // touch: creature selected by the previous tap
+    const onMove = (p: Phaser.Input.Pointer) => {
+      if (p.wasTouch) return;
+      const i = starterSlotAt(p.x, p.y);
+      if (i !== hover && i >= 0 && i !== idx) {
+        idx = i;
+        refresh();
+      }
+      hover = i;
+    };
+    const onDown = (p: Phaser.Input.Pointer) => {
+      // a click inside the menu is never a generic confirm
+      Input.suppress("a");
+      Input.suppress("b");
+      const i = starterSlotAt(p.x, p.y);
+      if (i < 0) return;
+      // mouse: the click lands on the creature the pointer is over (hover selected it);
+      // touch has no hover, so the first tap selects and a second tap confirms
+      let confirm: boolean;
+      if (p.wasTouch) {
+        confirm = armed === i;
+        armed = i;
+      } else confirm = hover === i;
+      if (i !== idx) {
+        idx = i;
+        refresh();
+      }
+      if (confirm) pick();
+    };
+    this.input.on("pointermove", onMove);
+    this.input.on("pointerdown", onDown);
+
     const pick = () => {
+      if (chosen) return; // one starter, however many inputs land in the same frame
+      chosen = true;
+      this.input.off("pointermove", onMove);
+      this.input.off("pointerdown", onDown);
       Audio.sfx("confirm");
       const picked = STARTERS[idx];
-      Session.get().party.push(makeCreature(picked, 5));
-      Session.setFlag("starter", picked);
+      grantStarter(Session.get(), picked);
       c.destroy();
       this.uiTick = null;
       Audio.sfx("evolve");

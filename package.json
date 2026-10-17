@@ -12,7 +12,10 @@
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "node tests/e2e/opening.e2e.mjs"
+    "test:e2e": "node tests/e2e/opening.e2e.mjs && node tests/e2e/starters.e2e.mjs && node tests/e2e/protagonists.e2e.mjs",
+    "test:e2e:opening": "node tests/e2e/opening.e2e.mjs",
+    "test:e2e:starters": "node tests/e2e/starters.e2e.mjs",
+    "test:e2e:heroes": "node tests/e2e/protagonists.e2e.mjs"
   },
   "dependencies": {
     "phaser": "3.90.0"
