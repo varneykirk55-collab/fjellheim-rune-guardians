@@ -36,7 +36,8 @@ function png(path, w, h, f) {
 }
 const solid = (rgba) => () => rgba;
 
-const DEFAULT = buildTileset();
+// the reference atlas is generated from an empty overrides folder, so installed fills never leak into it
+const DEFAULT = buildTileset(overrideDir());
 const tileOf = (ts, key) => {
   const i = ts.layout[key];
   const ox = (i % ts.cols) * 16;

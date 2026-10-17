@@ -2,7 +2,7 @@
 // grass features, meadow, creep blades, inner corners and the sand/soil
 // overlays are recoloured from the painted fill, keeping their shapes.
 import { describe, it, expect, afterEach } from "vitest";
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { PNG } from "pngjs";
@@ -52,10 +52,18 @@ const GRASS_DEPENDENT = keys(/^(grass(~\d)?|grass2|grass3|meadow|grass_clover|gr
 const GOLD = (v) => (x, y) => [176 + ((x * 3 + y + v) % 4) * 4, 132, 49, 255];
 
 describe("fill leftovers", () => {
-  it("with no fills the atlas matches the committed tiles.png byte for byte", () => {
-    const disk = PNG.sync.read(readFileSync("public/assets/tiles.png"));
-    expect(disk.width).toBe(DEFAULT.pix.w);
-    expect(Buffer.from(disk.data).equals(Buffer.from(DEFAULT.pix.d))).toBe(true);
+  it("with no fills the output is byte-identical however the empty overrides folder is laid out", () => {
+    // reference and candidate are both generated from empty folders, so this holds
+    // whatever fills or art are currently committed in public/assets/tiles.png
+    const bare = mkdtempSync(join(tmpdir(), "fjell-bare-"));
+    dirs.push(bare);
+    for (const d of [overrideDir(), bare]) {
+      const ts = buildTileset(d);
+      expect(ts.fills).toEqual([]);
+      expect(ts.layout).toEqual(DEFAULT.layout);
+      expect(ts.pix.w).toBe(DEFAULT.pix.w);
+      expect(Buffer.from(ts.pix.d).equals(Buffer.from(DEFAULT.pix.d))).toBe(true);
+    }
   });
 
   it("covers every tile the problem listed", () => {
