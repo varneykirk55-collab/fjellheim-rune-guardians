@@ -194,10 +194,63 @@ function grassFringe(p, mask, terrainShadow, prof = 0) {
  * channel is scaled by how the generated lip colour relates to plain grass.
  */
 const G3 = parseColor(V.g3);
-function relight(painted, generated) {
+function relight(painted, generated, ref = G3) {
   const g = parseColor(generated);
-  return [0, 1, 2].map((i) => Math.min(255, Math.round((painted[i] * g[i]) / G3[i]))).concat(255);
+  const r = parseColor(ref);
+  return [0, 1, 2].map((i) => Math.min(255, Math.round((painted[i] * g[i]) / Math.max(r[i], 1)))).concat(255);
 }
+
+/** the most common colour of a tile (ties: first in reading order) */
+function dominant(pix) {
+  const count = new Map();
+  let best = null;
+  for (let i = 0; i < pix.d.length; i += 4) {
+    const k = (pix.d[i] << 16) | (pix.d[i + 1] << 8) | pix.d[i + 2];
+    const n = (count.get(k) ?? 0) + 1;
+    count.set(k, n);
+    if (best === null || n > count.get(best)) best = k;
+  }
+  return [(best >> 16) & 255, (best >> 8) & 255, best & 255, 255];
+}
+
+/*
+ * Palette ramps that tiles outside the fill keys borrow from a fill. With a
+ * painted fill, `remapToFill` recolours a finished tile: pixels of the ramp's
+ * base colour take the fill's own pixel (so the texture continues), every
+ * other ramp colour keeps its relation to the base, scaled from the fill's
+ * dominant colour. Shapes, transparency and non-ramp colours (flowers,
+ * foam, cast shadows) are untouched.
+ */
+const RAMPS = {
+  grass: { colours: [V.g0, V.g1, V.g2, V.g3, V.g4, V.g5], base: V.g3, fill: () => fringeGrass() },
+  dirt: { colours: [V.d0, V.d1, V.d2, V.d3, V.d4], base: V.d3, fill: () => FILLS.path ?? FILLS.path2 ?? null },
+  sand: { colours: [V.s0, V.s1, V.s2, V.s3, V.s4, "#bfa070"], base: V.s2, fill: () => FILLS.sand ?? FILLS.sand2 ?? null },
+};
+export const FILL_RAMPS = RAMPS;
+function remapToFill(p, ramp) {
+  const fill = ramp.fill();
+  if (!fill) return;
+  const dom = dominant(fill);
+  const key = (c) => c.slice(0, 3).join();
+  const base = key(parseColor(ramp.base));
+  const inRamp = new Set(ramp.colours.map((c) => key(parseColor(c))));
+  for (let y = 0; y < 16; y++)
+    for (let x = 0; x < 16; x++) {
+      const px = p.get(x, y);
+      const k = key(px);
+      if (!px[3] || !inRamp.has(k)) continue;
+      const c = k === base ? fill.get(x, y) : relight(dom, px, ramp.base);
+      const i = (y * p.w + x) * 4;
+      p.d[i] = c[0];
+      p.d[i + 1] = c[1];
+      p.d[i + 2] = c[2]; // alpha stays: overlays keep their shape
+    }
+}
+/** draw as generated, then recolour onto the ramp's fill when one is supplied */
+const onFill = (ramp, draw) => (p, ...rest) => {
+  draw(p, ...rest);
+  remapToFill(p, ramp);
+};
 
 /* ================================================================ path */
 
@@ -823,10 +876,10 @@ function drawTwigs(p) {
  */
 export function registerVillageTiles(tile, animTiles) {
   // grass family (no edges: everything else fringes onto grass)
-  for (const key of ["grass", "grass2", "grass3", "meadow"]) tile(key, {}, (p) => drawGrass(p, GRASS_LAYOUTS[key]));
+  for (const key of ["grass", "grass2", "grass3", "meadow"]) tile(key, {}, onFill(RAMPS.grass, (p) => drawGrass(p, GRASS_LAYOUTS[key])));
   for (let v = 0; v < GRASS_VARIANTS; v++)
     tile(`grass~${v}`, {}, (p) => (FILLS[`grass~${v}`] ? blitFill(p, FILLS[`grass~${v}`]) : drawGrass(p, grassLayout(v + 3))));
-  for (const [name, draw] of Object.entries(GRASS_FEATURES)) tile(`grass_${name}`, {}, (p) => draw(p));
+  for (const [name, draw] of Object.entries(GRASS_FEATURES)) tile(`grass_${name}`, {}, onFill(RAMPS.grass, (p) => draw(p)));
 
   // autotiled ground families: base key (no edges) + key#mask variants
   const families = [
@@ -837,15 +890,20 @@ export function registerVillageTiles(tile, animTiles) {
     ["cobble", (p) => drawFlagstones(p, FLAGS_A), MORTAR, {}],
     ["cobble2", (p) => drawFlagstones(p, FLAGS_B), MORTAR, {}],
   ];
-  for (const [key, drawn, shadow, meta] of families) {
-    // a painted fill replaces the generated texture under every edge shape
+  for (const [key, drawn, genShadow, meta] of families) {
+    // a painted fill replaces the generated texture under every edge shape,
+    // and the grass's contact shadow is scaled from the fill like the texture
     const base = (p) => (FILLS[key] ? blitFill(p, FILLS[key]) : drawn(p));
+    const genBase = new Pix(16, 16);
+    drawn(genBase);
+    const ref = dominant(genBase);
+    const shadow = () => (FILLS[key] ? relight(dominant(FILLS[key]), genShadow, ref) : genShadow);
     tile(key, meta, (p) => base(p));
     for (const m of MASKS)
       for (let prof = 0; prof < PROFS.length; prof++)
         tile(prof ? `${key}#${m}~${prof}` : `${key}#${m}`, meta, (p) => {
           base(p);
-          grassFringe(p, m, shadow, prof);
+          grassFringe(p, m, shadow(), prof);
         });
   }
 
@@ -897,12 +955,12 @@ export function registerVillageTiles(tile, animTiles) {
   for (const m of MASKS) {
     if (!m) continue;
     for (const v of [0, 1]) {
-      tile(`creep#${m}~${v}`, O, (p) => drawCreep(p, m, v));
-      tile(`blend_sand#${m}~${v}`, O, (p) => tongues(p, m, v, V.s2, V.s1, V.s3));
-      tile(`blend_dirt#${m}~${v}`, O, (p) => tongues(p, m, v, V.d3, V.d2, V.d4));
+      tile(`creep#${m}~${v}`, O, onFill(RAMPS.grass, (p) => drawCreep(p, m, v)));
+      tile(`blend_sand#${m}~${v}`, O, onFill(RAMPS.sand, (p) => tongues(p, m, v, V.s2, V.s1, V.s3)));
+      tile(`blend_dirt#${m}~${v}`, O, onFill(RAMPS.dirt, (p) => tongues(p, m, v, V.d3, V.d2, V.d4)));
     }
-    tile(`wet#${m}`, O, (p) => drawWet(p, m));
-    tile(`inner#${m}`, O, (p) => drawInnerCorners(p, m));
+    tile(`wet#${m}`, O, onFill(RAMPS.sand, (p) => drawWet(p, m)));
+    tile(`inner#${m}`, O, onFill(RAMPS.grass, (p) => drawInnerCorners(p, m)));
     animTiles(`foam_inner#${m}`, O, 3, (p, f) => drawFoamCorners(p, m, f));
   }
 }

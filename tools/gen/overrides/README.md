@@ -54,7 +54,13 @@ whole ground family, and the generator rebuilds every edge tile from it:
   cells; supplying only one of a pair warns, because the other stays generated.
 - Tile overrides in `tiles/` are applied after fills, so a single painted edge
   key still wins.
-- Not driven by fills: the plain `grass`, `grass2`, `grass3`, `meadow`,
-  `grass_clover` and `grass_clump` tiles, and the overlay tiles (`creep`,
-  `blend_sand`, `blend_dirt`, `wet`, `inner`), which keep their generated
-  colours.
+- Tiles that borrow a family's colours are recoloured from its fill, keeping
+  their shapes: with a grass fill, `grass`, `grass2`, `grass3`, `meadow`,
+  `grass_clover`, `grass_clump`, the `creep` blades and `inner` corners; with
+  a path fill, the `blend_dirt` tongues; with a sand fill, `blend_sand` and
+  `wet`. The grass's contact shadow on each family's edge tiles follows that
+  family's fill. Pixels of the ramp's base colour take the fill's own pixel;
+  the other shades keep their relation to it, scaled from the fill's most
+  common colour. Flowers, foam and cast shadows keep their colours.
+- Still generated green: cliff tops and faces, and the plant decorations
+  (`tuft`, `fern`, `reeds`, flower and heather stems).

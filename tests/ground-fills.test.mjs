@@ -8,7 +8,15 @@ import { join } from "node:path";
 import { PNG } from "pngjs";
 import { buildTileset } from "../tools/gen/tiles.mjs";
 import { loadFills, seamScore, FILL_KEYS } from "../tools/gen/overrides.mjs";
-import { Pix } from "../tools/gen/pix.mjs";
+import { Pix, parseColor } from "../tools/gen/pix.mjs";
+import { V } from "../tools/gen/village-palette.mjs";
+
+/** a generated ramp colour carried onto a painted colour: painted * colour / base, per channel */
+function shade(painted, colour, base) {
+  const c = parseColor(colour);
+  const b = parseColor(base);
+  return [0, 1, 2].map((i) => Math.min(255, Math.round((painted[i] * c[i]) / b[i]))).concat(255).join();
+}
 
 const dirs = [];
 function overrideDir() {
@@ -70,8 +78,9 @@ describe("ground fills", () => {
   });
 
   it("a fill drives the base and every edge tile; the fringe keeps its shape", () => {
-    // build with two different fills: pixels that follow the fill are texture,
-    // everything else (grass fringe, contact shadow) must be the generated art
+    // build with two different fills: pixels that follow the fill are texture
+    // or the grass's contact shadow (scaled from the fill); everything else
+    // (the grass fringe) must be the generated art
     const A = [200, 40, 160, 255];
     const B = [30, 220, 90, 255];
     const da = overrideDir();
@@ -89,8 +98,9 @@ describe("ground fills", () => {
       let texture = 0;
       pa.forEach((px, i) => {
         if (px !== pb[i]) {
-          expect([px, pb[i]], `${k} pixel ${i}`).toEqual([A.join(), B.join()]);
-          texture++;
+          if (px === A.join()) texture++;
+          else expect(px, `${k} shadow ${i}`).toBe(shade(A, V.d2, V.d3));
+          expect(pb[i], `${k} pixel ${i}`).toBe(px === A.join() ? B.join() : shade(B, V.d2, V.d3));
         } else expect(px, `${k} pixel ${i}`).toBe(was[i]);
       });
       expect(texture, k).toBeGreaterThan(0);
