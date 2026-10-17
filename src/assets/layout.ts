@@ -5885,6 +5885,14 @@ export const ASSET_LAYOUT = {
     }
   },
   "objects": {
+    "nordic_house": {
+      "w": 160,
+      "h": 96,
+      "door": {
+        "x": 88,
+        "y": 95
+      }
+    },
     "longhouse_seer": {
       "w": 144,
       "h": 108,

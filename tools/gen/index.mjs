@@ -1,7 +1,8 @@
 // index.mjs - runs the full asset generation pipeline.
 // Outputs deterministic PNGs into public/assets/ and regenerates
 // src/assets/layout.ts (single source of truth for frame indices).
-import { writeFileSync, mkdirSync, copyFileSync, readdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, copyFileSync, readdirSync, readFileSync } from "node:fs";
+import { PNG } from "pngjs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Pix } from "./pix.mjs";
@@ -59,6 +60,16 @@ function saveObj(o) {
   if (o.doorX !== undefined) layout.objects[o.key].door = { x: o.doorX, y: o.doorY };
   console.log(`${o.key}.png`);
 }
+// Approved artwork recovered from screenshots (art/approved/): copied as-is.
+// The door metadata is the doorway centre / sill bottom in art pixels.
+const STATIC_ART = [{ key: "nordic_house", file: "nordic_house.png", doorX: 88, doorY: 95 }];
+for (const a of STATIC_ART) {
+  const png = PNG.sync.read(readFileSync(join(ROOT, "tools", "gen", "art", a.file)));
+  const pix = new Pix(png.width, png.height);
+  pix.d.set(png.data);
+  saveObj({ key: a.key, pix, doorX: a.doorX, doorY: a.doorY });
+}
+
 // Bjorvik village pass (Platinum-style, Norse architecture)
 saveObj(VB.longhouseSeer());
 saveObj(VB.housePlayer());

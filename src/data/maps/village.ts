@@ -53,6 +53,9 @@ g.hline(12, 20, 27, "q");
 // meadow patches & flowers
 g.rect(4, 4, 8, 8, "m");
 g.rect(34, 12, 6, 6, "m");
+// the meadow covered the path's first tile; the old house's porch art hid that,
+// the approved house ends at its sill - so the path reaches the doorstep again
+g.set(9, 11, "p");
 // Flowers, ferns and stones are hand-placed in VILLAGE.decor below instead of
 // a regular scatter lattice, so the village reads as composed, not generated.
 
@@ -84,7 +87,11 @@ export const VILLAGE: MapDef = {
   legend: OUTDOOR_LEGEND,
   buildings: [
     { asset: "longhouse_seer", x: 21, y: 4, solidH: 6, door: { x: 25, y: 10, to: { map: "seer", x: 8, y: 9, dir: "down" } } },
-    { asset: "house_player", x: 7, y: 6, solidH: 5, door: { x: 9, y: 11, to: { map: "home", x: 5, y: 6, dir: "down" } } },
+    // the approved Nordic turf-roof house (art/approved/), drawn over columns 4-13 /
+    // rows 5-10; solid where its walls and roof stand (columns 5-12, rows 6-10) - the
+    // sparse roof line on row 5 can be passed behind. Doorway centred on column 9,
+    // above the doorstep at (9,11) as before.
+    { asset: "nordic_house", x: 4, y: 5, solidX: 1, solidY: 1, solidW: 8, solidH: 5, door: { x: 9, y: 11, to: { map: "home", x: 5, y: 6, dir: "down" } } },
     { asset: "heal_hall", x: 38, y: 6, solidH: 6, door: { x: 42, y: 12, to: { map: "heal", x: 5, y: 6, dir: "down" } } },
     { asset: "shop", x: 38, y: 16, solidH: 5, door: { x: 39, y: 21, to: { map: "shop", x: 5, y: 6, dir: "down" } } },
     { asset: "house_npc_0", x: 7, y: 16, solidH: 4, door: { x: 9, y: 20, to: { map: "houseA", x: 5, y: 5, dir: "down" } } },
@@ -93,7 +100,7 @@ export const VILLAGE: MapDef = {
   props: [
     { asset: "longship", x: 16, y: 29, solid: true },
     { asset: "pine_0", x: 3, y: 5, solid: true },
-    { asset: "pine_1", x: 5, y: 9, solid: true },
+    { asset: "pine_1", x: 2, y: 9, solid: true }, // moved from (5,9): the wider approved house stands there
     { asset: "pine_0", x: 46, y: 4, solid: true },
     { asset: "pine_1", x: 47, y: 9, solid: true },
     { asset: "pine_1", x: 3, y: 22, solid: true },
@@ -155,7 +162,7 @@ export const VILLAGE: MapDef = {
     // fields and margins: mixed trees, shrubs and stones
     { asset: "birch", x: 3, y: 15 },
     { asset: "rock_small", x: 2, y: 17 },
-    { asset: "shrub_0", x: 2, y: 10 },
+    { asset: "shrub_0", x: 4, y: 12 }, // moved from (2,10) to make room for pine_1
     { asset: "spruce_young", x: 18, y: 12 },
     { asset: "birch", x: 19, y: 15 },
     { asset: "shrub_0", x: 22, y: 12 },

@@ -23,7 +23,7 @@ npm run dev        # http://localhost:5180 (binds 0.0.0.0)
 | `npm run build` | Typecheck + production build to `dist/` |
 | `npm run typecheck` | `tsc --noEmit` (strict) |
 | `npm test` | Vitest suite for the pure engine/data layers (incl. map reachability, input, dialogue paging, rival balance) |
-| `npm run test:e2e` | All browser tests (production build, real input): the opening playthrough (new game -> rival -> capture -> heal -> save/reload), the starter choice by keyboard/mouse/touch (`test:e2e:starters`), and both heroes' selection, walk cycle, door sounds and save/continue (`test:e2e:heroes`). Needs Playwright + Chromium; screenshots in `test-results/e2e/` |
+| `npm run test:e2e` | All browser tests (production build, real input): the opening playthrough (new game -> rival -> capture -> heal -> save/reload), the starter choice by keyboard/mouse/touch (`test:e2e:starters`), both heroes' selection, walk cycle, door sounds and save/continue (`test:e2e:heroes`), and the approved Nordic house's door, exterior and walls (`test:e2e:house`). Needs Playwright + Chromium; screenshots in `test-results/e2e/` |
 | `npm run assets` | Regenerate all pixel-art PNGs + `src/assets/layout.ts` (uses any hand-painted files in `tools/gen/overrides/`) |
 | `npm run maps:tiled` | Export every map to Tiled (`tools/tiled/out/*.tmj`) for review; one-way, see `docs/ART-TOOLING.md` |
 
@@ -146,7 +146,10 @@ them off paths, doors, warps, NPCs and story triggers.
 Room-specific pieces (Yggdrasil panel, braziers, healer cots, goods rack, loom, light pools...) come from
 `tools/gen/interior-props.mjs` and are placed through `MapDef.objects`. Wall pieces use `solid: false`; light uses
 `layer: "floor"` and `blend: "add"`. `tests/interiors.test.ts` checks that collision and doorways are unchanged.
-Tooling notes (Tiled export, LibreSprite/Aseprite overrides): `docs/ART-TOOLING.md`. Music and SFX are synthesized at runtime with the
+Tooling notes (Tiled export, LibreSprite/Aseprite overrides): `docs/ART-TOOLING.md`.
+
+**Approved artwork:** the player's house is the approved Nordic turf-roof house, recovered pixel for pixel from its
+reference screenshot (`art/approved/`, see its README) and copied unchanged into the assets by `npm run assets`. Music and SFX are synthesized at runtime with the
 WebAudio API (no audio files, no licensing concerns). Fonts: Press Start 2P (OFL).
 
 ## Save format

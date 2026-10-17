@@ -14,6 +14,11 @@ export interface BuildingDef {
   x: number; // tile coords of top-left
   y: number;
   solidH: number; // how many tile rows are solid (from y)
+  /** solid area within the image, in tiles (defaults: from the top-left corner, the image's full width) -
+   * for art whose edges are transparent padding or a sparse roof line the player may pass behind */
+  solidX?: number;
+  solidY?: number;
+  solidW?: number;
   door?: { x: number; y: number; to: WarpTarget }; // walkable trigger tile in front
 }
 
