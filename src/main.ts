@@ -1,5 +1,6 @@
 // main.ts - Phaser boot configuration. Landscape pixel-art RPG.
 import Phaser from "phaser";
+import { Audio } from "./core/audio";
 import { BootScene } from "./scenes/BootScene";
 import { TitleScene } from "./scenes/TitleScene";
 import { WorldScene } from "./scenes/WorldScene";
@@ -51,7 +52,7 @@ checkOrient();
 // Browser-test hook: only exposed when the page is opened with ?e2e, so
 // automated playthroughs (tests/e2e) can read state without affecting players.
 if (new URLSearchParams(window.location.search).has("e2e")) {
-  (window as unknown as Record<string, unknown>).__fjellheim = { game, Session, Input, SaveManager };
+  (window as unknown as Record<string, unknown>).__fjellheim = { game, Session, Input, SaveManager, Audio };
 }
 
 export default game;

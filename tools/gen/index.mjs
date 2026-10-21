@@ -1,7 +1,8 @@
 // index.mjs - runs the full asset generation pipeline.
 // Outputs deterministic PNGs into public/assets/ and regenerates
 // src/assets/layout.ts (single source of truth for frame indices).
-import { writeFileSync, mkdirSync, copyFileSync, readdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, copyFileSync, readdirSync, readFileSync } from "node:fs";
+import { PNG } from "pngjs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Pix } from "./pix.mjs";
@@ -9,6 +10,10 @@ import { buildTileset } from "./tiles.mjs";
 import { buildChars } from "./chars.mjs";
 import { buildCreatures } from "./creatures.mjs";
 import * as OBJ from "./objects.mjs";
+import * as VB from "./village-buildings.mjs";
+import * as VP from "./village-props.mjs";
+import { INTERIOR_PROPS } from "./interior-props.mjs";
+import { loadOverride, checkOverrideKeys } from "./overrides.mjs";
 import * as UI from "./ui.mjs";
 import * as BG from "./backdrops.mjs";
 
@@ -26,12 +31,17 @@ layout.tiles = ts.layout;
 layout.tileMeta = ts.meta;
 layout.tileAtlas = { cols: ts.cols, rows: ts.rows, size: 16 };
 console.log(`tiles.png  (${ts.count} tiles, ${ts.cols}x${ts.rows} grid)`);
+if (ts.overridden.length) console.log(`  hand-painted tile overrides: ${ts.overridden.join(", ")}`);
+for (const f of ts.fills) {
+  console.log(`  painted fill ${f.key}: seam score ${f.seam.score} (left/right ${f.seam.lr}, top/bottom ${f.seam.tb}, texture ${f.seam.interior})`);
+  for (const w of f.warnings) console.warn(`  WARNING fill ${f.key}: ${w}`);
+}
 
 /* ---- characters ---- */
 const ch = buildChars();
 ch.pix.save(join(OUT, "chars.png"));
 layout.chars = ch.layout;
-layout.charSheet = { w: 16, h: 24, framesPerChar: ch.cols, names: ch.names };
+layout.charSheet = { w: ch.w, h: ch.h, framesPerChar: ch.cols, names: ch.names };
 console.log(`chars.png  (${ch.names.length} characters)`);
 
 /* ---- creatures ---- */
@@ -42,35 +52,60 @@ layout.creatureSheet = { size: 64, cols: cr.cols };
 console.log(`creatures.png  (${Object.keys(cr.layout).length} creatures)`);
 
 /* ---- world objects ---- */
+const objectOverrides = [];
 function saveObj(o) {
+  const painted = loadOverride("objects", o.key, o.pix.w, o.pix.h);
+  if (painted) {
+    o.pix = painted;
+    objectOverrides.push(o.key);
+  }
   o.pix.save(join(OUT, `${o.key}.png`));
   layout.objects[o.key] = { w: o.pix.w, h: o.pix.h };
   if (o.doorX !== undefined) layout.objects[o.key].door = { x: o.doorX, y: o.doorY };
   console.log(`${o.key}.png`);
 }
-saveObj(OBJ.longhouseSeer());
-saveObj(OBJ.housePlayer());
-saveObj(OBJ.houseNpc(0));
-saveObj(OBJ.houseNpc(1));
-saveObj(OBJ.healHall());
-saveObj(OBJ.shop());
-saveObj(OBJ.longship());
-saveObj(OBJ.pineTree(0));
-saveObj(OBJ.pineTree(1));
+// Approved artwork recovered from screenshots (art/approved/): copied as-is.
+// The door metadata is the doorway centre / sill bottom in art pixels.
+const STATIC_ART = [{ key: "nordic_house", file: "nordic_house.png", doorX: 88, doorY: 95 }];
+for (const a of STATIC_ART) {
+  const png = PNG.sync.read(readFileSync(join(ROOT, "tools", "gen", "art", a.file)));
+  const pix = new Pix(png.width, png.height);
+  pix.d.set(png.data);
+  saveObj({ key: a.key, pix, doorX: a.doorX, doorY: a.doorY });
+}
+
+// Bjorvik village pass (Platinum-style, Norse architecture)
+saveObj(VB.longhouseSeer());
+saveObj(VB.housePlayer());
+saveObj(VB.houseNpc(0));
+saveObj(VB.houseNpc(1));
+saveObj(VB.healHall());
+saveObj(VB.shop());
+saveObj(VB.longship());
+for (const make of VP.VILLAGE_PROPS) saveObj(make());
+for (const make of INTERIOR_PROPS) saveObj(make());
 saveObj(OBJ.runeStones());
 saveObj(OBJ.pedestal());
 
 /* ---- animated objects (multi-frame single files) ---- */
 function saveAnim(framesData) {
   const { frames, key, w, h } = framesData;
-  const sheet = new Pix(w, h * frames.length);
+  let sheet = new Pix(w, h * frames.length);
   frames.forEach((f, i) => sheet.blit(f, 0, i * h));
+  const painted = loadOverride("objects", key, w, h * frames.length);
+  if (painted) {
+    sheet = painted;
+    objectOverrides.push(key);
+  }
   sheet.save(join(OUT, `${key}.png`));
   layout.objects[key] = { w, h, frames: frames.length };
   console.log(`${key}.png (${frames.length} frames)`);
 }
 saveAnim(OBJ.waterfallFrames());
 saveAnim(OBJ.runeRingFrames());
+
+checkOverrideKeys("objects", Object.keys(layout.objects));
+if (objectOverrides.length) console.log(`  hand-painted object overrides: ${objectOverrides.join(", ")}`);
 
 /* ---- title rune circle ---- */
 const trc = OBJ.titleRuneCircle();

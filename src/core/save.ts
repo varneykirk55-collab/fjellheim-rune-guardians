@@ -83,6 +83,8 @@ export const SaveManager = {
         data = mig(data);
       }
       if (!validateState(data)) return null;
+      // an unknown hero would render with no sprite: fall back to the first one
+      if (data.playerChar !== "eirik" && data.playerChar !== "astri") data.playerChar = "eirik";
       return data;
     } catch (e) {
       console.error("Load failed", e);

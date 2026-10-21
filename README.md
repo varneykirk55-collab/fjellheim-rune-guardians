@@ -23,8 +23,9 @@ npm run dev        # http://localhost:5180 (binds 0.0.0.0)
 | `npm run build` | Typecheck + production build to `dist/` |
 | `npm run typecheck` | `tsc --noEmit` (strict) |
 | `npm test` | Vitest suite for the pure engine/data layers (incl. map reachability, input, dialogue paging, rival balance) |
-| `npm run test:e2e` | Browser playthrough of the opening (new game -> rival -> capture -> heal -> save/reload) with real key presses; needs Playwright + Chromium (local or global install), screenshots in `test-results/e2e/` |
-| `npm run assets` | Regenerate all pixel-art PNGs + `src/assets/layout.ts` |
+| `npm run test:e2e` | All browser tests (production build, real input): the opening playthrough (new game -> rival -> capture -> heal -> save/reload), the starter choice by keyboard/mouse/touch (`test:e2e:starters`), both heroes' selection, walk cycle, door sounds and save/continue (`test:e2e:heroes`), and the approved Nordic house's door, exterior and walls (`test:e2e:house`). Needs Playwright + Chromium; screenshots in `test-results/e2e/` |
+| `npm run assets` | Regenerate all pixel-art PNGs + `src/assets/layout.ts` (uses any hand-painted files in `tools/gen/overrides/`) |
+| `npm run maps:tiled` | Export every map to Tiled (`tools/tiled/out/*.tmj`) for review; one-way, see `docs/ART-TOOLING.md` |
 
 ## Controls
 
@@ -109,7 +110,46 @@ invariants.
 Every sprite, tile, backdrop and UI piece is generated programmatically by
 `tools/gen/*.mjs` (pngjs) at a consistent pixel density (16px tiles, 16x24 characters,
 64x64 creatures, 512x288 screens) and written to `public/assets/` with machine-readable
-metadata in `src/assets/layout.ts`. Music and SFX are synthesized at runtime with the
+metadata in `src/assets/layout.ts`.
+
+**Bjorvik village pass (Platinum-style):** exterior village tiles are drawn by
+`tools/gen/village-tiles.mjs` and the buildings, pines and longship by
+`tools/gen/village-buildings.mjs`, using the hue-shifted ramps in
+`village-palette.mjs`. The world renders at an integer 2x (about 16x9 tiles on
+screen, close to the DS framing). `src/data/maps/visual.ts` picks ground edge
+variants, cliff roles and a separate decoration layer at render time; collision
+still comes only from the map grid. `node tools/gen/preview.mjs out.png 4 <prefix>`
+renders magnified tile previews for review.
+Village scenery is composed by hand in map data: `MapDef.objects` (trees, firewood,
+barrels, gardens...; anchored at the bottom-left tile, only the bottom `foot` rows
+block movement) and `MapDef.decor` (non-blocking flowers, ferns, pebbles). Props are
+drawn by `tools/gen/village-props.mjs`; `tests/village-composition.test.ts` keeps
+them off paths, doors, warps, NPCs and story triggers.
+
+**Interiors:** each room id selects a material set from
+`tools/gen/interior-tiles.mjs`:
+
+- **Home:** daub and timber with honey planks.
+- **Seer's longhouse:** smoke-dark staves and a slate floor.
+- **Hall of Mending:** lime-washed walls with birch boards.
+- **Shop:** wattle and dark oak.
+- **Fisherman's house:** salt-grey clapboard.
+- **Weaver's house:** a woven band over a parquet floor.
+
+`visual.ts` renders:
+
+- the north wall as a two-tile face (upper/lower);
+- other walls as dark beam tops;
+- the shadow walls cast onto the floor;
+- furniture as transparent tiles over the floor, with shelves and banners rising into the wall.
+
+Room-specific pieces (Yggdrasil panel, braziers, healer cots, goods rack, loom, light pools...) come from
+`tools/gen/interior-props.mjs` and are placed through `MapDef.objects`. Wall pieces use `solid: false`; light uses
+`layer: "floor"` and `blend: "add"`. `tests/interiors.test.ts` checks that collision and doorways are unchanged.
+Tooling notes (Tiled export, LibreSprite/Aseprite overrides): `docs/ART-TOOLING.md`.
+
+**Approved artwork:** the player's house is the approved Nordic turf-roof house, recovered pixel for pixel from its
+reference screenshot (`art/approved/`, see its README) and copied unchanged into the assets by `npm run assets`. Music and SFX are synthesized at runtime with the
 WebAudio API (no audio files, no licensing concerns). Fonts: Press Start 2P (OFL).
 
 ## Save format

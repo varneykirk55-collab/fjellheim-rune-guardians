@@ -4,3 +4,5 @@ coverage/
 *.log
 .DS_Store
 test-results/
+tools/tiled/out/
+__pycache__/

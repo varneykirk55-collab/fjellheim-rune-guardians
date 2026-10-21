@@ -135,7 +135,15 @@ export const TRACKS: Record<string, Track> = {
 
 type SfxName =
   | "cursor" | "confirm" | "cancel" | "blip" | "bump" | "encounter" | "hitPhys" | "hitSpec"
-  | "superEff" | "faint" | "throw" | "shake" | "burst" | "heal" | "save" | "error" | "evolve" | "door";
+  | "superEff" | "faint" | "throw" | "shake" | "burst" | "heal" | "save" | "error" | "evolve" | "door"
+  | "doorIn" | "doorOut";
+
+/** sound for a warp: building doors in each direction, a plain transition otherwise */
+export function doorSound(fromIndoors: boolean, toIndoors: boolean): "doorIn" | "doorOut" | "door" {
+  if (!fromIndoors && toIndoors) return "doorIn";
+  if (fromIndoors && !toIndoors) return "doorOut";
+  return "door";
+}
 
 class AudioManagerImpl {
   private ctx: AudioContext | null = null;
@@ -146,6 +154,8 @@ class AudioManagerImpl {
   private current: { track: Track; timer: number; nextTime: number; pos: number[]; beat: number } | null = null;
   musicVol = 0.7;
   sfxVol = 0.8;
+  /** names of the last requested effects (newest last), read by the browser tests */
+  readonly sfxLog: string[] = [];
 
   /** Must be called from a user gesture at least once. */
   unlock() {
@@ -221,8 +231,23 @@ class AudioManagerImpl {
   }
 
   sfx(name: SfxName) {
-    if (!this.ctx) return;
+    this.sfxLog.push(name);
+    if (this.sfxLog.length > 32) this.sfxLog.shift();
+    if (!this.ctx) return; // not unlocked by a user gesture yet: stay silent
+    const now = this.ctx.currentTime;
     switch (name) {
+      // building doors: a latch click, then a soft low thud as the door shuts behind you
+      case "doorIn":
+        this.noise({ dur: 0.05, vol: 0.07, f0: 2600, f1: 1800, q: 3 });
+        this.tone({ wave: "triangle", f0: 150, f1: 85, dur: 0.16, vol: 0.12, when: now + 0.07 });
+        this.noise({ dur: 0.12, vol: 0.05, f0: 260, f1: 140, q: 0.9, when: now + 0.07 });
+        break;
+      // ...and leaving: the latch, then a short rising breath of outside air
+      case "doorOut":
+        this.noise({ dur: 0.05, vol: 0.07, f0: 2400, f1: 1700, q: 3 });
+        this.noise({ dur: 0.26, vol: 0.05, f0: 300, f1: 1400, q: 0.7, when: now + 0.04 });
+        this.tone({ wave: "triangle", f0: 110, f1: 150, dur: 0.12, vol: 0.06, when: now + 0.04 });
+        break;
       case "cursor": this.tone({ wave: "square", f0: 880, dur: 0.045, vol: 0.12 }); break;
       case "confirm": this.tone({ wave: "square", f0: 660, f1: 990, dur: 0.09, vol: 0.14 }); break;
       case "cancel": this.tone({ wave: "square", f0: 440, f1: 300, dur: 0.09, vol: 0.12 }); break;
